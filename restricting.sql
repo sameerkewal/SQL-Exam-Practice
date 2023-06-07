@@ -242,7 +242,22 @@ order by salary DESC
 fetch first 3 rows with ties;
 
 
+
+--ook bij offset is row and rows the same thing
+select * from DEPARTMENTS
+order by DEPARTMENT_ID
+offset 4 rows;
+
+select *
+from DEPARTMENTS
+offset 5 rows;
+
+
+
+
 select * from EMPLOYEES order by salary desc;
+
+
 
 
 

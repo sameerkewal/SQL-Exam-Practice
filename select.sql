@@ -48,7 +48,11 @@ select FIRST_NAME || q'( works in department )' || DEPARTMENT_ID from EMPLOYEES;
 
 
 
-select distinct LAST_NAME from EMPLOYEES;
+select distinct LAST_NAME from employees
+
+
+
+
 
 
 
