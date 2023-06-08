@@ -76,6 +76,43 @@ terwijl bij double ampersand gaat hij je value onthouden en gaat die prompt wind
 undefine dept_id;
 select * from EMPLOYEES where DEPARTMENT_ID=&&dept_id;
 
+undefine column_name;
+select EMPLOYEE_ID, LAST_NAME, JOB_ID, &&column_name
+from EMPLOYEES
+order by &column_name;
+
+--verification??
+--verification wijst je gewoon die query voor en nadat die variable is gesubstitueerd
+set verify on;
+set verify off;
+select EMPLOYEE_ID, LAST_NAME ,SALARY
+from EMPLOYEES
+where EMPLOYEE_ID =&num;
+
+
+--set define off
+--als je deze statement execute
+--gaat ie denken dat je een substitution variable wilt zetten which is not exactly what we want is it
+select *
+from DEPARTMENTS
+where DEPARTMENT_NAME like '%&t%';
+
+
+--thats where set define off comes in handily dandily
+set define off;
+select *
+from DEPARTMENTS
+where DEPARTMENT_NAME like '%&t%';
+
+
+--worth mentioning dat als je set define off doet dan is hij off voor die hele session, dus dan als je je prompt windows weer nodig hebt,
+--moet je weer set define on gaan doen
+undefine dept_id;
+set define on;
+select * from DEPARTMENTS where DEPARTMENT_ID = &&dept_id;
+
+
+
 
 
 
