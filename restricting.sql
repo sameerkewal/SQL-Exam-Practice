@@ -244,6 +244,7 @@ fetch first 3 rows with ties;
 
 
 --ook bij offset is row and rows the same thing
+--worth mentioning dat offset and fetch alleen werken met order by
 select * from DEPARTMENTS
 order by DEPARTMENT_ID
 offset 4 rows;
