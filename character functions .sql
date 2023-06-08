@@ -102,6 +102,7 @@ select FIRST_NAME, instr(FIRST_NAME, 'et', 1, 1) from EMPLOYEES where FIRST_NAME
 --instr kan ook werken met negatieve positions voor de starting positions.
 --maar niet voor occurences anders krijg je argument out of range error
 --Maaaaaaar hier als je negatief zet voor je position gaat hij backwards beginnen te tellen. 
+--also je mag geen 0 zetten voor position. Definitely check out the documentation
 --BIJ SUBSTRING GAAT IE GEWOON WEER NAAR VOREN???
 --https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/INSTR.html#GUID-47E3A7C4-ED72-458D-A1FA-25A9AD3BE113
 select instr('nanette', 'n', -3, 1) from dual; --probably 
@@ -111,7 +112,100 @@ select instr('nanette', 'n', -3, 2) from dual;
 
 select 'nanette', instr('nanette', 'e', -1, -1) from dual;
 
+
+--de derde occurence van n als je vanuit achterin begint met tellen
+--btw je mag ook geen 0 zetten voor occurence(kinda obvious ig but not rly??)
 select 'nanette', instr('nannette', 'n', -1, 3) from dual;
+
+
+select 'nannette', instr('nannette', 'n', 1, 1) from dual;
+
+
+
+--now with bigger strings
+--7 remember dat het die spaces(just like any other programming language ook meetelt)
+select 'hello there', instr('hello there', 'there', 1, 1) from dual; 
+
+
+
+--needlessly ingewikkelde statement bc why not?
+select 'HELLO there', instr('HELLO there', upper('hello'), 1, 1) from dual;
+
+
+--remember dat, al begint hij backwards met tellen in geval van een negatieve position, die return value nog steeds vanaf voorin zal zijn 
+select 'nannette', instr('nannette', 'n', -1, 1) from dual;
+
+
+
+--lpad and rpad
+select FIRST_NAME, LAST_NAME, SALARY, lpad(SALARY, 10, 'test'), rpad(salary, 10, 'test') from EMPLOYEES;
+select FIRST_NAME, LAST_NAME, SALARY, lpad(SALARY, 10, '*'), rpad(salary, 10, '#') from EMPLOYEES;
+
+--hierbij wil je het salaris gedeeld door 1000 weergeven door middel van sterretjes
+--dus die empty space pad je door middel van sterretjes/asteriks
+select LAST_NAME, rpad(' ', SALARY/1000/1, '*') as salary
+from EMPLOYEES where EMPLOYEE_ID = 100
+order by LAST_NAME, salary;
+
+
+
+
+--replace
+select EMPLOYEE_ID, FIRST_NAME, replace(FIRST_NAME, 'a', '*'), replace(first_name, 'en', '*') from EMPLOYEES;
+
+
+--doesnt do anything
+select EMPLOYEE_ID, FIRST_NAME, replace(FIRST_NAME, 'a', null) from EMPLOYEES;
+
+--doesnt do anything either
+SELECT EMPLOYEE_ID, FIRST_NAME, Replace(FIRST_NAME, null, 'a') from EMPLOYEES;
+
+
+--trim
+--cant trim in the middle
+
+select '  sameer kewal  ', length('  sameer kewal  ') from dual;
+
+
+--if u dont specify then it will just do both, same thing as the last one
+select trim(' ' from '  sameer kewal  '), length( trim(' ' from '  sameer kewal  ')) from dual;
+
+--leading only clears the leading(the ones in front) from the string
+select trim(leading ' ' from '  sameer kewal  '), length(trim(leading ' ' from '  sameer kewal  ')) from dual;
+
+
+--trailing only clears the trailing(the ones in the back) from the string
+select trim(trailing ' ' from '  sameer kewal  '), length(trim(leading ' ' from '  sameer kewal  ')) from dual;
+
+
+select trim(both ' ' from '  sameer kewal  '), length(trim(both ' ' from '  sameer kewal  ')) from dual;
+
+
+select trim(leading 'k' from 'kkkkkill') from dual;
+
+select trim(trailing 'k' from 'kkkkillllkkkk') from dual;
+
+select trim('k' from 'kkillk') from dual;
+
+
+select trim(' Sameer             Kewal '), length(trim(' Sameer             Kewal ')) from dual;
+
+
+--case sensitive ofc ofc
+select trim(leading 'S' from 'Sameer') from dual;
+
+--niet specified dus het cleared both the trailing and leading spaces
+select trim(' ' from '  sameer kewal  '), length(trim(' ' from '  sameer kewal  ')) from dual;
+
+
+
+
+
+
+
+
+
+
 
 
 
