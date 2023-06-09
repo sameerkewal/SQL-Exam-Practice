@@ -105,5 +105,55 @@ next_day(HIRE_DATE, 6) from EMPLOYEES
 where months_between(SYSDATE, HIRE_DATE)>150;
 
 
-select SYSDATE-HIRE_DATE from EMPLOYEES;
+
+--met round als je het met MONTH gebruikt,
+--dates 1-15 resulteren in the first day of the nearest year or month
+--dates 16-31 result in the first day of the next month
+
+--in gevallen van YEAR werkt hij op de volgende manier:
+--maanden 1-6 resulteren in january 1st of the current YEAR
+--maanden 7-12 resulteren in january 1st of the next year
+
+
+--MET DAY GAAT IE ROUNDEN NAAR HET EIND VAN THE NEAREST WEEK WHICH IS SUNDAY
+--vanaf de donderdag gaat ie rounden naar de volgende zondag, voordien round het naar de zondag voorheen
+select round(to_date('25-JUN-23', 'DD-MONTH-RR'), 'DAY')from dual;
+
+
+--bij trunc op basis van month reset hij je terug naar het begin van de maand
+select FIRST_NAME, HIRE_DATE, round(HIRE_DATE, 'MONTH'), trunc(HIRE_DATE, 'MONTH')
+from EMPLOYEES
+order by HIRE_DATE;
+
+
+--bij trunc op basis van year reset hij je terug naar het begin van het jaar
+select FIRST_NAME, HIRE_DATE, round(HIRE_DATE, 'YEAR'), trunc(HIRE_DATE, 'YEAR')
+from EMPLOYEES
+order by HIRE_DATE;
+
+
+--bij trunc op basis van dag reset hij je terug naar het begin van de week!
+--and again bij day round ie naar het eind van de week vanaf donderdag
+select FIRST_NAME, HIRE_DATE, round(HIRE_DATE, 'DAY'), trunc(HIRE_DATE, 'DAY')
+from EMPLOYEES
+order by HIRE_DATE; 
+
+
+--what abt if u dont specify any value?
+--then it does absolutely nothing
+select FIRST_NAME, to_char(HIRE_DATE, 'DD-MON-YYYY: HH24:MI:SS'), to_char(round(HIRE_DATE), 'DD-MON-YYYY:HH24:MI:SS'), 
+to_char(trunc(HIRE_DATE), 'DD-MON-YYYY:HH24:MI')
+from EMPLOYEES;
+
+--als je dit doet rond hij af op like het eind van de dag
+--so if u dont specify a value for the round parameter(the 2nd parameter)dan rond hij de dag gewoon af
+select to_char(round(to_date('24-MARCH-2002 12:30:00', 'DD-MON-YYYY HH24:MI:SS'))) from dual;
+
+--the cutoff value is het midden van de dag dus 11:59 cut off naar hetzelfde dag en vanaf 12:00 gaat naar de volgende dag
+select to_char(round(to_date('24 MARCH 2002 11:59:00', 'DD-MON-YYYY HH24:MI:SS'))) from dual;
+
+
+--trunc reset het gewoon naar 00:00:00 van dezelfde dag
+select to_char(trunc(to_date('24-MARCH-2002 11:59:00', 'DD-MON-YYYY HH24:MI:SS'))) from dual;
+
 
