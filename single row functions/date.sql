@@ -1,0 +1,109 @@
+--default date display = DD-MON-RR
+
+select FIRST_NAMe, HIRE_DATE from EMPLOYEES;
+
+--important for testing out how the rr format works
+--als het tussen 0-49 is dan is het 20xx
+--en tussen 50 en 99 is het dus 19xx
+select to_char(to_date('1-JAN-51', 'DD-MON-RR'), 'YYYY') from dual;
+
+
+select SYSDATE from dual;
+
+
+
+--using arithmetic operators with dates
+--date+number=date
+select SYSDATE, SYSDATE+3 from dual;
+
+--date-number=date(logisch!)
+select SYSDATE, SYSDATE -3 from dual;
+
+
+--date - date = number of days
+select EMPLOYEE_ID, SYSDATE, HIRE_DATE, SYSDATE-HIRE_DATE, round(SYSDATE-HIRE_DATE)
+from EMPLOYEES;
+
+
+--als je date + number/24 doet = adding number of hours to a date
+--hierbij add je 5 hours to je sysdate
+select SYSDATE, SYSDATE+5/24 from dual;
+
+
+select EMPLOYEE_ID, FIRST_NAME, SYSDATE-HIRE_DATE "number of days", round((SYSDATE-HIRE_DATE)/7) "number of weeks"
+from EMPLOYEES
+where FIRST_NAME='Adam';
+
+
+select months_between(to_date('9-JUN-23', 'DD-MON-RR'), to_date('9-JUN-22', 'DD-MON-RR'))from dual;
+
+--calculeert het aantal maanden tussen vandaag en de datum 
+
+select sysdate, hire_date, months_between(SYSDATE, HIRE_DATE), round(months_between(sysdate, HIRE_DATE))from EMPLOYEES;
+
+--dont do the following bc not all months have 31 days obviously
+select sysdate, HIRE_DATE, months_between(SYSDATE, HIRE_DATE), (SYSDATE-HIRE_DATE)/30 from EMPLOYEES;
+
+
+--als je kleinere date als eerste parameter zet en grotere als 2e dan gaat ie negatief geven. check it:
+select months_between(to_date('23-JUN-00', 'DD-MON-RR'), to_date('23-JUN-01', 'DD-MON-RR')) from dual;
+
+
+--add months 😎🈷️
+--aangezien ik slecht ben met maanden tellen zal ik het verder uitleggen.
+--als je hire date january is dan tel je zo. Februari is 1. Maart is 2 en April dat is 3
+select EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, ADD_MONTHS(HIRE_DATE, 3) from EMPLOYEES
+where LAST_NAME='King';
+
+
+--oefenen met nesting functions!!!!
+--obviously gaat je add months een date returnen dus dan kan je daarom to_char toepassen,
+--although ik denk dat je to_char kan toepassen op basically anything
+select EMPLOYEE_ID, FIRST_NAME, HIRE_DATE, to_char(ADD_MONTHS(HIRE_DATE, 3), 'DD-MON-YYYY') from EMPLOYEES
+where LAST_NAME='King';
+
+
+--obviously mag je ook negatieve values definen voor add months en dan gaat ie gewoon aftrekken
+select add_months(sysdate, -3) from dual;
+
+
+
+select 'sameer', to_date('1-JUN-01', 'DD-MON-RR') as first_employee_date, 
+add_months(to_date('1-JUN-01', 'DD-MON-RR'), 6) as eind_contract_date
+from dual;
+
+--next_day
+--retrieves the next day vanuit the given date
+--als vandaag vrijdag is en je zoekt friday dan gaat ie je de van volgend week geven(en niet 0 or something)
+--het accepteert ook nummers:
+-- 1 = zondag, 2 = maandag, 3 = dinsdag, 4 = woensdag, 5 = donderdag, 6 = vrijdag, 7 = zaterdag(according to nls date language)
+select SYSDATE, next_day(SYSDATE, 7) from dual;
+
+--any date kan eerste argument zijn en dan vanuit daar gaat ie de volgende gegeven dag(2de argument zoeken)
+--check calender. De volgende vrijdag vanuit 17 juni is op 23 juni
+select SYSDATE, next_day(to_date('17-JUN-23'), 'friday') from dual;
+
+--je mag ook gewoon die abbrevation van die dag geven bv fri/sat/sun etc etc
+select sysdate, next_day(sysdate, 'thu') from dual;
+
+
+--ik wil dus vanuit vandaag(whichever date that might be) zondag retrieven
+select sysdate, next_day(sysdate ,1) from dual;
+
+/* 
+last_day
+retrieves the last day of the given month 
+kan van alles zijn bv sysdate, gewoon een to_date thing zoals hieronder zolang het een valid date is ofc*/
+select last_day(to_date('23-JUL-23', 'DD-MON-RR'))from dual;
+
+
+
+--display employee number, first name, hiredate, number of months employed, six month review, first friday after hire date
+--for all employees who have been employed for longer than 150 months
+select EMPLOYEE_ID, FIRST_NAME,HIRE_DATE, round(months_between(sysdate,HIRE_DATE),1), add_months(HIRE_DATE, 6),
+next_day(HIRE_DATE, 6) from EMPLOYEES
+where months_between(SYSDATE, HIRE_DATE)>150;
+
+
+select SYSDATE-HIRE_DATE from EMPLOYEES;
+

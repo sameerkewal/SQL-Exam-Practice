@@ -76,3 +76,5 @@ select mod(100, 2) from dual;
 select mod(101, 2) from dual;
 
 
+
+
