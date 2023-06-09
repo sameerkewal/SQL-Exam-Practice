@@ -156,4 +156,41 @@ select to_char(round(to_date('24 MARCH 2002 11:59:00', 'DD-MON-YYYY HH24:MI:SS')
 --trunc reset het gewoon naar 00:00:00 van dezelfde dag
 select to_char(trunc(to_date('24-MARCH-2002 11:59:00', 'DD-MON-YYYY HH24:MI:SS'))) from dual;
 
+--ik include dit gewoon om te checken om nested functions te wijzen
+--check waar de vorige function eindigt door te kijken naar die opening bracket. Just hover the 
+--opening bracket after you specified the function
+select to_char(round(to_date('24-JUN-2002 20:08:00', 'DD-MON-YYYY HH24:MI:SS')), 'DD-MM-YYYY HH24:MI:SS') from dual;
+
+
+
+--nesting functions
+select FIRST_NAME, upper(FIRST_NAME), substr(upper(FIRST_NAME), 1, 3) from EMPLOYEES;
+
+select FIRST_NAME, upper(FIRST_NAME), substr(upper(FIRST_NAME), 1, 3), 
+lpad(substr(upper(FIRST_NAME), 1, 3), 10, '*') from EMPLOYEES;
+
+
+
+
+--first_name werkt als volgt:
+--Hij substringed vanaf het eerste letter tot en met een space -1. De reden voor -1 is zodat die space niet included is
+--Middle name kinda complicated maar werkt door alvast vanaf die space +1 te nemen. Daar begint natuurlijk die tweede naam.
+--Nu heb je de lengte nodig van die middle name en dat bereken je door de index te nemen vanuit na die 2e space -1. Daar eindigt die 2nd
+--name en nadat trek je die index af van waar de eerste space occured -1 ???
+
+select 'Sameer Deepak Kewal' as full_name,
+substr('Sameer Deepak Kewal', 1, instr('Sameer Deepak Kewal',  ' ', 1, 1)-1 as first_name,
+substr('Sameer Deepak Kewal', instr('Sameer Deepak Kewal', ' ', 1, 1)+1,
+instr('Sameer Deepak Kewal', ' ', 1, 2) - instr('Sameer Deepak Kewal', ' ', 1, 1)-1) middle_name,
+substr('Sameer Deepak Kewal', instr('Sameer Deepak Kewal', ' ', 1, 2)) as last_name
+from dual;
+
+
+select instr('Sameer Deepak Kewal', ' ', 1, 1) from dual;
+
+select substr('Sameer Deepak Kewal', 8, 6) from DUAL;
+
+select instr('Sameer Deepak Kewal',  ' ', 1, 1) from dual;
+
+select instr('Sameer Deepak Kewal', ' ', 1, 2) from dual;
 
