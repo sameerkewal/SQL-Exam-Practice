@@ -1,7 +1,7 @@
-## Data conversion
-Er bestaan 2 soorten conversions:
-implicit data conversion  => done by oracle
-explicit data conversion => done by the user itself
+- [Expressions](#expressions)
+- [Expression evaluation](#expression-evaluation)
+- [Explicit data type conversion](#explicit-data-type-conversion)
+
 
 ### Expressions
 als je doet
@@ -17,5 +17,29 @@ wordt converted naar date omdat het het een valid date vindt dd-MON-RR
 
 ![Je hebt ook expression evalation](../resources/conversion.png)
 ### Expression evaluation
+
+
+select concat(EMPLOYEE_ID, FIRST_NAME) as stuff,
+concat(HIRE_DATE, FIRST_NAME) from EMPLOYEES;
+
+-Bv hier wordt je employee_id automatisch convert naar een varchar and bij je hire_date wordt die automatisch convert naar een varchar also
+
+
+Although implicit data type conversion is available, it is recommended that you use explicit data type conversion for readibility of your statements
+
+
+### Explicit data type conversion
+![Alt text](<../resources/explicit conversion.png>)
+
+**explicit data type conversion functions**:
+- to_date
+  - convert van varchar naar date bv
+- to_char
+  - convert van date naar varchar bv
+- to_number
+  - convert van varchar naar number bv 
+
+
+
 
 
