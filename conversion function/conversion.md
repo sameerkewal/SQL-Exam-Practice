@@ -52,3 +52,9 @@ Although implicit data type conversion is available, it is recommended that you 
 ![Alt text](../resources/other_formats.png)
 
 
+![Alt text](<../resources/to_char with numbers.png>)
+
+
+
+
+![Alt text](../resources/to_char_number_formatting.png)
