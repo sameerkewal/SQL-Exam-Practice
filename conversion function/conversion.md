@@ -1,6 +1,7 @@
 - [Expressions](#expressions)
 - [Expression evaluation](#expression-evaluation)
 - [Explicit data type conversion](#explicit-data-type-conversion)
+- [to\_char:](#to_char)
 
 
 ### Expressions
@@ -40,6 +41,14 @@ Although implicit data type conversion is available, it is recommended that you 
   - convert van varchar naar number bv 
 
 
+### to_char:
+![Alt text](../resources/to_char_with_dates.png)
 
+
+# Very important
+![Alt text](../resources/elements_date_format_model.png)
+
+
+![Alt text](../resources/other_formats.png)
 
 
