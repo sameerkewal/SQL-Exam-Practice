@@ -177,7 +177,7 @@ lpad(substr(upper(FIRST_NAME), 1, 3), 10, '*') from EMPLOYEES;
 --Middle name kinda complicated maar werkt door alvast vanaf die space +1 te nemen. Daar begint natuurlijk die tweede naam.
 --Nu heb je de lengte nodig van die middle name en dat bereken je door de index te nemen vanuit na die 2e space -1. Daar eindigt die 2nd
 --name en nadat trek je die index af van waar de eerste space occured -1 ???
-
+--voor last name doe je gewoon basically vanaf waar je laatste space begint t/m het einde
 
 
 select 'Sameer Deepak Kewal' as full_name,
