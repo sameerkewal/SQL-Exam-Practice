@@ -134,9 +134,23 @@ SELECT TO_CHAR('01110' + 2) FROM DUAL;
 
 select to_char(22222, '9G9999') from dual;
 
---NLS_NUMERIC_CHARACTER wordt gebruikt om value van G en D respectievelijk aan te geven
+--so voor nls_currency kan je anything zetten basically
+--voor NLS_ISO_CURRENCY moet het wel voorkomen op die iso lijst i assume
+--NLS_NUMERIC_CHARACTER wordt gebruikt om value van D en G respectievelijk aan te geven
 select to_char(10000.99, 'L99G999D99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_CURRENCY=''AusDollars'' ') "Amount" from dual;
 
 
+--NLS_ISO_CURRENCY
+select to_char(10000.99, 'L99999.99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_ISO_CURRENCY=''America'' ')from dual;
+select to_char(10000.99, 'C99999.99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_ISO_CURRENCY=''dsd'' ')from dual;
+
+
+
+--wat je zet bij NLS_CURRENCY IS WAT KOMT ALS JE L GEBRUIKT
+select to_char(10000.99, 'L99999d99', 'NLS_ISO_CURRENCY=''Poland'' NLS_NUMERIC_CHARACTERS=''.,'' NLS_CURRENCY=''DOLLAR'' ')from dual;
+
+
+select to_char(10000.99, 'L99999', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_ISO_CURRENCY=''Suriname'' NLS_CURRENCY=''TEST'' ')
+from dual;
 
 
