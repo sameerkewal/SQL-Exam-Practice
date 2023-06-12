@@ -58,3 +58,11 @@ Although implicit data type conversion is available, it is recommended that you 
 
 
 ![Alt text](../resources/to_char_number_formatting.png)
+
+
+### General functions
+![Alt text](<../resources/general functions.png>)
+
+### Conditional expressions
+-Providing the use of if-then-else within an sql statement
+![Alt text](<../resources/conditional expressions.png>)
