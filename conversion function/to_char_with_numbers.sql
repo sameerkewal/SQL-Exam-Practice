@@ -154,3 +154,37 @@ select to_char(10000.99, 'L99999', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_ISO_CURREN
 from dual;
 
 
+select to_char(10000.99, 'C99999D99', 'NLS_ISO_CURRENCY=''Suriname'' NLS_NUMERIC_CHARACTERS=''.,'' ')
+from dual;
+
+
+select to_char(10000, 'C99999D99', 'NLS_ISO_CURRENCY=''Suriname'' NLS_CURRENCY=''SRD'' NLS_NUMERIC_CHARACTERS=''.,'' ')
+from dual;
+
+
+--BIJ L gebruikt het je NLS_CURRENCY
+--BIJ C gebruikt het je NLS_ISO_CURRENCY
+select to_char(20000, 'L99999', 'NLS_ISO_CURRENCY=''Suriname'' NLS_NUMERIC_CHARACTERS=''.,'' NLS_CURRENCY=''TEST'' ' )
+FROM DUAL;
+
+--dus die V multiplied met 10. Als je 1V zet dan wordt het je getal maal 10. 2V's worden maal 100
+select to_char(5000, '9999V9')
+from dual;
+
+--maal 100
+select to_char(3000, '9999V99')
+from dual;
+
+--doesnt work
+select to_char(3000, '9V999')
+from dual;
+
+--S zegt je gewoon of hij positief of negatief is
+select to_char(3000, 'S9999')
+from dual;
+
+select to_char(-3000, 'S9999')
+from dual;
+
+--no clue what this does. Klopt niet volgens het voorbeeld?
+select to_char(3000.00, 'B9999.99') from dual;

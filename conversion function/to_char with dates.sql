@@ -115,3 +115,8 @@ select to_char(HIRE_DATE, 'ddTH') from EMPLOYEES;
 
 
 
+--als je Abbrevation wilt hebben van day of number kan je gebruik maken van dy/mon zoals volgt:
+--zelfde regels van hoofdletters gelden voor die abbrevation versies
+select to_char(HIRE_DATE, 'dd mon yyyy')from EMPLOYEES;
+
+select to_char(HIRE_DATE, 'dy mon yyyy') from EMPLOYEES;
