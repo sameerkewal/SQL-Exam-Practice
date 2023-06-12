@@ -48,3 +48,81 @@ select salary,
              when salary > 5000 then 'salary > 3000'
              end "The Correct Way of Doing it"
              from EMPLOYEES;
+
+
+
+---In de eerste 2 then statements heb je een number en dan plotseling een varchar in die derde. Dit mag niet
+select salary,
+        case when salary>=1000 and salary<=3000 then salary*2
+             when salary>3001 and salary<=4000 then salary*3
+             when salary > 4000 then 'High earner!!!'
+             end as "Revised Salary"
+             from EMPLOYEES
+             order by SALARY;
+
+
+--Elke kolumn moet dus in dezelfde format zijn for it to work
+select salary,
+        case when salary>=1000 and salary<=3000 then to_char(salary*2)
+             when salary>3001 and salary<=4000 then to_char(salary*3)
+             when salary > 4000 then 'High earner!!!'
+             end as "Revised Salary"
+             from EMPLOYEES
+             order by SALARY;
+
+
+--Dit is waarom case when condition beter is basically 
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID,
+        case when length(FIRST_NAME)=4 then 'first name is 4 characters'
+             when FIRST_NAME = 'Steven' then 'Steve spotted!!!'
+             end as "test"
+            from EMPLOYEES;
+
+
+
+--Decode function
+--Decode simpler and not as powerful as case statement
+--die job_is die column op basis waarvan je je comparison doet
+--die laatste salary is die else statement(called default value)
+--first value is called search(IT_PROG) and the 2nd result is called result(the calculation)
+--best practice is to write the decode statement like this bc its easier to read
+select LAST_NAME, JOB_ID, SALARY,
+decode(JOB_ID, 'IT_PROG', salary*1.10,
+                'ST_CLERK', salary*1.15,
+                'SA_REP', salary*1.20,
+        salary)
+        revised_salary
+        from EMPLOYEES
+        order by JOB_ID;
+
+
+
+--net als bij die case statement, als je niets specified voor die else(default value in this case), gaat hij null returnen
+select LAST_NAME, JOB_ID, SALARY,
+decode(JOB_ID, 'IT_PROG', salary*1.10,
+                'ST_CLERK', salary*1.15,
+                'SA_REP', salary*1.20) as new_salary
+                from EMPLOYEES;
+
+
+
+select EMPLOYEE_ID, FIRST_NAME, SALARY,
+case when salary<3000 then '0%'
+    when salary between 3000 and 7000 then '10%'
+    when salary>7000 then '20%'
+    end "taxes"
+    from EMPLOYEES;
+
+
+--Mogelijk om bovengenoemde statement te schrijven using decode?
+--NOPE NOT POSSIBLE.  
+select EMPLOYEE_ID, FIRST_NAME, salary,
+decode(salary, salary<3000, '0%')
+from EMPLOYEES;
+
+
+--decode so simple used for stuff like this.
+select EMPLOYEE_ID, FIRST_NAME,
+decode(FIRST_NAME, 'Steven', 'YOOOOOO')
+as "stuff"
+from EMPLOYEES
