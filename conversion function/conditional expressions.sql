@@ -125,4 +125,34 @@ from EMPLOYEES;
 select EMPLOYEE_ID, FIRST_NAME,
 decode(FIRST_NAME, 'Steven', 'YOOOOOO')
 as "stuff"
-from EMPLOYEES
+from EMPLOYEES;
+
+--first syntax
+select EMPLOYEE_ID, FIRST_NAME,
+case JOB_ID when 'ST_CLERK' then 'epcic'
+end as "stuff"
+from EMPLOYEES;
+
+
+select EMPLOYEE_ID, FIRST_NAME, SALARY,
+case JOB_ID when 'AD_PRES' then 'test'
+end as "new test"
+from employees;
+
+
+--Belangrijk verschil tussen decode and case statement is dat je bij DECODE WEL
+--een andere datatype mag hebben bij je nieuwe column terwijl dat helemaal niet mag bij case statements
+ select JOB_ID, SALARY,
+decode(JOB_ID, 'AD_PRES', 'president',
+                'ST_CLERK', 'clerk',
+                'IT_PROG', 2)
+                as full_title
+                from EMPLOYEES;
+
+
+select JOB_ID, SALARY, 
+case when JOB_ID='AD_PRES' then 'president'
+     when JOB_ID='ST_CLERK' then 'clerk'
+     when JOB_ID='IT_PROG' then 2
+     end as "test"
+     from EMPLOYEES;
