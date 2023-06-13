@@ -233,7 +233,12 @@ select FIRST_NAME, COMMISSION_PCT, MANAGER_ID, SALARY,
 nvl2();
 
 --47 Write a query to print the salary of an employee with commission. Use coalesce.
-SELECT FIRST_NAME, LAST_NAME, COMMISSION_PCT, SALARY, coalesce(SALARY, COMMISSION_PCT) from EMPLOYEES;
+
+--final answer:
+select FIRST_NAME, SALARY, COMMISSION_PCT, coalesce(nullif(COMMISSION_PCT, null), null)*0+salary as new_salary
+from EMPLOYEES;
+-- moeilijk as hell
+
 
 --48 Write a sql query to print employee first_name, commission_ptc, manager_id and salary. 
 --When an employee has no commission_pct then return 1 else show the commission. Use case.
