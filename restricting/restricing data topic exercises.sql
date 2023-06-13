@@ -1,0 +1,185 @@
+/* --WHERE: =, !=, <>, ^=  equal clause and not equal clause */
+
+
+-- 1 Write an SQL query to display an employee’s firstname and lastname where the employee lastname is ‘King’.
+select FIRST_NAME, LAST_NAME from EMPLOYEES where LAST_NAME ='King';
+
+--2 Write an SQL query to display the employee’s fistname, last_name and job_id who earn a salary of 4800.
+select FIRST_NAME, LAST_NAME, JOB_ID from EMPLOYEES where salary = 4000;
+
+--3 Write an SQL query to display the employees who started working on 13-01-2001.
+select * from EMPLOYEES where HIRE_DATE=to_date('13-01-2001', 'DD-MM-YYYY');
+
+--4 Write an SQL query to display an employee’s firstname and lastname where the employee lastname is not ‘King’.
+select FIRST_NAME, LAST_NAME from EMPLOYEES where LAST_NAME not like 'King';
+select FIRST_NAME, LAST_NAME from EMPLOYEES where LAST_NAME != 'King';
+select FIRST_NAME, LAST_NAME from EMPLOYEES where LAST_NAME <> 'King';
+
+--5 Write an SQL query to display the employee’s fistname, last_name and job_id who earn a salary not equal to 4800.
+select FIRST_NAME, LAST_NAME, JOB_ID from EMPLOYEES where salary != 4800;
+
+--6 Write an SQL query to display the employees who started working on not equal to ‘13-01-2001’.
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, HIRE_DATE from EMPLOYEES where HIRE_DATE != to_date('13-01-2001', 'DD-MM-YYYY')
+order by EMPLOYEE_ID;
+
+select employee_id, FIRST_NAME, LAST_NAME, HIRE_DATE from EMPLOYEES where HIRE_DATE = to_date('13-01-2001', 'DD-MM-YYYY');
+
+
+/* 
+WHERE: <, >, >=, <=equal clause and not equal clause */
+
+--7 Write an SQL query to display employee’s first_name, last_name and salary who’s salary it greater then 10000
+select FIRST_NAME, LAST_NAME, SALARY from EMPLOYEES where salary > 10000;
+
+
+--8 Write an SQL query to display employee’s first_name, last_name and salary who’s salary it less then 10000
+select FIRST_NAME, LAST_NAME, SALARY from EMPLOYEES where salary < 10000;
+
+--9 Write an SQL query to display employee’s first_name, last_name and salary who’s salary is equal and greater then 17000
+select FIRST_NAME, LAST_NAME, SALARY from EMPLOYEES where salary >= 17000;
+
+
+--10 Write an SQL query to display employee’s first_name, last_name and salary who’s salary is equal and less then 17000
+select FIRST_NAME, LAST_NAME, SALARY from EMPLOYEES where salary <= 17000;
+
+--11 Write an SQL query to display an employee full_name and where full_name = ‘Steven King’
+select FIRST_NAME || ' ' || LAST_NAME as full_name 
+from EMPLOYEES
+where FIRST_NAME || ' ' || LAST_NAME = 'Steven King';
+
+
+--12 Write an SQL query to display 1 columnn containing following information:
+--‘Rewiesh Ramcharan has an salary of 1000’.
+ --Where information is only displayed for employee who’s salary is greater and equal to 10000.
+select FIRST_NAME || ' ' || LAST_NAME || ' has a salary of ' || SALARY
+from EMPLOYEES where salary > 1000;
+
+
+--13 Write an SQL query to display employee first_name, last_name and job_id who started working for the company prior to '24-07-2005'
+select FIRST_NAME, LAST_NAME, JOB_ID, HIRE_DATE from EMPLOYEES where HIRE_DATE<to_date('24-07-2005', 'DD-MM-YYYY')
+order by HIRE_DATE;
+
+
+--14 Write an SQL query to display employee first_name, last_name and job_id who started working for the company after to '24-07-2005'
+select FIRST_NAME, LAST_NAME, JOB_ID, HIRE_DATE from EMPLOYEES where HIRE_DATE>to_date('24-07-2005', 'DD-MM-YYYY')
+ORDER BY HIRE_DATE asc;
+
+
+--15 Write an SQL query to display employee first_name, last_name and job_id who started working for the company on '24-07-2005' 
+--and prior.
+select FIRST_NAME, LAST_NAME, JOB_ID, HIRE_DATE 
+from EMPLOYEES 
+where HIRE_DATE<=to_date('24-07-2005', 'dd-mm-yyyy')
+order by HIRE_DATE;
+
+
+--16 Write an SQL query to display employee first_name, last_name and job_id who started working for the company on '24-07-2005' 
+--and after.
+select FIRST_NAME, LAST_NAME, JOB_ID, HIRE_DATE 
+from EMPLOYEES 
+where HIRE_DATE>=to_date('24-07-2005', 'dd-mm-yyyy')
+order by HIRE_DATE;
+
+
+/* 
+Where: AND, OR and NOT */
+--17 Write an SQL query to display the employee full name where name = ‘Nandita Sarchand’ and salary = 4200
+select FIRST_NAME || ' ' || LAST_NAME as full_name, salary
+from EMPLOYEES
+where FIRST_NAME|| ' ' ||LAST_NAME = 'Nandita Sarchand'
+and salary = 4200;
+
+
+
+
+--18 Write an SQL query to display all employee who have the job_id ST_CLERK and earn 3500 or more.
+select * from EMPLOYEES where JOB_ID='ST_CLERK' and salary>3500;
+
+
+--19 Write an SQL query to display all employees who have manager_id 100 as there manager and work in department 50
+select * from EMPLOYEES where MANAGER_ID=100 and DEPARTMENT_ID=50;
+
+--20 Write an SQL query to display all employees who have manager 100 or 101 as there manager
+select * from EMPLOYEES where MANAGER_ID=100 or MANAGER_ID=101;
+
+--21 Write an SQL query to display employee who work as ST_CLERK or SA_REP or AD_VP 
+select * from EMPLOYEES where JOB_ID='ST_CLERK' or JOB_ID='SA_REP' or JOB_ID='AD_VP';
+
+--22 Write a Oracle SQL query to get the first_name and last_name, job_id, department_id of the employees 
+--who are working in the department no 10 or 20 or 40 or employees working as 'ST_CLERK', 'SA_MAN' or 'IT_PROG'.
+--23 Write query to list the name (first and last name), hire date of all the employees who joined on 1-06-2006,24-03-2007,04-01-2008.
+--24 Write a Oracle SQL query to get the employee no, first name and last name for those employees who are earning commission and have a salary equal or higher then 5000
+--25 Write an SQL query all display employee not working for deplarment 10 (use NOT clause).
+
+
+/* Where: BETWEEN, NOT BETWEEN */
+
+--26 Write an SQL query to get all employees who salary are between 9000 and 24000.
+--27 Write an SQL query to get all employees who salary are not between 9000 and 24000.
+--28 Write an SQL query to get all employees who salary are not between ‘9000’ and ‘24000’.
+--39 Write an SQL query to get all employees who salary are not between ’01-02-2021’ and ‘31-02-2021’
+--30 Write an SQL query to get all employees who were hire between '30-01-2005' and '17-08-2002'.
+--31 Write an SQL query to get all employees who salary are not between ’01-02-2021’ and ‘31-02-2021’ and have a commission_pct between 20% and 40% and have an JOB_ID = SA_MAN or SA_REP
+--32 Write an SQL query to get all jobs where the min is between 8200 and 10000 and the max salary not between 20080 and 16000.
+--33 Write an SQL query to get all job history where job_id is AC_MGR and sysdate between start_date and end_date
+
+
+/* 
+Where: IN, NOT IN */
+
+--34 Write an SQL query to get employees who have the job_id of AD_PRES, AD_VD and IT_PROG.
+--35 Write an SQL query to get employees who have don’t the job_id of AD_PRES, AD_VD and IT_PROG.
+--36 Write an SQL query to get all jobs who have an min salary of 15000, 4200, 8200 and 6000.
+
+
+/* Where: LIKE */
+--37 Write a query to list the names (first and last) of those employees whose name starts with A.
+--38 Write a query to list the names (first and last) of those employees whose last name ends with a.
+--39 Write a query to list the names (first and last) of those employees whose name have second alphabet 's' in their names.
+--40 Write a query to list the names (first and last) of those employees whose first name has only five characters.
+--41 Write a query to list the names (first and last) of those employees whose first name has only five characters and starts with 'A'.
+--42 Write a query to list the names (first and last) of those employees whose first name has only five characters and last name have third alphabet ends with 's'.
+--43 `Write a query to list the names (first and last) of the employees whose first name has only five characters and starting with 'S' and ending with 'n'.
+--44 Write a query to list the names (first and last), hire date of those employees who joined in the month of which second character is 'u'.
+--45 Write a query to list the names (first and last), salary of those employees whose salary is four digit number ending with Zero.
+--46 Write a query to list the names (first and last), salary of those employees whose names having a character set 'll' together.
+--47 Write a query to list first_name, last_name of employees with the pattern 'l_x' in their first name.
+
+/* Where: Is null , is not null */
+--48 Write an query of all employees who earn an commission
+--49 Write an query to get the employee who has no manager
+--50 Write an query to gel all departments who don’t have an manager
+--51 Write an query to get all departments who have an manager
+--52 Write an query to get all location who are not assigned to an state_province and in the Roma, Venice and London.
+
+
+/* Where: &, && */
+--53 Write a query to get employees who’s first_name are Neena, Valli, John and Luis. Use 1 query for this and use the &.
+--54 Write an query to get all employees who were hired after 16-08-2002. Use & to prompt for the date.
+--55 Write 2 queries were you use the substitution variable of the first query in the second query. 
+     -- The first query should get all employees who’s name are Steven
+     -- The second query should get all employee who’s name are Steven and salary are higher then 5000.
+
+/* 
+Substitution: Define */
+
+--56 Create a substitution variable which you can use in multiple queries. The query should do the following
+    -- Get all employees where job_id = ST_CLERK
+    -- Get all description of that job and the min and max_salary   
+    --And the history
+--57 Change job_id of 56 to SA_REP and rerun the queries of 56 again.
+
+/* Order by */
+
+--58 Write a query to get all employees sorted in alphabetic order.
+--59 Write a query to get all employee who earn a commission first and the those who done. 
+--60 Write a query to get all employees sorted based on the salary the earn. Highest first.
+--61 Write a query to get all employees based in the date the were hired. Oldest employee first. 
+--62 Write a query to get all jobs the employee have sorted in alphabetic order. Use distinct in employee table
+
+
+/* Fetch: */
+--64 Write a query to get the top 10 earning employees
+--65 Write a query to get the 10 lowest earning employees
+--66 Write a query to get the top 10 paying jobs starting from the 3 paying job
+
