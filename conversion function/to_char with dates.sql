@@ -18,6 +18,10 @@ select to_char(SYSDATE, 'dd%mm%yyy') from dual;
 select to_char(sysdate, 'dd-mm-yyyy hh:mi:ss am') from dual;
 
 select to_char(sysdate, 'dd-mm-yyyy hh:mi:ss pm') from dual;
+select to_char(sysdate, 'dd-mm-yyyy hh:mi:ss') from dual;
+
+
+
 
 
 
@@ -120,3 +124,8 @@ select to_char(HIRE_DATE, 'ddTH') from EMPLOYEES;
 select to_char(HIRE_DATE, 'dd mon yyyy')from EMPLOYEES;
 
 select to_char(HIRE_DATE, 'dy mon yyyy') from EMPLOYEES;
+
+
+--Je kan krijgen welke dag van de week is. Again Zondag is dag nummer 1.
+select FIRST_NAME, LAST_NAME, HIRE_DATE, to_char(HIRE_DATE, 'Day Month yyyy'),
+to_char(HIRE_DATE, 'd') from EMPLOYEES;

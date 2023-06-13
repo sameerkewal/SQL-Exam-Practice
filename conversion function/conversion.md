@@ -47,6 +47,9 @@ Although implicit data type conversion is available, it is recommended that you 
 
 # Very important
 ![Alt text](../resources/elements_date_format_model.png)
+- Niet verplicht om een format te speciferen bij het gebruik van to_date maar het is wel recommended om een format te gebruiken
+- 
+- NLS_DATE_FORMAT specifies the default date format to use with the TO_CHAR and TO_DATE functions. The default value of this parameter is determined by NLS_TERRITORY.
 
 
 ![Alt text](../resources/other_formats.png)

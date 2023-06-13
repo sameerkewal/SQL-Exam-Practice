@@ -43,6 +43,15 @@ select to_char(1598.98, '9G999D99') from dual;
 --hier gaat ie afronden op 1 cijfer na de komma
 select to_char(1598.49, '9999.9') from dual;
 
+
+--Hier rond ie die laatste 6 ook af, omdat er like een 9 na komma is en 9 wordt 10 yk
+select 8777777666.999989, to_char(8777777666.999989, '9G999G999G999D999') from dual;
+--hier rond ie die laatste 6 nier af omdat na die komma er gewoon een 456 so it rounds 457
+select 8777777666.456789, to_char(8777777666.456789, '9,999,999,999.999') from dual;
+
+--just turns into 568
+select 8777777666.567899, to_char(8777777666.567899, '9,999,999,999.999') from dual;
+
 --hier gaat het afronden op 2 decimalen sinds je 2 decimalen in je formatting na je komma hebt gespecifeerd
 select to_char(1598.527, '9999.99') from dual;
 
@@ -188,3 +197,8 @@ from dual;
 
 --no clue what this does. Klopt niet volgens het voorbeeld?
 select to_char(3000.00, 'B9999.99') from dual;
+
+
+
+
+select to_number('200.81', '999,99') from dual;

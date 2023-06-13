@@ -71,7 +71,7 @@ from EMPLOYEES;
 
 
 
---in geval je for some reason alle gevallen waar commission pct null is will displayen als null
+--in geval je for some reason alle gevallen waar commission pct 0.3 is will displayen als null
 select COMMISSION_PCT,
         nullif(COMMISSION_PCT, 0.3)
 from EMPLOYEES
@@ -105,3 +105,7 @@ select nvl2(null, 'yippee', 'value3') from dual;
 
 
 select nvl(null, 'expression2', 'expression3')from dual;
+
+
+--als commission pct null is dan gaat het salary returnen. En als commission pct niet null is dan gaat het commission pct returnen.
+SELECT FIRST_NAME, LAST_NAME, COMMISSION_PCT, SALARY, coalesce(COMMISSION_PCT, SALARY) from EMPLOYEES;

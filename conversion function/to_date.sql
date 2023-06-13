@@ -3,6 +3,16 @@
 
 --logisch maar dan moet je valid formats gebruiken for it to work
 
+--NIET VERPLICHT OM EEN FORMAT TE SPECIFEREN BUT IT IS RECOMMENDED TO SPECIFY A VALUE FOR THE FORMAT
+--als je niets specifeert gebruikt het gewoon je nls_date_format parameter in table
+select to_date('17 JUN 2003') from dual;
+select to_char(HIRE_DATE) from EMPLOYEES;
+
+--dit is je standaard date format. To change it use alter session set nls_date_format="DD-MON-YYYY" for example
+--any format works, maar het moet wel worden gezet tussen double quotes
+select value from V$NLS_PARAMETERS
+where PARAMETER = 'NLS_DATE_FORMAT';
+
 
 select to_date('10-11-2015', 'dd-mm-yyyy')
 from dual;
