@@ -109,3 +109,19 @@ select nvl(null, 'expression2', 'expression3')from dual;
 
 --als commission pct null is dan gaat het salary returnen. En als commission pct niet null is dan gaat het commission pct returnen.
 SELECT FIRST_NAME, LAST_NAME, COMMISSION_PCT, SALARY, coalesce(COMMISSION_PCT, SALARY) from EMPLOYEES;
+
+
+--47 Write a query to print the salary of an employee with commission. Use coalesce.
+--De reden dat dit actually werkt is als volgt:
+-- - in Gevallen waar die commission pct null is dan gaat het null returnen bij die null if right
+-- - En dan gaat het bij die coalesce weer null returnen.
+-- - Vervolgt gaat het null*0+salary doen en calculation met null resulteert altijd in NULL
+-- - Now let's assume dat die commission pct niet null is, dan gaat het bij die nullif die commission pct returnen
+-- - Vervolgt gaat het bij die coalesce again die value van die commission pct returnen.
+-- - Tenslotte gaat het die commission pct gewoon discarden door het te vermenigvuldigen met 0 which turns into 0
+-- - And then telt het gewoon dat salaris op met 0(product van commission pct en 0)
+select FIRST_NAME, SALARY, COMMISSION_PCT, coalesce(nullif(COMMISSION_PCT, null), null)*0+salary as new_salary
+from EMPLOYEES;
+
+--dus belangrijk hier is dat als je null krijgt uit die functions en calculations daarmee doet gaat het resultaat gewoon weer null zijn
+--Maar geen null values kan je disregarden en je hele calculatie is nog steeds helemaal valid
