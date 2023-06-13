@@ -34,6 +34,18 @@ select FIRST_NAME from EMPLOYEES where FIRST_NAME BETWEEN 'A' and 'C';
 select * from EMPLOYEES where SALARY in(10000, 25000, 17000);
 
 
+--Hierbij doet Oracle implicit conversion om die salarissen toch te vergelijken
+select *
+from EMPLOYEES
+where not salary > '20000';
+
+--Kan ook met dates(dont forget that between and is inclusive)
+select *
+from EMPLOYEES
+where not HIRE_DATE between to_date('13-01-2001', 'DD-MM-YYYY') and to_date('07-06-2002', 'DD-MM-YYYY')
+order by HIRE_DATE;
+
+
 --like operator
 select * from EMPLOYEES where FIRST_NAME like 'N%';
 
@@ -127,6 +139,20 @@ where (JOB_ID='SA_REP' or JOB_ID='AD_PRES')
 and SALARY > 15000;
 
 select * from EMPLOYEES where JOB_ID ='SA_REP';
+
+
+--everyone hired between that specific time period
+select *
+from JOB_HISTORY
+where START_DATE >= to_date('01-01-2004', 'DD-MM-YYYY') and end_date <= to_date('31-12-2007', 'DD-MM-YYYY');
+
+--als je geen parentheses gebruikt dan wordt statement gelezen als of job_id=SA_REP of anything that comes before that
+select EMPLOYEE_ID, FIRST_NAME, COMMISSION_PCT, JOB_ID, HIRE_DATE
+from EMPLOYEES
+where not HIRE_DATE between to_date('01-02-2021', 'dd-mm-yyyy') and to_date('31-02-2021', 'dd-mm-yyyy')
+and COMMISSION_PCT between 0.2 and 0.4
+and (JOB_ID='SA_MAN' or JOB_ID = 'SA_REP')
+order by EMPLOYEE_ID;
 
 
 

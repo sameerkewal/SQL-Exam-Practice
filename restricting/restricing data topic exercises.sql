@@ -107,28 +107,111 @@ select * from EMPLOYEES where JOB_ID='ST_CLERK' or JOB_ID='SA_REP' or JOB_ID='AD
 
 --22 Write a Oracle SQL query to get the first_name and last_name, job_id, department_id of the employees 
 --who are working in the department no 10 or 20 or 40 or employees working as 'ST_CLERK', 'SA_MAN' or 'IT_PROG'.
+select FIRST_NAME, LAST_NAME, DEPARTMENT_ID, JOB_ID
+from EMPLOYEES
+where DEPARTMENT_ID=10 or DEPARTMENT_ID=20
+or JOB_ID='ST_CLERK' or JOB_ID='SA_MAN' or JOB_ID='IT_PROG';
+
+
 --23 Write query to list the name (first and last name), hire date of all the employees who joined on 1-06-2006,24-03-2007,04-01-2008.
---24 Write a Oracle SQL query to get the employee no, first name and last name for those employees who are earning commission and have a salary equal or higher then 5000
+select FIRST_NAME, LAST_NAME, HIRE_DATE
+FROM EMPLOYEES
+where HIRE_DATE=to_date('01-06-2006', 'DD-MM-YYYY') or HIRE_DATE=to_date('24-03-2007', 'DD-MM-YYYY') 
+OR HIRE_DATE=to_date('04-01-2008', 'DD-MM-YYYY');
+
+--24 Write a Oracle SQL query to get the employee no, first name and last name for those employees 
+--who are earning commission and have a salary equal or higher then 5000
+select EMPLOYEE_ID,FIRST_NAME,LAST_NAME, COMMISSION_PCT, SALARY
+from EMPLOYEES
+where COMMISSION_PCT is not null and salary >=5000;
+
 --25 Write an SQL query all display employee not working for deplarment 10 (use NOT clause).
+select * from EMPLOYEES where not DEPARTMENT_ID = 20;
+
 
 
 /* Where: BETWEEN, NOT BETWEEN */
 
 --26 Write an SQL query to get all employees who salary are between 9000 and 24000.
+    select * from EMPLOYEES where salary between 9000 and 24000
+    order by salary;
+
 --27 Write an SQL query to get all employees who salary are not between 9000 and 24000.
+select *
+from EMPLOYEES
+where not salary between 9000 and 24000;
+
 --28 Write an SQL query to get all employees who salary are not between ‘9000’ and ‘24000’.
+-- implicit conversion hier?
+select *
+from EMPLOYEES
+where not salary between '9000' and '24000';
+
+
 --39 Write an SQL query to get all employees who salary are not between ’01-02-2021’ and ‘31-02-2021’
+select *
+from EMPLOYEES
+where not HIRE_DATE between to_date('01-02-2021', 'DD-MM-YYYY') and to_date('31-02-2021', 'DD-MM-YYYY')
+order by HIRE_DATE;
+
+
+
+
 --30 Write an SQL query to get all employees who were hire between '30-01-2005' and '17-08-2002'.
---31 Write an SQL query to get all employees who salary are not between ’01-02-2021’ and ‘31-02-2021’ and have a commission_pct between 20% and 40% and have an JOB_ID = SA_MAN or SA_REP
+select *
+from EMPLOYEES
+where HIRE_DATE between to_date('17-08-2002', 'DD-MM-YYYY') AND to_date('30-01-2005', 'DD-MM-YYYY');
+
+--31 Write an SQL query to get all employees who salary are not between ’01-02-2021’ and ‘31-02-2021’ and have a commission_pct 
+--between 20% and 40% and have an JOB_ID = SA_MAN or SA_REP
+
+--als je geen parentheses gebruikt dan wordt statement gelezen als of job_id=SA_REP of anything that comes before that
+
+select EMPLOYEE_ID, FIRST_NAME, COMMISSION_PCT, JOB_ID, HIRE_DATE
+from EMPLOYEES
+where not HIRE_DATE between to_date('01-02-2021', 'dd-mm-yyyy') and to_date('31-02-2021', 'dd-mm-yyyy')
+and COMMISSION_PCT between 0.2 and 0.4
+and (JOB_ID='SA_MAN' or JOB_ID = 'SA_REP')
+order by EMPLOYEE_ID;
+
+
 --32 Write an SQL query to get all jobs where the min is between 8200 and 10000 and the max salary not between 20080 and 16000.
+select JOB_ID, JOB_TITLE, MIN_SALARY, MAX_SALARY
+from jobs
+where MAX_SALARY not between 16000 and 20080
+and MIN_SALARY between 8200 and 10000
+order by JOB_ID;
+
+
+
+
 --33 Write an SQL query to get all job history where job_id is AC_MGR and sysdate between start_date and end_date
+--retrieves every record where the current date falls between the start_date and the end_date
+select * 
+from JOB_HISTORY
+where JOB_ID = 'AC_MGR'
+and SYSDATE between START_DATE and END_DATE;
+
+select * 
+from JOB_HISTORY
+where JOB_ID = 'AC_MGR'
+and to_date('31-03-2003', 'DD-MM-YYYY') between START_DATE and END_DATE;
+
+
+select * from JOB_HISTORY;
+
+
 
 
 /* 
 Where: IN, NOT IN */
 
 --34 Write an SQL query to get employees who have the job_id of AD_PRES, AD_VD and IT_PROG.
+select * from EMPLOYEES where JOB_ID in ('AD_PRES', 'AD_VD', 'IT_PROG');
+
 --35 Write an SQL query to get employees who have don’t the job_id of AD_PRES, AD_VD and IT_PROG.
+select * from EMPLOYEES where JOB_ID not in('AD_PRES', 'AD_VD', 'IT_PROG');
+
 --36 Write an SQL query to get all jobs who have an min salary of 15000, 4200, 8200 and 6000.
 
 
