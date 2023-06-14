@@ -326,13 +326,22 @@ where FIRST_NAME in('&name1', '&name2', '&name3', '&name4');
 accept dateP prompt 'enter date as 16-08-2002'
 select FIRST_NAME, LAST_NAME, SALARY, HIRE_DATE
 from EMPLOYEES
-where HIRE_DATE>to_date('&dateP', 'DD-MM-YY')
+where HIRE_DATE>to_date('&dateP', 'DD-MM-YY');
 undefine dateP;
 
 
 --55 Write 2 queries were you use the substitution variable of the first query in the second query. 
      -- The first query should get all employees who’s name are Steven
      -- The second query should get all employee who’s name are Steven and salary are higher then 5000.
+
+    select FIRST_NAME, LAST_NAME, SALARY
+    from EMPLOYEES where FIRST_NAME = '&&nameParameter';
+
+
+    select FIRST_NAME, LAST_NAME, SALARY
+    from EMPLOYEES
+    where FIRST_NAME = '&&nameParameter'
+    and salary > 5000;
 
 /* 
 Substitution: Define */
@@ -341,19 +350,68 @@ Substitution: Define */
     -- Get all employees where job_id = ST_CLERK
     -- Get all description of that job and the min and max_salary   
     --And the history
+
+define jobParamater= ST_CLERK;
+select *
+from EMPLOYEES
+where JOB_ID='&jobParamater';
+
+select JOB_TITLE, MIN_SALARY, MAX_SALARY
+from jobs where JOB_ID='&jobParamater';
+
+select *
+from JOB_HISTORY
+where JOB_ID='&jobParamater';
+
+
+
+
 --57 Change job_id of 56 to SA_REP and rerun the queries of 56 again.
 
 /* Order by */
 
 --58 Write a query to get all employees sorted in alphabetic order.
---59 Write a query to get all employee who earn a commission first and the those who done. 
---60 Write a query to get all employees sorted based on the salary the earn. Highest first.
---61 Write a query to get all employees based in the date the were hired. Oldest employee first. 
---62 Write a query to get all jobs the employee have sorted in alphabetic order. Use distinct in employee table
+select *
+from EMPLOYEES
+order by FIRST_NAME
+asc;
 
+--59 Write a query to get all employee who earn a commission first and the those who done. 
+select *
+from EMPLOYEES
+order by COMMISSION_PCT
+desc;
+
+--60 Write a query to get all employees sorted based on the salary the earn. Highest first.
+select *
+from EMPLOYEES
+order by salary desc;
+
+--61 Write a query to get all employees based in the date the were hired. Oldest employee first. 
+select *
+from EMPLOYEES
+order by HIRE_DATE asc;
+
+--62 Write a query to get all jobs the employee have sorted in alphabetic order. Use distinct in employee table
+select *
+from EMPLOYEES
+order by JOB_ID;
 
 /* Fetch: */
 --64 Write a query to get the top 10 earning employees
---65 Write a query to get the 10 lowest earning employees
---66 Write a query to get the top 10 paying jobs starting from the 3 paying job
+select *
+from EMPLOYEES
+order by SALARY DESC
+fetch first 10 rows only;
 
+--65 Write a query to get the 10 lowest earning employees
+select *
+from EMPLOYEES
+order by salary ASC
+fetch first 10 rows only;
+
+--66 Write a query to get the top 10 paying jobs starting from the 3 paying job
+select *
+from EMPLOYEES
+order by salary DESC
+offset 3 rows fetch first 10 rows only;
