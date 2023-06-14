@@ -213,32 +213,123 @@ select * from EMPLOYEES where JOB_ID in ('AD_PRES', 'AD_VD', 'IT_PROG');
 select * from EMPLOYEES where JOB_ID not in('AD_PRES', 'AD_VD', 'IT_PROG');
 
 --36 Write an SQL query to get all jobs who have an min salary of 15000, 4200, 8200 and 6000.
+select * from jobs where MIN_SALARY in(15000, 4200, 8200, 6000);
+
 
 
 /* Where: LIKE */
 --37 Write a query to list the names (first and last) of those employees whose name starts with A.
+select FIRST_NAME, LAST_NAME 
+from EMPLOYEES
+where FIRST_NAME like 'A%';
+
+
 --38 Write a query to list the names (first and last) of those employees whose last name ends with a.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where LAST_NAME like '%a';
+
 --39 Write a query to list the names (first and last) of those employees whose name have second alphabet 's' in their names.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME like '_s%';
+
 --40 Write a query to list the names (first and last) of those employees whose first name has only five characters.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where length(FIRST_NAME)=5;
+
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME like '_____';
+
 --41 Write a query to list the names (first and last) of those employees whose first name has only five characters and starts with 'A'.
---42 Write a query to list the names (first and last) of those employees whose first name has only five characters and last name have third alphabet ends with 's'.
---43 `Write a query to list the names (first and last) of the employees whose first name has only five characters and starting with 'S' and ending with 'n'.
---44 Write a query to list the names (first and last), hire date of those employees who joined in the month of which second character is 'u'.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME like 'A____';
+
+
+--42 Write a query to list the names (first and last) of those employees whose first name has only five characters and 
+--last name have third alphabet ends with 's'.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME = '_____'
+and LAST_NAME like '__s%';
+
+
+--43 `Write a query to list the names (first and last) of the employees whose first name has only five characters and starting with 'S' 
+--and ending with 'n'.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME like 'S___n';
+
+--44 Write a query to list the names (first and last), hire date of those employees who joined in the month of which second character 
+--is 'u'.
+select FIRST_NAME, LAST_NAME, HIRE_DATE
+from EMPLOYEES where to_char(HIRE_DATE, 'month')like '_u%';
+
+
 --45 Write a query to list the names (first and last), salary of those employees whose salary is four digit number ending with Zero.
+
+--this works, maar is er sprake van implicit conversion?
+select FIRST_NAME, LAST_NAME, SALARY
+from EMPLOYEES
+where salary like '___0';
+
 --46 Write a query to list the names (first and last), salary of those employees whose names having a character set 'll' together.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME like '%ll%';
+
 --47 Write a query to list first_name, last_name of employees with the pattern 'l_x' in their first name.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME like 'L_x';
 
 /* Where: Is null , is not null */
 --48 Write an query of all employees who earn an commission
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where COMMISSION_PCT is not null;
+
+
 --49 Write an query to get the employee who has no manager
+select *
+from EMPLOYEES
+where MANAGER_ID is null;
+
 --50 Write an query to gel all departments who don’t have an manager
+select *
+from DEPARTMENTS
+where MANAGER_ID is null;
+
 --51 Write an query to get all departments who have an manager
+select *
+from DEPARTMENTS
+where MANAGER_ID is not null;
+
 --52 Write an query to get all location who are not assigned to an state_province and in the Roma, Venice and London.
+select *
+from LOCATIONS
+where STATE_PROVINCE is NULL
+and CITY in('Roma', 'Venice', 'London');
+
 
 
 /* Where: &, && */
 --53 Write a query to get employees who’s first_name are Neena, Valli, John and Luis. Use 1 query for this and use the &.
+select FIRST_NAME, LAST_NAME
+from EMPLOYEES
+where FIRST_NAME in('&name1', '&name2', '&name3', '&name4');
+
 --54 Write an query to get all employees who were hired after 16-08-2002. Use & to prompt for the date.
+accept dateP prompt 'enter date as 16-08-2002'
+select FIRST_NAME, LAST_NAME, SALARY, HIRE_DATE
+from EMPLOYEES
+where HIRE_DATE>to_date('&dateP', 'DD-MM-YY')
+undefine dateP;
+
+
 --55 Write 2 queries were you use the substitution variable of the first query in the second query. 
      -- The first query should get all employees who’s name are Steven
      -- The second query should get all employee who’s name are Steven and salary are higher then 5000.

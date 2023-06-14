@@ -20,3 +20,8 @@ where not salary between 9000 and 24000;
 select *
 from EMPLOYEES
 where salary not between 9000 and 24000;
+
+Is er hier sprake van implicit conversion?
+select FIRST_NAME, LAST_NAME, SALARY
+from EMPLOYEES
+where salary like '___0';
