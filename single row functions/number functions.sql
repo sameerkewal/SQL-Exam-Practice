@@ -77,4 +77,15 @@ select mod(101, 2) from dual;
 
 
 
+--The first argument is called the dividend and the 2nd argument is called the divisor
+select mod(10,4) from dual;
 
+
+--the sign of the remainder is decided by the dividend. Je dividend is hier positief
+select mod(11, -4) from dual;
+
+--dividend is hier negatief so result is negatief
+select mod(-11, 4) from dual;
+
+--dividend is hier also negatief
+select mod(-11, -4) from dual;
