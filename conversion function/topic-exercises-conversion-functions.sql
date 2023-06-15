@@ -25,6 +25,7 @@ select HIRE_DATE from EMPLOYEES;
 
 
 --6 Change NLS_DATE_FORMAT to ‘DD-MON-YYYY’ and run query of 5 again. 
+--dit is alleen voor die session btw
 alter session set nls_date_format="DD-MON-YYYY";
 select * from EMPLOYEES where HIRE_DATE>'17 JUNE 2003';
 
