@@ -86,3 +86,79 @@ select *
 from JOB_HISTORY;
 
 
+select *
+from EMPLOYEES
+join JOBS using(JOB_ID);
+
+
+
+--zo alleen bij job_id mag je geen alias of table name zetten, bij derest van de kolumns is dat wel totally allowed
+select emp.FIRST_NAME, emp.LAST_NAME, JOB_ID, j.JOB_TITLE
+from EMPLOYEES emp
+join jobs j using (JOB_ID);
+
+--multiple columns allowed in using clause
+select *
+from EMPLOYEES
+join JOB_HISTORY
+using(EMPLOYEE_ID, DEPARTMENT_ID);
+
+--long join using "using clause"
+select emp.first_name, emp.last_name, dep.DEPARTMENT_NAME, loc.CITY, COUNTRY_ID, CNTR.COUNTRY_NAME, CNTR.REGION_ID
+from EMPLOYEES emp
+join DEPARTMENTS dep using(DEPARTMENT_ID)
+join LOCATIONS loc using(LOCATION_ID)
+join countries cntr using(COUNTRY_ID);
+
+
+--on clause
+--dit gaat werken want die department_name is maar in 1 kolumn
+select  FIRST_NAME, LAST_NAME, dep.DEPARTMENT_NAME
+from EMPLOYEES emp join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
+
+--this wont omdat die kolumn in alle 2 tables voorkomt
+select EMP.FIRST_NAME, LAST_NAME, department_id, dep.DEPARTMENT_NAME
+from EMPLOYEES emp join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
+
+--now it works yippee
+select EMP.FIRST_NAME, LAST_NAME, dep.department_id, dep.DEPARTMENT_NAME
+from EMPLOYEES emp join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
+
+--je kan on ook gebruiken voor non equijoins
+select emp.EMPLOYEE_ID , emp.FIRST_NAME, emp.SALARY, j.GRADE_LEVEL
+from EMPLOYEES emp join JOB_GRADES J 
+on emp.SALARY between j.LOWEST_SAL and j.HIGHEST_SAL;
+
+--totally fine
+select emp.EMPLOYEE_ID, emp.FIRST_NAME, emp.SALARY, j.GRADE_LEVEL
+from EMPLOYEES emp join job_grades j
+on salary between LOWEST_SAL and HIGHEST_SAL;
+
+
+--ofc kan je ook self join doen using an on clause
+select worker.FIRST_NAME, worker.LAST_NAME, worker.EMPLOYEE_ID, MANAGER.FIRST_NAME
+from EMPLOYEES worker join EMPLOYEES MANAGER on worker.MANAGER_ID=MANAGER.EMPLOYEE_ID;
+
+
+
+--full join:
+--Hier include het die Kimberely ook en alle departments that dont have any employees under them
+select emp.EMPLOYEE_ID, emp.FIRST_NAME, emp.DEPARTMENT_ID, dep.DEPARTMENT_NAME
+from EMPLOYEES emp
+full join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
+
+--left join:
+--Kimberely
+select emp.EMPLOYEE_ID, emp.FIRST_NAME, emp.DEPARTMENT_ID, dep.DEPARTMENT_name
+from EMPLOYEES emp left join DEPARTMENTS DEP
+on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
+
+
+--right join:
+--alle departments that also dont have any employees under them
+SELECT emp.EMPLOYEE_ID, emp.FIRST_NAME, emp.DEPARTMENT_ID, dep.DEPARTMENT_NAME
+from EMPLOYEES emp right join DEPARTMENTS dep
+on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
+order by emp.FIRST_NAME;
+
+

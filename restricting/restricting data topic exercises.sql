@@ -410,6 +410,11 @@ from EMPLOYEES
 order by salary ASC
 fetch first 10 rows only;
 
+
+
+
+
+
 --66 Write a query to get the top 10 paying jobs starting from the 3 paying job
 select *
 from EMPLOYEES

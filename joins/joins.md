@@ -44,3 +44,12 @@ should be table2 which has the reference from table1
   Note: Use the using clause to match only one column when more than one column matches
 - Do not use a table name or alias in the referenced columns
 - The natural join and using clause are mutually exclusive
+
+- On clause:
+  Three way join is a join of 3 tables. Joins are performed left to right, so the first join to be performed is employees join departments. The first join condition can reference columns in employees and departments but cannot reference columns in locations.
+  The 2nd join condition can reference columns from all 3 tables
+
+- left join/right join/full join:
+  die outer keyword is optional
+  Met betrekking tot full join was er geen manier met de oude syntax om zoeiets te doen, unlike left and right join
+  Full join betekent je wilt data van beide tables helemaal displayen and all of the rows that match

@@ -69,6 +69,10 @@ select * from JOBS;
 --die escape character is voor als je wilt dat je result werkelijk die _ moet containen
 select * from JOBS where JOB_ID like 'SA/_%' ESCAPE '/';
 
+--good luck deciphering this
+select *
+from jobs where JOB_ID like q'[SA'_%]' escape q'[']';
+
 
 select FIRST_NAME, COMMISSION_PCT from EMPLOYEES WHERE COMMISSION_PCT is null;
 

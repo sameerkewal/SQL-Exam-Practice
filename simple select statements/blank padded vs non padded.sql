@@ -30,8 +30,10 @@ select * from test_table where TEST_VARCHAR = 'a ';
 --meer info over blank padding and non padding
 CREATE TABLE ducks (f CHAR(6), v VARCHAR2(6));
 
+select *
+from ducks;
 insert into ducks values('DUCK', 'DUCK');
 
 
-select '*'||f||'*' "char", '*'||v||'*' "varchar" from ducks;
+select '*'||f||'*' "char", '*'||v||'*' "varchar", length('*'||f||'*'), length('*'||v||'*') from ducks;
 --Because Oracle blank-pads CHAR values, the value of f is blank-padded to 6 bytes. v is not blank-padded and has length 4.
