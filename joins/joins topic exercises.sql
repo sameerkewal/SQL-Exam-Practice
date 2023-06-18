@@ -120,20 +120,163 @@ left join employees emp on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
 select * from LOCATIONS;
  
 --2 Write an sql query to show all locations not connected to an employee.
-select loc.CITY, dep.DEPARTMENT_NAME, emp.FIRST_NAME
+select loc.LOCATION_ID, loc.CITY, dep.DEPARTMENT_NAME, emp.FIRST_NAME
 from LOCATIONS loc left join DEPARTMENTS dep on loc.LOCATION_ID=dep.LOCATION_ID
 left join EMPLOYEES emp on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
 where emp.FIRST_NAME is null and DEP.DEPARTMENT_NAME is null;
 
+
+select loc.CITY, dep.department_name
+from LOCATIONS loc left join DEPARTMENTS dep on loc.LOCATION_ID=dep.LOCATION_ID;
+
+
+select dep.DEPARTMENT_NAME, emp.FIRST_NAME
+from DEPARTMENTS dep left join EMPLOYEES emp on dep.DEPARTMENT_ID=emp.DEPARTMENT_ID;
+
+
+select *
+from LOCATIONS left join DEPARTMENTS on LOCATIONS.LOCATION_ID=DEPARTMENTS.LOCATION_ID order by DEPARTMENT_ID;
+
+
+
 --3 Write an sql to only jobs which were changes by employees.
-select 
+select j.JOB_TITLE
+from JOB_HISTORY jh left join jobs j on jh.JOB_ID=j.JOB_ID;
 
 --4 Write an sql query to only show regions which are not connected to employees.
+select reg.REGION_NAME, CNTR.COUNTRY_NAME, loc.CITY, dep.DEPARTMENT_NAME, EMP.FIRST_NAME
+from REGIONS reg left join countries cntr on cntr.REGION_ID=reg.REGION_ID
+left join LOCATIONS LOC on loc.COUNTRY_ID=cntr.COUNTRY_ID
+left join DEPARTMENTS dep on loc.LOCATION_ID=dep.LOCATION_ID
+left join EMPLOYEES emp on dep.DEPARTMENT_ID=emp.department_id
+where EMP.FIRST_NAME is null;
+
+
+select *
+from LOCATIONS;
+select *
+from countries cntr left join LOCATIONS loc on cntr.COUNTRY_ID=loc.COUNTRY_ID;
+select * from REGIONS;
+
 --5 Write an sql query to show only show employees which are connected to a region.
+select EMP.FIRST_NAME, DEP.DEPARTMENT_NAME, loc.CITY, cntr.COUNTRY_NAME, reg.REGION_NAME
+from EMPLOYEES emp left join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
+left join locations loc on loc.LOCATION_ID=dep.LOCATION_ID
+left join countries cntr on cntr.COUNTRY_ID=loc.COUNTRY_ID
+left join REGIONS reg on reg.REGION_ID=cntr.REGION_ID
+where REG.REGION_NAME is not null;
+
+
 --6 Write an sql query to only show emplyees who never changed a job.
+select EMP.FIRST_NAME, jh.JOB_ID
+from EMPLOYEES emp left join JOB_HISTORY jh on jh.EMPLOYEE_ID=emp.EMPLOYEE_ID where JH.JOB_ID is null;
+
+select *
+from JOB_HISTORY;
+
 --7 Write an sql query to only show employees who never changed from a department.
+--antwoord:
+select EMP.FIRST_NAME, jh.JOB_ID as old_job, emp.JOB_ID as new_job
+, emp.DEPARTMENT_ID as new_department, jh.DEPARTMENT_ID as old_department
+from EMPLOYEES emp left join JOB_HISTORY jh on emp.EMPLOYEE_ID=jh.EMPLOYEE_ID
+where NULLIF(emp.DEPARTMENT_ID, jh.DEPARTMENT_ID) is null or jh.department_id is null;
+
+select *
+from JOB_HISTORY;
+
+
+select emp.FIRST_NAME, DEP.DEPARTMENT_NAME
+from JOB_HISTORY jh join DEPARTMENTS dep on dep.DEPARTMENT_ID=jh.DEPARTMENT_ID
+join EMPLOYEES emp on emp.EMPLOYEE_ID=jh.EMPLOYEE_ID
+order by emp.EMPLOYEE_ID ;
+
+select FIRST_NAME, dep.DEPARTMENT_NAME
+from EMPLOYEES 
+join departments dep on employees.DEPARTMENT_ID=dep.department_id
+order by EMPLOYEE_ID;
+
+
+select *
+from jobs;
 --8 Write an sql query to show all the regions and the amount of employees per region. Also show the amount of employee who 
 --are not connected to a region.
+select reg.region_name, count(EMP.EMPLOYEE_ID)
+from REGIONS reg left join countries cntr on reg.REGION_ID=cntr.REGION_ID
+left join locations loc on cntr.COUNTRY_ID=loc.COUNTRY_ID
+left join departments dep on loc.LOCATION_ID=dep.LOCATION_ID
+left join employees emp on dep.DEPARTMENT_ID=emp.DEPARTMENT_ID
+group by reg.REGION_NAME;
+
+
+
+SELECT * from (
+    select r.REGION_NAME, COUNT(e.EMPLOYEE_ID) AS EMPLOYEE_COUNT
+FROM REGIONS r
+left join countries cntr on cntr.REGION_ID=r.REGION_ID
+LEFT JOIN LOCATIONS l ON cntr.COUNTRY_ID = l.COUNTRY_ID
+LEFT JOIN DEPARTMENTS d ON l.LOCATION_ID = d.LOCATION_ID
+LEFT JOIN EMPLOYEES e ON d.DEPARTMENT_ID = e.DEPARTMENT_ID
+GROUP BY r.REGION_NAME
+union 
+select 'No Region', count(*)
+from EMPLOYEES emp left join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
+left join locations loc on loc.LOCATION_ID=dep.LOCATION_ID
+left join countries cntr on cntr.COUNTRY_ID=loc.COUNTRY_ID
+left join REGIONS reg on reg.REGION_ID=cntr.REGION_ID where DEP.DEPARTMENT_ID is null) result
+order by result.REGION_NAME;
+
+/* select EMP.FIRST_NAME, DEP.DEPARTMENT_NAME, loc.CITY, cntr.COUNTRY_NAME, reg.REGION_NAME
+from EMPLOYEES emp left join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
+left join locations loc on loc.LOCATION_ID=dep.LOCATION_ID
+left join countries cntr on cntr.COUNTRY_ID=loc.COUNTRY_ID
+left join REGIONS reg on reg.REGION_ID=cntr.REGION_ID where DEP.DEPARTMENT_ID is null; */
+
+select *
+from COUNTRIES;
+
+
 /* Make exercises 1-8 using right join. */
+--Right join:
+
+--1 Write an sql query to show all locations and the employees connected to the locations. 
+--All locations should be shown, regardless if they areconnected to an employees or not.
 
 
+select EMP.FIRST_NAME, DEP.DEPARTMENT_NAME, loc.CITY
+from EMPLOYEES emp 
+right join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
+right join locations loc on loc.LOCATION_ID=dep.LOCATION_ID;
+
+
+
+
+--2 Write an sql query to show all locations not connected to an employee.
+--answer: 
+select distinct EMP.FIRST_NAME, loc.city, loc.STREET_ADDRESS
+from EMPLOYEES emp
+right join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
+right join locations loc on dep.LOCATION_ID=loc.LOCATION_ID
+where emp.EMPLOYEE_ID is null
+order by loc.CITY;
+
+SELECT loc.LOCATION_ID, loc.CITY, loc.STATE_PROVINCE, loc.COUNTRY_ID
+FROM LOCATIONS loc
+LEFT JOIN DEPARTMENTS dep ON loc.LOCATION_ID = dep.LOCATION_ID
+LEFT JOIN EMPLOYEES emp ON dep.DEPARTMENT_ID = emp.DEPARTMENT_ID
+WHERE loc.city = 'Seattle' and EMP.EMPLOYEE_ID is null
+ORDER BY loc.LOCATION_ID;
+
+
+
+ --3 Write an sql to only jobs which were changes by employees.
+ select j.JOB_TITLE
+ from jobs j  right join JOB_HISTORY jh on j.JOB_ID=jh.JOB_ID;
+
+
+ --4 Write an sql query to only show regions which are not connected to employees.
+ select reg.REGION_NAME, EMP.FIRST_NAME
+ from EMPLOYEES emp
+ right join DEPARTMENTS dep on dep.DEPARTMENT_ID=emp.DEPARTMENT_ID
+ right join locations loc on loc.LOCATION_ID=dep.LOCATION_ID
+ right join countries cntr on cntr.COUNTRY_ID=loc.COUNTRY_ID
+ right join regions reg on reg.REGION_ID=cntr.REGION_ID;
