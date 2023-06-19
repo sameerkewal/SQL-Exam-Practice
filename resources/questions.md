@@ -25,3 +25,13 @@ Is er hier sprake van implicit conversion?
 select FIRST_NAME, LAST_NAME, SALARY
 from EMPLOYEES
 where salary like '___0';
+
+
+
+
+select *
+from EMPLOYEES
+where DEPARTMENT_ID != any(10, 20)
+order by DEPARTMENT_ID;
+
+Why does this query not work
