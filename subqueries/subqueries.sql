@@ -43,6 +43,13 @@ group by DEPARTMENT_ID;
 select *
 from EMPLOYEES where DEPARTMENT_ID=30;
 
+--The WHERE clause specifies the condition e.salary = (SELECT MAX(salary) FROM employees WHERE department_id = e.department_id). 
+--This condition checks if the salary of the current employee (e.salary) is 
+--equal to the maximum salary (MAX(salary)) within the same department (WHERE department_id = e.department_id).
+SELECT e.*
+from EMPLOYEES e where e.salary=(
+    select max(SALARY) from EMPLOYEES where DEPARTMENT_ID=e.department_id
+);
 
 
 --You can also have subquery in having clause
@@ -235,6 +242,22 @@ where exists(select DEPARTMENT_ID from EMPLOYEES where DEPARTMENT_ID=DEPARTMENT_
 select *
 from DEPARTMENTS dept
 where not exists(select department_id from EMPLOYEES emp where emp.DEPARTMENT_ID=dept.DEPARTMENT_ID);
+
+--Retrieves no rows
+select *
+from departments dept
+where exists(select department_id from EMPLOYEES emp where EMP.FIRST_NAME='null');
+
+/* This query returns the department_id from the departments table if there is at least one row in the employees 
+table with the matching department_id */
+
+SELECT department_id
+FROM departments d
+WHERE EXISTS (SELECT *
+              FROM employees e
+              WHERE d.department_id = e.department_id)
+ORDER BY department_id;
+
 
 
 
