@@ -227,3 +227,184 @@ where not exists(select emp.department_id from employees emp where emp.DEPARTMEN
 select * from departments dep 
 where DEP.DEPARTMENT_ID not in(select emp.department_id from EMPLOYEES emp);
 
+
+
+
+
+----------------------With clause-----------------------------
+--Die emp kan je zien als een variabel and you store the result of that query in it
+--Je main query(onderste line)gaat beginnen te lezen van boven
+with emp 
+as(
+    select employee_id, first_name from employees
+)
+select first_name from emp;
+
+--This totally works. 
+with emp
+as(
+    select employee_id, first_name, last_name, department_name from employees emp join departments dep on emp.department_id=dep.department_id
+)
+select department_name from emp;
+
+
+
+--Als je je kolumn niet specified in je subquery select statement dan kan je het for some reason niet accessen in the outer query
+--So this query will not work at all
+with emp
+as(
+    select * from employees join departments dep on dep.DEPARTMENT_ID=EMPLOYEES.DEPARTMENT_ID
+)
+select DEPARTMENT_ID from emp;
+
+
+--If you specify the column then it will work
+with emp
+as(
+    select EMP.FIRST_NAME, EMP.LAST_NAME, DEP.DEPARTMENT_ID, DEP.DEPARTMENT_NAME from employees emp join departments dep on dep.department_id=emp.department_id
+)
+select department_id from emp;
+
+
+--Je mag ook aliases gebruiken when accessing values from your inner query
+with test
+as(
+    select emp.first_name, emp.last_name, dep.department_name from employees emp join departments dep on emp.department_id=dep.department_id
+)
+select test.department_name from test;
+
+
+--Als die kolumn 2 keer voorkomt in die subquery dan kan je het niet gewoon accessen in je main query, anders krijg je column 
+--ambiguously defined error
+with test
+as(
+    select emp.first_name, emp.last_name, dep.department_name, emp.DEPARTMENT_ID, dep.DEPARTMENT_ID from employees emp join departments dep on emp.department_id=dep.department_id
+)
+select test.department_id from test;
+
+--TENZIJ JE OFC EEN COLUMN ALIAS GEBRUIKT
+with test
+as(
+    select emp.first_name, dept.department_name, emp.department_id as dept_id, dept.department_id from employees emp join departments dept on emp.DEPARTMENT_ID=dept.department_id
+)
+select test.dept_id from test;
+
+
+--Je kan 2 subqueries hebben:
+--Die tweede subquery kan selecteren uit de eerste subquery
+--The main query is pulling info out the 2nd query
+with emp 
+as (
+    select first_name, department_id, salary from employees
+),
+dept_sum_sal as (
+    select department_id, sum(salary)sum_sal from emp group by DEPARTMENT_ID
+)
+select * from dept_sum_sal;
+
+
+
+/*Display each department_name and count for the employees */
+select DEPARTMENT_ID, count(*)
+from EMPLOYEES group by DEPARTMENT_ID
+order by DEPARTMENT_ID;
+
+--Dit select die count van elke department aantal employees and then joins the department_name on it
+with dept_count
+as(
+    select department_id, count(1) as cnt
+    from employees 
+    group by department_id
+    order by department_id
+) select DEPARTMENT_NAME , dept_count.cnt from DEPARTMENTS dep, dept_count
+where dep.DEPARTMENT_ID=dept_count.department_id;
+
+
+--I think this is using subquery as a table source
+select department_name, dept_count.cnt from departments dep, (select department_id, count(1) as cnt
+    from employees 
+    group by department_id
+    order by department_id)dept_count
+where dept_count.department_id=dep.DEPARTMENT_ID;
+
+
+with dept_count 
+as (
+    select department_id, count(1) as cnt
+    from employees
+    group by department_id
+    order by department_id
+)
+select dept.DEPARTMENT_ID, dept_count.cnt from DEPARTMENTS dept, dept_count where dept.DEPARTMENT_ID=dept_count.department_id;
+
+
+
+--Write a query to display the department_name and total salaries for the department
+--but only for the departments whose salaries is greater than the average salary across departments
+
+
+--De sum van elke departments salaris
+select DEPARTMENT_NAME, sum(salary)sum_sal
+from EMPLOYEES e
+join DEPARTMENTS dep on e.DEPARTMENT_ID=dep.DEPARTMENT_ID
+group by DEP.DEPARTMENT_NAME;
+
+
+--De average van alle departments
+select sum(sum_sal)/count(*)
+from (select DEPARTMENT_NAME, sum(salary)sum_sal
+from EMPLOYEES e
+join DEPARTMENTS dep on e.DEPARTMENT_ID=dep.DEPARTMENT_ID
+group by DEP.DEPARTMENT_NAME);
+
+--Department name and total salaries where total salary bigger than avg salary across all departments
+SELECT e.department_Id, dep.department_name,sum(salary)
+from (select sum(sum_sal)/count(*) as avg
+from (select DEPARTMENT_NAME, sum(salary)sum_sal
+from EMPLOYEES e
+join DEPARTMENTS dep on e.DEPARTMENT_ID=dep.DEPARTMENT_ID
+group by DEP.DEPARTMENT_NAME)), employees e join departments dep on e.department_id=dep.department_Id
+group by e.department_Id, dep.department_name
+having sum(salary)>(select sum(sum_sal)/count(*) as avg
+from (select DEPARTMENT_NAME, sum(salary)sum_sal
+from EMPLOYEES e
+join DEPARTMENTS dep on e.DEPARTMENT_ID=dep.DEPARTMENT_ID
+group by DEP.DEPARTMENT_NAME));
+
+
+
+
+
+with avg_all
+as (
+    select department_name, sum(salary)sum_sal from employees emp join departments dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID group by DEP.DEPARTMENT_NAME
+),
+avged as (
+    select sum(sum_sal)/count(*) as avg_sal from avg_all
+),
+test as (
+    select department_name, sum(salary) from EMPLOYEES emp join departments dep on dep.DEPARTMENT_ID=emp.DEPARTMENT_ID
+    group by DEP.DEPARTMENT_NAME
+    having sum(salary)>(select * from avged)
+)
+select * from test; 
+
+--Mooier
+with avg_all
+as (
+    select department_name, sum(salary)sum_sal from employees emp join departments dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID group by DEP.DEPARTMENT_NAME
+),
+avged as (
+    select sum(sum_sal)/count(*) as avg_sal from avg_all
+),
+test as (
+    select department_name, sum_sal from avg_all
+    where sum_sal>(select * from avged)
+)
+select * from test; 
+
+
+
+
+
+
