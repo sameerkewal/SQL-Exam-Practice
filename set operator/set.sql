@@ -135,3 +135,25 @@ union
 select employee_id empno, JOB_ID, 0 salary
 from JOB_HISTORY
 order by 3;
+
+
+--Als je eenmaal een alias(ofc voor je eerste query hebt gebruikt), mag je in bij je sort by niet gewoon first_name schrijven
+--Verplicht om je alias dan te gebruiken
+--So this doesn't work
+select FIRST_NAME as Voornaam, LAST_NAME as Achternaam from EMPLOYEES
+UNION
+select FIRST_NAME, LAST_NAME from EMPLOYEES
+order by FIRST_NAME;
+
+--But this one very much works
+select FIRST_NAME as Voornaam, LAST_NAME as Achternaam from EMPLOYEES
+UNION
+select FIRST_NAME, LAST_NAME from EMPLOYEES
+order by Voornaam;
+
+
+--Al heb je dezelfde alias voor je tweede en eerste query, het gaat gewoon van die eerste query pakken gelukkig
+select FIRST_NAME as Voornaam, LAST_NAME as Achternaam from EMPLOYEES
+UNION
+select FIRST_NAME as Voornaam, LAST_NAME as from EMPLOYEES
+order by Voornaam;
