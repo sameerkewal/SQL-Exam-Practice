@@ -85,3 +85,25 @@ An Automatic rollback occurs when there is an abnormal termination of SQLDevelop
 - The affected rows are locked; other sessions cannot change the data in the affected rows  
 
 
+
+### State of the data after commit:
+- Data changes are saved in the database
+- The previous state of the data is overwritten
+- All sessions can view the results
+- Locks on the affected rows are released. Other sessions can now change the data in those rows
+- All savepoints are erased
+
+
+
+
+
+
+## Savepoints
+
+- When you go to a rollback or savepoint the other safe points made after the one you rolled back to will be deleted
+- Als je gewoon savepoint zet and then rollback without doing "rollback to savepoint" dan gaat het helemaal rollbacken
+  and all the safepoints after that will be deleted
+- If you put the savepoint name between "" hoef je niet de hele tijd zo ernaar te referreren(unless you're not using normal alphabet letters order)
+- savepoint, then the earlier savepoint is erased.
+
+
