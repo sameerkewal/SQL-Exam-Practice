@@ -71,46 +71,200 @@ commit;
 
 --7 Insert multiple records into a table using a single INSERT statement. 
 --Add two new employees with Employee ID = 103 and Employee ID = 104, along with their respective details.
+insert into EMP_COPY
+select * from EMPLOYEES where EMPLOYEE_ID in(103, 104);
 
 
 
 
 
-insert into EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID)
-                    select from EMPLOYEES
 
 
 
 --8 Insert data into a table from a subquery. Insert all employees from the employees table into a new table called "backup_employees".
---9 Add a new department by selecting data from another table. Insert a new department with Department ID = 60 and retrieve the Department Name, Manager ID, and Location ID from the departments table for the department with Department ID = 50.
+create table backup_employees
+select * from EMPLOYEES; 
+
+
+
+--9 Add a new department by selecting data from another table. Insert a new department with Department ID = 60 and retrieve 
+--the Department Name, Manager ID, and Location ID from the departments table for the department with Department ID = 50.
+insert into DEPT_COPY(DEPARTMENT_ID, DEPARTMENT_NAME,MANAGER_ID, LOCATION_ID)
+        select 60, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID
+        from DEPARTMENTS where DEPARTMENT_ID=50;
+
+
+        select * from DEPT_COPY;
+
+        select * from DEPARTMENTS where DEPARTMENT_ID=50; 
+
+
+
 --10 Insert a new record into a table with default values. Insert a new employee into the employees table with only the required columns, and let the default values be assigned for other columns.
+commit;
+ROLLBACK;
+
+--first way:
+insert into EMP_COPY values(1001, null, 'Kewal', 'Kewal@test.com', null, '20-MAY-02', 'IT_PROG', null, null, null, null);
+
+--2nd way:
+insert into EMP_COPY(EMPLOYEE_ID, LAST_NAME, EMAIL, HIRE_DATE, JOB_ID)
+values(1001, 'Kewal', 'kewal@test.com', '20-MAY-02', 'IT_PROG');
+
+
+select * from emp_copy where EMPLOYEE_ID=1001;
+
+
+--Employees heeft geen default values, as seen below:
+
+
+CREATE TABLE "HR"."EMPLOYEES" 
+   (	"EMPLOYEE_ID" NUMBER(6,0), 
+	"FIRST_NAME" VARCHAR2(20), 
+	"LAST_NAME" VARCHAR2(25) CONSTRAINT "EMP_LAST_NAME_NN" NOT NULL ENABLE, 
+	"EMAIL" VARCHAR2(25) CONSTRAINT "EMP_EMAIL_NN" NOT NULL ENABLE, 
+	"PHONE_NUMBER" VARCHAR2(20), 
+	"HIRE_DATE" DATE CONSTRAINT "EMP_HIRE_DATE_NN" NOT NULL ENABLE, 
+	"JOB_ID" VARCHAR2(10) CONSTRAINT "EMP_JOB_NN" NOT NULL ENABLE, 
+	"SALARY" NUMBER(8,2), 
+	"COMMISSION_PCT" NUMBER(2,2), 
+	"MANAGER_ID" NUMBER(6,0), 
+	"DEPARTMENT_ID" NUMBER(4,0), 
+	 CONSTRAINT "EMP_SALARY_MIN" CHECK (salary > 0) ENABLE, 
+	 CONSTRAINT "EMP_EMAIL_UK" UNIQUE ("EMAIL")
+  USING INDEX  ENABLE, 
+	 CONSTRAINT "EMP_EMP_ID_PK" PRIMARY KEY ("EMPLOYEE_ID")
+  USING INDEX  ENABLE, 
+	 CONSTRAINT "EMP_DEPT_FK" FOREIGN KEY ("DEPARTMENT_ID")
+	  REFERENCES "HR"."DEPARTMENTS" ("DEPARTMENT_ID") ENABLE, 
+	 CONSTRAINT "EMP_JOB_FK" FOREIGN KEY ("JOB_ID")
+	  REFERENCES "HR"."JOBS" ("JOB_ID") ENABLE, 
+	 CONSTRAINT "EMP_MANAGER_FK" FOREIGN KEY ("MANAGER_ID")
+	  REFERENCES "HR"."EMPLOYEES" ("EMPLOYEE_ID") ENABLE
+   ) ;
+
+
+
+   
+
+
+
+
+
+
 
 
 
 /* Perform Update */
 --1 Update the salary of employee with Employee ID = 101 to 6000.
---2 Set the job ID of employee with Employee ID = 102 to 'IT_PROG' and the department ID to 60.
---3 Increase the salary of all employees in the 'SA_REP' job by 10%.
---4 Update the commission percentage of all employees in the 'SA_REP' job to 0.1.
---5 Change the manager ID of the employee with Employee ID = 105 to 110.
---6 Update the job title of all employees in the 'HR_REP' job to 'HR Representative'.
---7 Set the department ID of all employees in department 30 to null.
---8 Increase the salary of all employees in department 50 by 5%.
---9 Update the hire date of all employees in department 20 to the current date.
---10 Modify the email addresses of all employees by appending '@company.com' to their existing email addresses.
+truncate table emp_copy;
 
+insert into EMP_COPY
+select * from EMPLOYEES;
+
+update emp_copy set SALARY=6000 where EMPLOYEE_ID=101;
+commit;
+
+--2 Set the job ID of employee with Employee ID = 102 to 'IT_PROG' and the department ID to 60.
+update EMP_COPY set JOB_ID='IT_PROG', DEPARTMENT_ID=60 where EMPLOYEE_ID=102;
+
+select * from EMP_COPY where EMPLOYEE_ID=102;
+
+
+
+
+--3 Increase the salary of all employees in the 'SA_REP' job by 10%.
+rollback;
+select * from EMP_COPY;
+
+update EMP_COPY set salary=salary*1.10 where JOB_ID='SA_REP';
+
+
+
+--4 Update the commission percentage of all employees in the 'SA_REP' job to 0.1.
+update EMP_COPY set COMMISSION_PCT=0.1 where JOB_ID = 'SA_REP';
+
+
+--5 Change the manager ID of the employee with Employee ID = 105 to 110.
+rollback;
+
+update emp_copy set MANAGER_ID=110 where EMPLOYEE_ID=105;
+
+select * from EMP_COPY where EMPLOYEE_ID=105;
+
+--6 Update the job title of all employees in the 'HR_REP' job to 'HR Representative'.
+update JOB_COPY set JOB_TITLE='HR Representative' where JOB_ID='HR_REP';
+
+select * from JOB_COPY;
+
+--7 Set the department ID of all employees in department 30 to null.
+select * from EMP_COPY where DEPARTMENT_ID is null;
+
+update EMP_COPY set DEPARTMENT_ID=null where DEPARTMENT_ID=30;
+
+
+
+
+
+--8 Increase the salary of all employees in department 50 by 5%.
+update EMP_COPY set salary = salary*1.05 where DEPARTMENT_ID=50;
+
+
+--9 Update the hire date of all employees in department 20 to the current date.
+select * from EMP_COPY order by HIRE_DATE;
+update EMP_COPY set HIRE_DATE=sysdate where DEPARTMENT_ID=20;
+
+--10 Modify the email addresses of all employees by appending '@company.com' to their existing email addresses.
+update EMP_COPY set EMAIL = concat(email, '@company.com');
+
+select * from EMP_COPY;
+commit;
 
 /* Perform Delete */
 --1 Delete the employee with Employee ID = 101 from the employees table.
+delete from EMP_COPY where EMPLOYEE_ID=101;
+
 --2 Remove all employees in the department with Department ID = 50.
+delete EMP_COPY where DEPARTMENT_ID=50;
+
+select * from EMP_COPY where DEPARTMENT_ID=50;
+
 --3 Delete the job history records for the employee with Employee ID = 102.
+delete from JH_COPY where EMPLOYEE_ID=102;
+
+
+
 --4 Remove all employees with a hire date earlier than '01-JAN-2005'.
+delete from EMP_COPY where HIRE_DATE<to_date('01-JAN-2005', 'DD-MON-YYYY');
+
 --5 Delete the department with Department ID = 60 from the departments table.
+delete from DEPT_COPY where DEPARTMENT_ID=60;
+
 --6 Remove all employees who have a job title of 'Programmer'.
+
+delete from EMP_COPY where EMPLOYEE_ID in(
+select EMPLOYEE_ID
+from EMPLOYEES emp join
+jobs j on emp.JOB_ID=j.JOB_ID where J.JOB_TITLE='Programmer');
+
+
 --7 Delete all employees who have a salary greater than 10000.
+delete EMP_COPY where SALARY>10000;
+
+
 --8 Remove all job history records where the end date is before '01-JAN-2010'.
+
+delete from JH_COPY where END_DATE<to_date('01-JAN-2010', 'DD-MON-yyyy');
+
+select * from JH_COPY;
+
+
 --9 Delete the location with Location ID = 3000 from the locations table.
+delete LOCATION_COPY where LOCATION_ID=3000;
+
+
 --10 Remove all employees whose last name starts with the letter 'S'.
+
 
 
 /* Performing multi table Inserts */
