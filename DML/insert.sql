@@ -63,6 +63,24 @@ insert into xx_emp(empno, fname, salary)
 select EMPLOYEE_ID, FIRST_NAME, SALARY from EMPLOYEES;
 
 
+--zo kan het ook
+insert INTO EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID)
+select 102, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID
+from EMPLOYEES where EMPLOYEE_ID=101;
+
+
+
+
+
+
+
+--Multiple inserts using one statement(not a multitable insert!)
+commit;
+insert into EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID)
+VALUES              (1000, 'Sameer', 'Kewal', 'skewal@test.com', '115', to_date('01-MAY-2002', 'DD-MON-YYYY'), 'IT_PROG', 1000, 1, 101),
+                    (1001, 'Jennifer', 'Amogus', 'jamogus@test.com', '911', to_date('09-NOV-2000', 'DD-MON-YYYY'), 'IT_PROG', 1000, 1, 101);
+                    
+
 
 -------------------------Common Errors-------------------------------
 
