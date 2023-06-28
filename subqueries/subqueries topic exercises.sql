@@ -80,6 +80,7 @@ and DEPARTMENT_ID=(select DEPARTMENT_ID from DEPARTMENTS where DEPARTMENT_NAME='
 
 
 
+
 --7 Display the employee details along with their job title for employees whose salary is greater than the salary of 
 --their immediate supervisor.
 

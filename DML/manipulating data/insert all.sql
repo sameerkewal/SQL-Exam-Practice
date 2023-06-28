@@ -35,6 +35,14 @@ delete from MANAGER_HIST;
 commit;
 
 
+--this looks messy but point is je mag aliasses gebruiken
+insert all
+into EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID) 
+			values(78, fname1, lname1, mail1, number1, hiredate1, jid1, slry1, cmt1, mgrid1)
+select FIRST_NAME as fname1, LAST_NAME as lname1, EMAIL as mail1, PHONE_NUMBER as number1, HIRE_DATE as hiredate1, JOB_ID as jid1,
+SALARY as slry1, COMMISSION_PCT as cmt1, MANAGER_ID as mgrid1
+from EMPLOYEES where EMPLOYEE_ID=101;
+
 
 -------------Conditional Insert----------------------
 
@@ -356,5 +364,18 @@ on(a.id=b.id)
 when not  matched THEN
 update set b.name='Hi';
 
+--Maar kan je inserten en dan deleten na je inserten?
+--Nope alleen na het updaten apparently 
+merge into table_b b
+using(select id, name from table_a)a 
+on(a.id=b.id)
+when not matched THEN
+    insert(id, name)
+    values(5, 'test')
+    delete where b.name='test';
 
 
+
+select * from table_a;
+select * from table_b;
+rollback;

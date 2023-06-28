@@ -264,24 +264,221 @@ delete LOCATION_COPY where LOCATION_ID=3000;
 
 
 --10 Remove all employees whose last name starts with the letter 'S'.
+delete from EMP_COPY where LAST_NAME like 'S%';
 
 
 
 /* Performing multi table Inserts */
---1 Insert a new department and an associated employee into the departments and employees tables. The department details are Department ID = 80, Department Name = 'Quality Assurance', Manager ID = 103, and Location ID = 2000. The employee details are Employee ID = 107, First Name = 'David', Last Name = 'Johnson', Email = 'davidjohnson@example.com', Phone Number = '8765432109', Hire Date = '2023-06-01', Job ID = 'QA_ANALYST', Salary = 5500, Commission Percentage = NULL, Manager ID = 103, and Department ID = 80.
---2 Add a new employee into the employees and job_history tables. Insert an employee with Employee ID = 108, First Name = 'Amy', Last Name = 'Brown', Email = 'amybrown@example.com', Phone Number = '7654321098', Hire Date = '2023-06-01', Job ID = 'IT_PROG', Salary = 4500, Commission Percentage = NULL, Manager ID = 102, and Department ID = 60. Also, insert a job history record for the employee with Start Date = '2023-06-01', End Date = NULL, Job ID = 'IT_PROG', Department ID = 60.
---3 Insert a new employee into the employees and job_history tables, selecting data from existing employees. Insert an employee with Employee ID = 109, retrieving the First Name, Last Name, Email, Phone Number, Hire Date, Job ID, Salary, Commission Percentage, Manager ID, and Department ID from an existing employee with Employee ID = 106. Also, insert a job history record for the new employee with Start Date = '2023-06-01', End Date = NULL, Job ID = (same as the new employee), and Department ID = (same as the new employee).
---4 Add a new department into the departments and locations tables, selecting data from existing departments. Insert a new department with Department ID = 90, retrieving the Department Name, Manager ID, and Location ID from an existing department with Department ID = 80.
---5 Insert multiple employees into the employees and job_history tables using a single INSERT statement. Add two new employees with Employee ID = 110 and Employee ID = 111, along with their respective details. Also, insert job history records for the new employees with Start Date = '2023-06-01', End Date = NULL, Job ID = (same as the new employees), and Department ID = (same as the new employees).
+--1 Insert a new department and an associated employee into the departments and employees tables. 
+--The department details are Department ID = 80, Department Name = 'Quality Assurance', Manager ID = 103, and Location ID = 2000. 
+--The employee details are Employee ID = 107, First Name = 'David', Last Name = 'Johnson', Email = 'davidjohnson@example.com', 
+--Phone Number = '8765432109', Hire Date = '2023-06-01', Job ID = 'QA_ANALYST', Salary = 5500, Commission Percentage = NULL, 
+--Manager ID = 103, and Department ID = 80.
+
+insert ALL
+into dept_copy(DEPARTMENT_ID,DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID) values(80, 'Quality Assurance', 103, 2000)
+into EMP_COPY values(107, 'David', 'Johnson', 'davidjohnson@example.com', '8765432109', '01-JUNE-23', 'QA_ANALYST', 5500, null, 103, 80)
+select 1 from dual;
+
+
+select EMP.FIRST_NAME, EMP.LAST_NAME, DEPT.DEPARTMENT_NAME from
+ EMP_COPY emp join dept_copy dept on emp.DEPARTMENT_ID=dept.DEPARTMENT_ID;
+
+
+--2 Add a new employee into the employees and job_history tables. 
+--Insert an employee with Employee ID = 108, First Name = 'Amy', Last Name = 'Brown', Email = 'amybrown@example.com', 
+--Phone Number = '7654321098', Hire Date = '2023-06-01', Job ID = 'IT_PROG', Salary = 4500, Commission Percentage = NULL, 
+--Manager ID = 102, and Department ID = 60. Also, insert a job history record for the employee with Start Date = '2023-06-01', 
+--End Date = NULL, Job ID = 'IT_PROG', Department ID = 60.
+
+insert all 
+into EMP_COPY values(108, 'Amy', 'Brown', 'amybrown@example.com', '7654321098', '01-JUNE-2023', 'IT_PROG', 4500, null, 102, 60)
+into JH_COPY values(108, '01-JUNE-23', '01-DECEMBER-49', 'IT_PROG', 60)
+select 1 from dual; 
+
+select * from EMP_COPY;
+select * from jh_COPY;
+
+
+--3 Insert a new employee into the employees and job_history tables, selecting data from existing employees.
+-- Insert an employee with Employee ID = 109, retrieving the First Name, Last Name, Email, Phone Number, 
+--Hire Date, Job ID, Salary, Commission Percentage, Manager ID, and Department ID from an existing employee with Employee ID = 106.
+-- Also, insert a job history record for the new employee with Start Date = '2023-06-01', End Date = NULL, Job ID = 
+--(same as the new employee), and Department ID = (same as the new employee).
+insert ALL
+into EMP_COPY values (109, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID)
+into JH_COPY  values (109, '01-JUNE-2023', '01-DECEMBER-49', JOB_ID, DEPARTMENT_ID)
+select FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID
+from EMPLOYEES where EMPLOYEE_ID=106;
+
+select * from EMP_COPY;
+select * from EMPLOYEES where EMPLOYEE_ID=106;
+select * from JH_COPY;
+
+
+
+--4 Add a new department into the departments and locations tables, selecting data from existing departments. 
+--Insert a new department with Department ID = 90, retrieving the Department Name, Manager ID, 
+--and Location ID from an existing department with Department ID = 80.
+insert ALL
+into DEPT_COPY values(90, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+select DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID from DEPARTMENTS where DEPARTMENT_ID=80;
+
+select * from DEPT_COPY where DEPARTMENT_ID=90;
+
+select * from DEPARTMENTS where DEPARTMENT_ID=80;
+
+
+--5 Insert multiple employees into the employees and job_history tables using a single INSERT statement. 
+--Add two new employees with Employee ID = 110 and Employee ID = 111, along with their respective details. 
+--Also, insert job history records for the new employees with Start Date = '2023-06-01', End Date = NULL, Job ID = 
+--(same as the new employees), and Department ID = (same as the new employees).
+
+insert ALL
+into 	EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID) 
+		values(110, 'Sameer', 'Kewal', 'skewal@test.com', '115', '1-JUNE-23', 'IT_PROG', 80000, 0, 60)
+into EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID) 
+		values(111, 'Jennifer', 'Aamir', 'jamir@test.com', 115, '1-JUNE-23', 'FI_MGR', 80000, 0, 100)
+into JH_COPY(EMPLOYEE_ID, START_DATE, END_DATE, JOB_ID, DEPARTMENT_ID)
+		values(110, '01-JUNE-23', '01-DECEMBER-49', 'IT_PROG', 60)
+into JH_COPY(EMPLOYEE_ID, START_DATE, END_DATE, JOB_ID, DEPARTMENT_ID)
+		values(111, '01-JUNE-23', '01-DECEMBER-49', 'FI_MGR', 100)
+select 1 from dual;
+
+
+
+
+
+
+
+
+select * from jobs;
+select * from DEPARTMENTS;
+
+
+
+
+
+select * from EMP_COPY where EMPLOYEE_ID=101;
+
+rollback;
+
+insert all
+into EMP_COPY(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID) 
+			values(78, fname1, lname1, mail1, number1, hiredate1, jid1, slry1, cmt1, mgrid1)
+select FIRST_NAME as fname1, LAST_NAME as lname1, EMAIL as mail1, PHONE_NUMBER as number1, HIRE_DATE as hiredate1, JOB_ID as jid1,
+SALARY as slry1, COMMISSION_PCT as cmt1, MANAGER_ID as mgrid1
+from EMPLOYEES where EMPLOYEE_ID=101;
+
+
+
+
+
+
+
+
+
+select FIRST_NAME as FIRST_NAME1 from EMPLOYEES;
 
 /* Performing Merge statements
 Perform the following command for making the questions:
 create table employees_staging as select * from  employees;
 create table departments_staging as select * from  departments; */
 
---1 Merge the data from the employees_staging table into the employees table. Match the records based on the employee_id column. If a match is found, update the existing record in the employees table with the values from the employees_staging table. If a match is not found, insert the record from the employees_staging table into the employees table.
---2 Merge the data from the employees_staging table into the employees table, but only for employees who belong to department_id = 50. Match the records based on the employee_id column. If a match is found, update the existing record in the employees table with the values from the employees_staging table. If a match is not found, insert the record from the employees_staging table into the employees table.
---3 Merge the data from the employees_staging table into the employees table, but only for employees who have a salary greater than 5000. Match the records based on the employee_id column. If a match is found, update the existing record in the employees table with the values from the employees_staging table. If a match is not found, insert the record from the employees_staging table into the employees table.
---4 Merge the data from the departments_staging table into the departments table. Match the records based on the department_id column. If a match is found, update the existing record in the departments table with the values from the departments_staging table. If a match is not found, insert the record from the departments_staging table into the departments table.
---5 Merge the data from the departments_staging table into the departments table, but only for departments located in region_id = 1. Match the records based on the department_id column. If a match is found, update the existing record in the departments table with the values from the departments_staging table. If a match is not found, insert the record from the departments_staging table into the departments table.
+
+select * from DEPT_COPY;
+select * from EMP_COPY;
+
+
+--1 Merge the data from the employees_staging table into the employees table. 
+--Match the records based on the employee_id column. If a match is found, update the existing record in the employees table 
+--with the values from the employees_staging table. If a match is not found, insert the record from the employees_staging table 
+--into the employees table.
+
+
+merge into EMPLOYEES a
+using(select * from EMP_COPY)b
+on(a.employee_id=b.employee_id)
+when matched THEN
+	update set a.first_name=b.first_name
+when not matched THEN
+	insert(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID)values
+	(b.employee_id, b.first_name, b.LAST_NAME, b.email, b.PHONE_NUMBER, b.hire_date, b.job_id, b.salary, b.manager_id, b.department_id);
+
+
+
+
+
+
+
+--2 Merge the data from the employees_staging table into the employees table, 
+-- but only for employees who belong to department_id = 50. Match the records based on the employee_id column. 
+-- If a match is found, update the existing record in the employees table with the values from the employees_staging table. 
+-- If a match is not found, insert the record from the employees_staging table into the employees table.
+merge into EMPLOYEES a
+using(select * from EMP_COPY)b
+on(a.employee_id=b.employee_id)
+when matched then
+	update set a.first_name=b.first_name
+when not matched THEN
+	insert (EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID)
+	values(b.employee_id, b.first_name, b.last_name, b.email, b.PHONE_NUMBER, b.hire_date, b.job_id, b.salary, b.manager_id, b.department_Id);
+where DEPARTMENT_ID=50;
+
+--3 Merge the data from the employees_staging table into the employees table, but only for employees who have a salary greater than 5000. 
+-- Match the records based on the employee_id column. 
+-- If a match is found, update the existing record in the employees 
+-- table with the values from the employees_staging table. 
+-- If a match is not found, insert the record from the employees_staging table into the employees table.
+merge into EMPLOYEES a
+using(select * from EMP_COPY)b
+on(a.employee_id=b.employee_id)
+when matched then
+update set a.first_name=b.first_name
+when not matched THEN
+insert(EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, MANAGER_ID, DEPARTMENT_ID)
+values(b.employee_id, b.first_name, b.last_name, b.email, b.phone_number, b.hire_date, b.job_id,b.salary, b.manager_id, b.department_id);
+
+
+--4 Merge the data from the departments_staging table into the departments table. 
+--Match the records based on the department_id column. If a match is found, update the existing record in the departments table 
+--with the values from the departments_staging table. 
+--If a match is not found, insert the record from the departments_staging table into the departments table.
+
+create table dept_copy
+select * from departments;
+
+merge into DEPARTMENTS a
+using(select * from DEPT_COPY) b
+on(a.department_id=b.department_id)
+when matched THEN
+update set a.department_name=b.department_name
+when not matched then
+insert(department_id, department_name, MANAGER_ID, location_id)
+values(b.department_id, b.department_name, b.manager_id, b.location_id);
+
+
+
+
+--5 Merge the data from the departments_staging table into the departments table, but only for departments located in region_id = 1. 
+--Match the records based on the department_id column. If a match is found, 
+--update the existing record in the departments table with the values from the departments_staging table. 
+--If a match is not found, insert the record from the departments_staging table into the departments table.
+
+create table dept_copy
+as select * from departments;
+
+merge into dept_copy a
+using(select * from dept_copy)b
+on(a.department_id=b.department_id)
+when matched then
+update set a.department_name=b.department_name
+when not matched THEN
+insert(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
+	values(b.department_id, b.department_name, b.manager_id, b.location_id);
+
+	commit;
+
+
+
 
