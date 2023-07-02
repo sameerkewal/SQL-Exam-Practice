@@ -296,3 +296,152 @@ delete from dept2 where deptno = 1;
 select * from emp2;
 
 select * from emp2 join dept2 on (emp2.deptno = dept2.deptno);
+
+
+
+
+
+
+-----------------Creating table using Subquery---------------
+
+
+--When you use an expression you should use an alias
+--Note the error tells u what to do
+create table newtest as
+select EMPLOYEE_ID, LAST_NAME, salary*12
+from EMPLOYEES;
+
+create table newtest as
+select EMPLOYEE_ID, LAST_NAME, salary*12 as annual_salary
+from EMPLOYEES;
+
+drop table newtest;
+
+
+--If you want to use your own column names
+create table newtest(
+    emp_id,
+    fname,
+    lname,
+    sal default 0,
+    dept_id
+) as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+desc newtest;
+
+drop table newtest;
+
+
+--JE MAG WEL CONSTRAINTS ZETTEN ALLEEN GEEN DATATYPE
+create table newtest(
+    emp_id constraint pk_test primary key,
+    fname,
+    lname,
+    sal default 0,
+    dept_id
+)as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+
+--create as select with referential constraints not allowed
+--dus geen FK constraints allowed
+create table newtest(
+    emp_id constraint pk_test primary key,
+    fname,
+    lname,
+    sal default 0,
+    dept_id,
+    constraint newtest_dept_fk foreign key(dept_id) references DEPARTMENTS
+)as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+
+--Non varchar column with substring type check
+--Check error(check constraint violated)
+--Dus basically wanneer je insert zijn die constraints al defined. So if you define a constraint wat zal violated worden
+--bij het inserten gaat die create table statement failen
+create table newtest(
+    emp_id constraint pk_test primary key,
+    fname,
+    lname,
+    sal default 0,
+    dept_id check(substr(dept_id, 1, 1)='S')
+)as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+--A constraint which won't be violated when inserting will work
+create table newtest(
+    emp_id constraint pk_test primary key,
+    fname,
+    lname constraint newtest_chk check(length(lname)<100),
+    sal default 0,
+    dept_id
+    )as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+drop table newtest;
+
+--Constraints mogen ook hier defined worden op table level of op column level
+create table newtest(
+    emp_id,
+    fname,
+    lname constraint newtest_chk check(length(lname)<100),
+    sal default 0,
+    dept_id,
+    constraint newtest_pk primary key(emp_id) 
+    )as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+
+--Ook not null constraints mogen defined worden
+create table newtest(
+    emp_id,
+    fname not null,
+    lname constraint newtest_chk check(length(lname)<100),
+    sal default 0,
+    dept_id,
+    constraint newtest_pk primary key(emp_id) 
+    )as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+
+/*In the newtest table, when inserting data from the EMPLOYEES table, if the DEPARTMENT_ID in the original table is NULL, 
+the corresponding value in the dept_id column of the newtest table will also be NULL. 
+This is because the dept_id column has a default value of 0, 
+but the default value is not used when explicitly inserting data from the source table.*/
+
+--Final test with a default value and constraint!
+drop table newtest;
+
+create table newtest(
+    emp_id,
+    fname not null check(length(fname)<1000),
+    lname constraint newtest_chk check(length(lname)<100),
+    sal default 0 not null,
+    dept_id  default 0 constraint newtest_chk2 check(dept_id not between 0 and 5),
+    constraint newtest_pk primary key(emp_id)
+    )as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+
+
+insert into newtest(emp_id, fname, lname, dept_id)
+VALUES              (1001, 'Sameer', 'Kewal', 10);
+
+select * from NEWTEST;
+
+drop table NEWTEST;
+
+create table newtest(
+    emp_id,
+    fname not null check(length(fname)<1000),
+    lname constraint newtest_chk check(length(lname)<100),
+    sal default 0 not null,
+    dept_id  default 20 not null,
+    constraint newtest_pk primary key(emp_id)
+    )as select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, DEPARTMENT_ID
+from EMPLOYEES;
+
+select * from newtest
+order by dept_id;

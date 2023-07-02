@@ -105,5 +105,44 @@ When you create a primary key or unique constraint maakt Oracle zelfs een index 
 ### Creating table as subquery
 - Not null constraints are inherited, but only the explicit ones. Not the ones from primary keys
 - Any other constraints are not passed to the new table
+- Je mag je eigen constraints maken wanneer je die table defined, mag zowel op column level als op table level
+- Het mag geen FK zijn
+- je mag geen constraint definen which will be violated when the inserts happens
 
 ![Alt text](<../resources/create table with subquery.png>)
+
+
+## Alter table
+
+Use alter table to:
+- Add a new column
+- Modify existing column
+- Define a default value for a new column(not existing column?)
+- Drop column
+- Rename a column
+- Change table to read only status
+- Add new constraint
+- disable constraint
+- drop constraint from the table
+
+![Alt text](<../resources/alter table.png>)
+
+
+- If a table already contains rows when a new column is added, the new column is initially null or takes the default values
+for all rows. You can add a not null column to a table that contains data in the other columns only if you specify a default value.
+You can add a not null column to an empty table without a default value
+
+## Modifying a column:
+- You can change a column's data type, size and default value
+- A change to the default value affects only subsequent insertions to the table
+
+
+Guidelines:
+- You can increase the width or precision of a numeric column
+- You can increase the width of character columns
+- You can decrease the width of a column if:
+ - The column contains only null values
+ - The table has no rows
+ - The decrease in column width is not less than what the existing rows have as width
+ - You can change the data type if the column contains only null values. The exception to this is char-to-varchar2 conversions, which can be done with data in the columns
+ - You can convert a char column to the varchar2 data type or convert a varchar2 column to a char data type only if the column contains null values or if you do not change the size
