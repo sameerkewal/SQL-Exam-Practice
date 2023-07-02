@@ -19,4 +19,9 @@ Er bestaan 2 soorten conversions:
 implicit data conversion  => done by oracle
 explicit data conversion => done by the user itself
 
+
+
+Je kan geen unique constraint zetten als je al een pk constraint hebt.
+Omgekeerd obv ook niet
+
 ![Alt text](image.png)

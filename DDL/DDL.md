@@ -96,4 +96,14 @@ difference between two datetime values
 - View a constraint in the data dictionary
 
 
-Recommendation is to use Table level constraintsf
+Recommendation is to use Table level constraints
+
+When you create a primary key or unique constraint maakt Oracle zelfs een index voor de primary key en unique constraint
+
+
+
+### Creating table as subquery
+- Not null constraints are inherited, but only the explicit ones. Not the ones from primary keys
+- Any other constraints are not passed to the new table
+
+![Alt text](<../resources/create table with subquery.png>)
