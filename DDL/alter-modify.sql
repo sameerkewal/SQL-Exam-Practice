@@ -15,7 +15,7 @@ alter table test add test_lname VARCHAR2(20) not null;
 
 --dit gaat wel, omdat je een default value specified, zo die 2 existing rows gaan die default value nemen
 --voor die test_lname
-alter table test add test_lname VARCHAR2(20) default 'UNASAT' not null;
+alter table test add test_lname VARCHAR2(20) default 'Qualogy' not null;
 
 --check:
 select * from test;
@@ -303,8 +303,101 @@ insert into test values(3, 'Kewal', 'M', 'F');
 alter table test read write;
 
 
+alter table test read only;
 
+select * from test;
 
+commit;
+drop table test;
 
+rollback;
 
 alter table test drop column gender;
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------Drop Table---------------------
+
+create table test(
+    test_id number,
+    test_name varchar2(20)
+);
+
+insert into test values(1, 'Sameer');
+insert into test values(2, 'Jasmine');
+alter table test add test_lname VARCHAR2(20) default 'Qualogy' not null;
+alter table test add gender char(1);
+update test set gender = 'M';
+
+
+select * from test;
+
+drop table test;
+
+--Data dictionary
+select * from USER_RECYCLEBIN
+where original_name='TEST';
+
+
+drop table test purge;
+
+create table x_jobs
+as select * from jobs;
+
+drop table x_jobs purge;
+
+--Als je het purged kan je het ook niet meer vinden in je user_recyclebin
+select * from USER_RECYCLEBIN where original_name='X_JOBS';
+
+
+
+
+
+
+
+------------------Rename---------------------
+drop table DEPT_COPY;
+create table DEPT_COPY(
+    deptno number,
+    daname varchar2(90)
+);
+alter table dept_copy add constraint dept_pk primary key(deptno);
+
+
+
+select * from DEPT_COPY;
+insert into dept_copy values(1, 'HR');
+
+alter table dept_copy rename column daname to dept_name;
+
+
+--Rename table
+rename DEPT_COPY to dept_new_copy;
+drop table dept_new_copy;
+
+
+select * from dept_new_copy;
+
+---Rename a constraint
+alter table dept_copy rename constraint dept_pk to dept_copy_pk;
+
+
+---Rename a view
+create or replace view myView as
+select FIRST_NAME, LAST_NAME, DEPARTMENT_NAME
+from EMPLOYEES emp join departments dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID;
+
+rename myView to emp_view;
+
+select * from emp_view;
+
+drop view emp_view;

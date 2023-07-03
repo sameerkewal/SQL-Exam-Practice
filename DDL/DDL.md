@@ -192,3 +192,17 @@ Als die table in read only is kan je geen enkele DML statement erop doen of any 
 
 **Note:** You can drop a table which is in read only mode. The drop command is executed only in the data dictionary, so access to the table contents is not required. The space used by the table will not be reclaimed until the tablespace is made read/write again,
 and then the required changes can be made to the block segment headers and so on
+
+## Drop tables
+- Once you drop a table you can use flashback to retrieve the table 
+- Dropping a table moves it to the recycle bin
+- Removes the table and all its data entirely if the purge clause is specified
+- Invalidates dependent objects and removes object privileges on the table
+
+Unless you specify the purge clause the drop table statement does not result in space being released back to the tablespace for use by other objects, and the space continues to count towards the user's space quota. Dropping a table invalidates the dependent objects and removes object privileges on the table. When you drop a table, the database loses all the data in the table and all the indexes associated with it.
+
+Guidelines:
+- All data is deleted from the table
+- Any views and synonyms remain, but are invalid
+- Any pending transactions are committed
+- Only the creator of the table or a user with the drop any table privilege can remove a table
