@@ -39,3 +39,34 @@ You can not use nextval and currval in the following contexts:
 - Requires no storage other than its definition in the data dictionary
 - Is useful for hiding the identity and location of an underlying schema object
 
+In order to create a public synonym he has to have a privilege called create public synonym
+
+
+![Alt text](../resources/synonyms.png)
+
+
+## Indexes:
+- Is a schema object
+- Can be used by Oracle server to speed up the retrieval of rows by using a pointer
+- Can reduce disk input/output(I/O) by using a rapid path access method to locate data quickly
+- Is dependent on the table that it indexes
+- Is used and maintained automatically by the Oracle Server
+
+
+If you do not have an index on the column, a full table scan occurs. An index provides direct and fast access to rows in a table. Its purpose is to reduce the disk I/O by using an indexed path to locate data quickly. An index is used and maintained automatically by the Oracle sevrer. After an index is created no direct activity is required by the user.
+
+Indexes are logically and physically independent of the data in the objects with which they are associated.This means that they can be created or dropped at any time, and have no effect on the base tables or other indexes. 
+When you drop a table, the corresponding indexes are also dropped. 
+
+## How are indexes created?
+Automatically. Oracle will automatically create a unique index when you define a primary key or unique constraint in a table definition.
+The name of index will be as the constraint name. 
+
+Manually => You can create unique or nonunique index on columns to speed up access to the rows
+Bij manually bv You can create the FK column index for a join in a query to improve the speed of retrieval.
+
+**Note:** You can manually create the unique index, but it is recommended that you create an unique constraint, 
+which implicitly creates a unique index.
+
+
+![Alt text](../resources/indexes.png)
