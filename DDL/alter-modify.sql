@@ -1,5 +1,5 @@
 ------------Alter table--------------
-
+drop table test;
 
 create table test(
     test_id number,
@@ -176,6 +176,8 @@ alter table test modify test_id number add constraint test_pk primary key(TEST_I
 alter table test drop constraint test_pk;
 alter table test drop constraint test_chk;
 
+
+
 --Je mag maar 1 add constraint doen per keer als je het zo doet(???)
 alter table test modify test_id number add constraint test_pk primary key(test_name),
 add constraint test_chk check(test_id not between 20 and 30);
@@ -186,10 +188,11 @@ constraint test_chk check(test_id not between 20 and 30);
 
 --However als je het zo doet kan je any number of constraints zetten voor die column alleen ofc!
 alter table test modify test_id constraint test_pk primary key constraint test_chk check(test_id not between 1000 and 2000)
-constraint test_chk2 check(length(test_name)<20000);
+constraint test_chk2 check(length(test_id)<20000);
 
 
---So basically als je het net als column level doet mag je alleen die table referencen maar je mag meerdere constraints zetten(op die column)
+--So basically als je het net als column level doet mag je alleen die table referencen maar je mag meerdere constraints zetten
+--(op die column)
 --Op table level kan je maar 1 constraint zetten maar je mag dan any table referencen in die constraint
 
 
@@ -197,6 +200,111 @@ constraint test_chk2 check(length(test_name)<20000);
 
 
 
+------------------Dropping columns-----------------------
+select * from test;
+
+--met deze syntax kan je maar 1 table droppen
+alter table test drop column gender;
+
+--Met deze syntax kan je >1 column droppen
+alter table test drop(gender, test_lname);
+
+
+alter table test add gender char(1);
+alter table test add test_lname varchar2(100) default 'UNASAT';
+update test set gender ='M';
 
 
 
+
+-------------------Set unused--------------------
+
+select * from test;
+
+--het moet tussenhaakjes en je kan multiple columns at the same time op unused zetten
+alter table test set unused (gender, test_lname);
+
+
+
+--Deze syntax kan je alleen 1 column op unused zetten en hier hoeft het niet tussen haakjes
+alter table test set unused column test_lname;
+
+
+--Deze gaan niet
+alter table test set unused column test_lname, gender;
+alter table test set unused column (test_lname, gender);
+
+
+-
+
+
+
+--Data dictionary table dat je access geeft tot je columns which have been set to unused
+select * from USER_UNUSED_COL_TABS;
+
+
+
+
+--This will error
+select * from test;
+
+--Invalid identifier bc basically it sees the column as not there anymore
+update test set gender = 'F';
+
+
+--Je kan ook niet andere kolommen updaten bc it locks the table
+update test set test_name = 'newtest';
+commit;
+rollback;
+
+
+--Bringing back gender
+
+select * from test;
+
+--Als je **online** keyword gebruikt, kan je wel nog DML statements op die table doen 
+alter table test set unused (gender) online;
+
+
+alter table test set unused(gender, test_lname);
+
+--This physically drops the columns
+alter table test drop unused column;
+
+select * from USER_UNUSED_COL_TABS;
+
+drop table test;
+
+
+
+
+
+
+
+
+---------------Read only/Read write--------------------
+
+select * from test;
+
+alter table test read ONLY;
+
+delete from test;
+
+--Will work
+alter table test add gender char(1);
+
+
+--Keyword is **changing data**
+alter table test add gender2 char(2) default 'M';
+
+--even tho you're not changing any data you're doing a dml statement
+insert into test values(3, 'Kewal', 'M', 'F');
+
+alter table test read write;
+
+
+
+
+
+
+alter table test drop column gender;

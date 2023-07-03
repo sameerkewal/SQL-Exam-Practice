@@ -146,3 +146,49 @@ Guidelines:
  - The decrease in column width is not less than what the existing rows have as width
  - You can change the data type if the column contains only null values. The exception to this is char-to-varchar2 conversions, which can be done with data in the columns
  - You can convert a char column to the varchar2 data type or convert a varchar2 column to a char data type only if the column contains null values or if you do not change the size
+
+
+
+
+
+ ## Dropping columns
+
+ Guidelines:
+ - The column may or may not contain data, it doesn't matter
+ - Using the alter table drop column statement only one column can be dropped at a time
+ - The table must have atleast one column remaining in it after it's dropped
+ - After a column is dropped, it cannot be recovered
+ - The primary key that is referenced by another column cannot be dropped unless the cascade option is added
+ - Dropping a column can take a while if the column has a large number of values. In this 
+   case it might be better to set it to unused and drop it when there are fewer users on the system to avoid extended locks
+
+**Note:** Certain columns can never be dropped, such as columns that form part of the partitioning key of a partitioned table
+or columns that form part of the primary key of an index organized table. 
+
+
+
+
+
+
+
+
+## Set unused
+
+- You can use set unused option to mark one or more columns as unused
+- You use the drop unused columns to remove the columns that are marked as unused
+- You can specify the online keyword to indicate that DML statements on the table are allowed while marking the column or columns unused
+![Alt text](<../resources/set unused.png>)
+
+
+
+
+
+
+## Read Only
+
+You can use alter table syntax to put a table into read only which prevents any DML statements or any DDL statements that will change the data. 
+
+Als die table in read only is kan je geen enkele DML statement erop doen of any select....for update statement. You can issue DDL statements as long as they do not modify any data in the table. Operations on indexes associated with the table are allowed when the table is in read only mode
+
+**Note:** You can drop a table which is in read only mode. The drop command is executed only in the data dictionary, so access to the table contents is not required. The space used by the table will not be reclaimed until the tablespace is made read/write again,
+and then the required changes can be made to the block segment headers and so on
