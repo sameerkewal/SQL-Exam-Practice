@@ -41,6 +41,13 @@ You can not use nextval and currval in the following contexts:
 
 In order to create a public synonym he has to have a privilege called create public synonym
 
+**You can have:**
+- Table and Public Synonym with the same name
+- Public Synonym and Private Synonym with the same name
+
+But can not have:
+- Table and Private Synonym with the same name inside the same schema
+
 
 ![Alt text](../resources/synonyms.png)
 
@@ -70,3 +77,23 @@ which implicitly creates a unique index.
 
 
 ![Alt text](../resources/indexes.png)
+
+
+## Index creation guidelines:**
+**Do create an index when:**
+- A column contains a wide range of values
+- A column contains a large number of null values
+- One or more columns are frequently used together in a where clause or a join condition
+- The table is large and most queries are expected to retrieve less than 2% to 4% of the rows in te table
+
+
+- The columns are not often used as a condition in the query
+- The table is small or most queries are expected to retrieve more than 2% to 4% of rows in the table
+- The table is updated frequently(bc everytime a record is inserted, updated or deleted the index needs to be modified to reflect the changes)
+- The indexed columns are referenced as part of an expression
+
+
+Bitmap indexes zijn als je wilt pointen naar distinct values rather than each row seperately. Dus basically a group of values. Stel je
+voor dat je een column gender hebt. Gender kan maar 2 values hebben. M of F. Rather than point to each row seperately just point to
+either the group of values which are M or the group of values that are Ff
+
