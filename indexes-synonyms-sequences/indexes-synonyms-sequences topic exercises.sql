@@ -206,10 +206,11 @@ select * from USER_CONSTRAINTS where table_name='JOBS';
 --6 Temporarily disable the "IDX_JOB_TITLE" unique index to allow inserting duplicate job titles.
 alter index job_title_idx UNUSABLE;
 
+alter index job_title_idx REBUILD;
 
 alter table jobs disable constraint job_title_idx;
 
-alter index JOB_TITLE_idx disable;
+alter index JOB_TITLE_idx  disable;
 
 
 insert into jobs values('PRES', 'President', 2000, 2000);
@@ -217,8 +218,9 @@ insert into jobs values('PRES', 'President', 2000, 2000);
 select * from USER_INDEXES where table_name='JOBS';
 select * from USER_IND_COLUMNS where table_name='JOBS';
 
+create unique index job_title_idx on jobs(JOB_TITLE);
 
 --7 Enable the "IDX_JOB_TITLE" unique index to enforce the uniqueness constraint again.
 --8 Remove the "IDX_JOB_TITLE" unique index from the database.
 
-drop index job_title_idx;
+drop index job_title_idx; .
