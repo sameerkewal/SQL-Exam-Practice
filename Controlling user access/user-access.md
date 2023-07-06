@@ -33,3 +33,45 @@ Table SYSTEM_PRIVILEGE_MAP contains all the system privileges available
 
 
 ![Alt text](<../resources/privilege syntax.png>)
+
+
+
+
+- Create session privilege is necessary if the user wants to connect to the database
+
+
+## Roles:
+A role is a named group of related privileges that can be granted to the user. This method makes it easier to revoke and maintain privileges. A user can have access to several roles, and several users
+can be assigned the same role. Roles are typically created for a database application. 
+
+![Alt text](<../resources/roles privileges.png>)
+
+
+
+
+
+
+
+
+## Object privileges:
+
+![Alt text](<../resources/object privileges.png>)
+
+
+
+![Alt text](<../resources/object privileges syntax.png>)
+
+
+![Alt text](<../resources/object privileges syntax2.png>)
+
+
+![Alt text](../resources/unauthorized.png)
+
+
+![Alt text](<../resources/revoking object privileges.png>)(onderzoek dit!!!)
+
+
+![Alt text](<../resources/revoking object privileges2.png>)
+
+
+Worth knowing dat bv het verschil is tussen create table and create any table is dat het verschil is tussen een create table privilege en een create any table privilege is dat bij een create table privilege die user alleen in zijn schema een tabel kan maken terwijl bij create any table die user een table kan maken in any schema

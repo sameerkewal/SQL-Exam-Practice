@@ -75,8 +75,12 @@ from EMPLOYEES where DEPARTMENT_ID=90;
 
 select FIRST_NAME, LAST_NAME, SALARY
 from EMPLOYEES
-where SALARY in (select SALARY from EMPLOYEES where DEPARTMENT_ID=90);
+where (SALARY,DEPARTMENT_ID) in (select SALARY,DEPARTMENT_ID from EMPLOYEES where DEPARTMENT_ID=90);
 --je kan die in statement ook gewoon replacen met in(17000, 24000)
+
+
+
+
 
 
 --Any value greater than/equal 17000 or any value greater than/equal 24000
