@@ -107,5 +107,78 @@ select * from USER_CONSTRAINTS
 where table_name='EMPLOYEES';
 
 
+--In bovenstaande query vind je dat die PK van emp_dept_fk dept_id_pk heet
+--dus dan doe je deze query to find out the actual source(table) for this table
 select *
 from user_constraints where CONSTRAINT_name='DEPT_ID_PK';
+
+
+--Self join om te wijzen wat die PK's van die FK's zijn if that makes any sense
+select m.owner, m.TABLE_NAME, m.CONSTRAINT_NAME, m.CONSTRAINT_TYPE, m.R_CONSTRAINT_NAME, d.TABLE_NAME
+from user_constraints m join user_constraints d on m.R_CONSTRAINT_NAME=d.CONSTRAINT_NAME
+where m.TABLE_NAME = 'EMPLOYEES';
+
+
+--Cannot see which column has which constraint
+select * from USER_CONSTRAINTS
+where table_name='EMPLOYEES';
+
+
+select * from USER_CONS_COLUMNS
+where table_name='EMPLOYEES';
+
+
+SELECT m.OWNER, m.TABLE_NAME, m.CONSTRAINT_NAME, m.CONSTRAINT_TYPE
+from user_constraints m
+where table_name='EMPLOYEES';
+
+
+SELECT m.OWNER, m.TABLE_NAME, m.CONSTRAINT_NAME, m.CONSTRAINT_TYPE, d.COLUMN_NAME, d.POSITION
+from user_constraints m
+join USER_CONS_COLUMNS d
+on m.CONSTRAINT_NAME = d.CONSTRAINT_NAME
+where m.table_name='EMPLOYEES';
+
+select count(1) from USER_CONS_COLUMNS;
+
+
+--Check the results. Wijst simply gewoon die constraint.
+--If it is an fk it shows the PK it references and the columns in which both of the aforementioned
+--columns appear
+select m.owner, m.table_name, m.constraint_name, m.CONSTRAINT_TYPE, m1.COLUMN_NAME, d.CONSTRAINT_NAME, d1.COLUMN_NAME
+from user_constraints m
+left join USER_CONSTRAINTS d on m.R_CONSTRAINT_NAME=d.CONSTRAINT_NAME
+left join USER_CONS_COLUMNS m1 on m1.CONSTRAINT_NAME=m.CONSTRAINT_NAME
+left join user_cons_columns d1 on d1.CONSTRAINT_NAME=d.CONSTRAINT_NAME
+where m.TABLE_NAME='EMPLOYEES';
+
+
+
+
+
+
+
+
+
+-------------Table Comments and User Comments----------------
+
+comment on table EMP_COPY
+is 'This table is a subquery copy of the original employees table';
+
+select * from USER_TAB_COMMENTS where table_name='EMP_COPY';
+
+select * from all_tab_comments where table_name='EMP_COPY';
+
+
+comment on column emp_copy.SALARY
+is 'The salary the employee earns';
+
+select * from USER_COL_COMMENTS WHERE
+table_name='EMP_COPY';
+
+
+comment on column EMP_COPY.SALARY
+is 'new comment';
+
+--overwrites old comment
+select * from USER_COL_COMMENTS where table_name='EMP_COPY';

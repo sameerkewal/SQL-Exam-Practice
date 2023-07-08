@@ -80,6 +80,17 @@ where (SALARY,DEPARTMENT_ID) in (select SALARY,DEPARTMENT_ID from EMPLOYEES wher
 
 
 
+--Je kan een subquery gebruiken in een having, maar niet in een group by clause
+select DEPARTMENT_ID, count(DEPARTMENT_ID)
+from EMPLOYEES
+group by DEPARTMENT_ID
+having count(DEPARTMENT_ID)=(
+    select count(DEPARTMENT_ID) from EMPLOYEES  where DEPARTMENT_ID=50 group by DEPARTMENT_ID);
+
+
+--If a subquery returns null the main query may still return rows
+select * from EMPLOYEES where DEPARTMENT_ID IN
+(select DEPARTMENT_ID from EMPLOYEES where FIRST_NAME='Kimberely');
 
 
 
