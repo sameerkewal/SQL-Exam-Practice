@@ -33,3 +33,12 @@ from dual;
 select to_timestamp('20-12-2002', 'dd-mm-yyyy') from dual;
 
 
+select DEPARTMENT_ID, max(SALARY)
+from EMPLOYEES
+group by DEPARTMENT_ID
+having max(SALARY)>(select 7150 from dual);
+
+
+
+select to_char('1889.22', '99,999.00')
+from dual;
