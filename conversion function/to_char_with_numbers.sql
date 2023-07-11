@@ -46,7 +46,7 @@ select to_char(1598.49, '9999.9') from dual;
 
 --Hier rond ie die laatste 6 ook af, omdat er like een 9 na komma is en 9 wordt 10 yk
 select 8777777666.999989, to_char(8777777666.999989, '9G999G999G999D999') from dual;
---hier rond ie die laatste 6 nier af omdat na die komma er gewoon een 456 so it rounds 457
+--hier rond ie die laatste 6 niet af omdat na die komma er gewoon een 456 so it rounds 457
 select 8777777666.456789, to_char(8777777666.456789, '9,999,999,999.999') from dual;
 
 --just turns into 568
@@ -69,6 +69,9 @@ select to_char(1598, '99999999') from dual;
 
 --als je 0 gebruikt en 0's gebruikt dan je origineel getal is, dan gaat het 0 zetten voor je cijfer to pad it
 select to_char(1598, '0000000') from dual;
+
+select to_char(1598, '999900')
+from dual;
 
 --in dit geval prioritiseert die 0 een actual digit and not trynna pad it with 0's
 select to_char(1598, '0999') from dual;
@@ -122,6 +125,9 @@ select to_char(8, '9'), length(to_char(8, '9'))from dual;
 --Als je die unneccessary space weg wilt laten, kan je gebruik maken van fm(trim also works)
 select to_char(8, '9'), length(to_char(8, 'fm9'))from dual;
 
+select to_char(8, '9'), length(trim(to_char(8, '9'))) from dual;
+
+
 --length hiervan blijft 2 omdat het actually negatief is
 select to_char(-8, '9'), length(to_char(-8, 'fm9'))from dual;
 
@@ -138,6 +144,8 @@ select to_char(9999, '9999U') from dual;
 --WHAT
 SELECT TO_CHAR('01110' + 1) FROM DUAL;
 
+select to_char('11000') from dual;
+
 SELECT TO_CHAR('01110' + 2) FROM DUAL;
 
 
@@ -146,11 +154,23 @@ select to_char(22222, '9G9999') from dual;
 --so voor nls_currency kan je anything zetten basically
 --voor NLS_ISO_CURRENCY moet het wel voorkomen op die iso lijst i assume
 --NLS_NUMERIC_CHARACTER wordt gebruikt om value van D en G respectievelijk aan te geven
-select to_char(10000.99, 'L99G999D99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_CURRENCY=''AusDollars'' ') "Amount" from dual;
+select to_char(10000.99, 'L99G999D99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_CURRENCY=''AusDollars'' ') 
+"Amount" from dual;
+
+
+--Die L kan ook je NLS_iSO_CURRENCY value aannemen
+select to_char(1000.99, 'L9G999D999', 'NLS_ISO_CURRENCY = ''America'' NLS_CURRENCY=''AusDollars''') from dual;
+
+--Als je beide NLS_ISO_CURRENCY en NLS_CURRENCY gebruikt dan gaat het je value van NLS_CURRENCY aannemen
+select to_char(10000.99, 'L99G999D99', 'NLS_NUMERIC_CHARACTERS='',.'' 
+NLS_CURRENCY=''AusDollars'' NLS_ISO_CURRENCY=''America''') 
+"Amount" from dual;
 
 
 --NLS_ISO_CURRENCY
 select to_char(10000.99, 'L99999.99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_ISO_CURRENCY=''America'' ')from dual;
+
+--Moet natuurlijk voorkomen in je NLS_ISO_CURRENCY
 select to_char(10000.99, 'C99999.99', 'NLS_NUMERIC_CHARACTERS=''.,'' NLS_ISO_CURRENCY=''dsd'' ')from dual;
 
 
@@ -176,16 +196,17 @@ from dual;
 select to_char(20000, 'L99999', 'NLS_ISO_CURRENCY=''Suriname'' NLS_NUMERIC_CHARACTERS=''.,'' NLS_CURRENCY=''TEST'' ' )
 FROM DUAL;
 
---dus die V multiplied met 10. Als je 1V zet dan wordt het je getal maal 10. 2V's worden maal 100
-select to_char(5000, '9999V9')
+--dus die V multiplied met 10. Als je 1 "9" na je 10 zet zet dan wordt het je getal maal 10. 
+--2 "9"s worden maal 100
+select to_char(5000, '9999V99')
 from dual;
 
 --maal 100
 select to_char(3000, '9999V99')
 from dual;
 
---doesnt work
-select to_char(3000, '9V999')
+--does work
+select to_char(3000, '9999V999')
 from dual;
 
 --S zegt je gewoon of hij positief of negatief is
@@ -196,9 +217,19 @@ select to_char(-3000, 'S9999')
 from dual;
 
 --no clue what this does. Klopt niet volgens het voorbeeld?
-select to_char(3000.00, 'B9999.99') from dual;
+select to_char(03000.00, 'B9999.99') from dual;
+
+
+
+--returns the specified number in roman numerals(rn staat voor roman numerals)
+select to_char(3000, 'rn')
+from dual;
+
+--RN is in caps so the roman numerals will also obviously be in caps
+select to_char(2000, 'RN')
+from dual;
 
 
 
 
-select to_number('200.81', '999,99') from dual;
+

@@ -482,3 +482,6 @@ insert(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID)
 
 
 
+/* Use the USING clause to specify the source of the data to be updated or inserted. 
+The source can be a table, view, or the result of a subquery.
+ */

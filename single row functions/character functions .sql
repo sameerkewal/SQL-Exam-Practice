@@ -128,7 +128,7 @@ select 'hello there', instr('hello there', 'there', 1, 1) from dual;
 
 
 
---needlessly ingewikkelde statement bc why not?
+--needlessly ingewikkelde statement bc why not?(looking at this 2 weeks later and this is the simplest statement ever)
 select 'HELLO there', instr('HELLO there', upper('hello'), 1, 1) from dual;
 
 
@@ -160,6 +160,9 @@ select EMPLOYEE_ID, FIRST_NAME, replace(FIRST_NAME, 'a', null) from EMPLOYEES;
 --doesnt do anything either
 SELECT EMPLOYEE_ID, FIRST_NAME, Replace(FIRST_NAME, null, 'a') from EMPLOYEES;
 
+--Replaces cat with null
+select replace('the null is on the cat', 'cat', null)
+from dual;
 
 --trim
 --cant trim in the middle
