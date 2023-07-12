@@ -113,9 +113,13 @@ select * from DEPARTMENTS where DEPARTMENT_ID = &&dept_id;
 
 
 
+--Als je alle defined variables wilt zien, kan je gewoon define gebruiken, it will show all of them
+define test=100;
+define;
 
+--Ik denk dat define wijst wat die value is wat je moet zetten voor je substitution variable
+show define
 
-
-
-
+--Wijst some stuff
+show all;
 
