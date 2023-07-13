@@ -129,3 +129,39 @@ select to_char(HIRE_DATE, 'dy mon yyyy') from EMPLOYEES;
 --Je kan krijgen welke dag van de week is. Again Zondag is dag nummer 1.
 select FIRST_NAME, LAST_NAME, HIRE_DATE, to_char(HIRE_DATE, 'Day Month yyyy'),
 to_char(HIRE_DATE, 'd') from EMPLOYEES;
+
+
+
+--Je kan ook quarter gebruiken to find out which quarter of the year it is
+-- Q1 is from January 1 to March 31, 
+-- Q2 is from April 1 to June 30, 
+-- Q3 is from July 1 to September 30 
+-- Q4 is from October 1 to December 31.
+select FIRST_NAME, LAST_NAME, HIRE_DATE, to_char(HIRE_DATE, 'q')
+from EMPLOYEES;
+
+
+select to_char(sysdate, 'q dd-mm-yyyy hh24:mi:ss')
+from dual;
+
+select to_char(sysdate, 'QSpth')
+from dual;
+
+--Alles kleinletter
+select to_char(sysdate, 'yyyySP')
+from dual;
+
+--Het eerste letter alleen is capitalized 
+select to_char(sysdate, 'Yyyysp')
+from dual;
+
+
+--Alles is capitalized
+select to_char(sysdate, 'YYyysp')
+from dual;
+
+
+--Kan ook met spelling ofc
+select to_char(sysdate, 'Yyspth')
+from dual;
+

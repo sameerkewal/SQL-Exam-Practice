@@ -61,3 +61,4 @@ table
 - . LEAD returns data from a row following the
 current row, as determined by the offset and sorted by the LEAD function’s
 ORDER BY clause
+- Having **must** occur after the where clause

@@ -145,7 +145,8 @@ from employees;
  select JOB_ID, SALARY,
 decode(JOB_ID, 'AD_PRES', 'president',
                 'ST_CLERK', 'clerk',
-                'IT_PROG', 2)
+                'IT_PROG', 'brogrammer',
+                'whack')
                 as full_title
                 from EMPLOYEES;
 

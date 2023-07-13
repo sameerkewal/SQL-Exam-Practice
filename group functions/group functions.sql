@@ -249,3 +249,45 @@ join DEPARTMENTS dep on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
 join LOCATIONS loc on loc.LOCATION_ID=dep.LOCATION_ID
 group by LOC.LOCATION_ID
 order by loc.LOCATION_ID;
+
+
+SELECT e.*, sum(e.SALARY) over() as salary_sum
+FROM
+EMPLOYEES e;
+
+
+--Je mag een group function hebben in je statement
+select FIRST_NAME, max(SALARY)
+from EMPLOYEES
+group by FIRST_NAME
+order by min(SALARY);
+
+--Die aggregate function is verplicht for it to work
+-- and since die aggregate function verplicht is dan is die group by clause ook verplicht
+select first_name, max(SALARY) from EMPLOYEES
+group by FIRST_NAME
+order by max(SALARY);
+
+
+select count(EMPLOYEE_ID)
+from EMPLOYEES;
+
+
+
+--Dit mag niet zonder een group by 
+select count(count(EMPLOYEE_ID))
+from EMPLOYEES;
+
+
+
+select count(count(employee_id))
+from EMPLOYEES
+group by EMPLOYEE_ID;
+
+
+--Je having clause **moet** na de where clause anders gaat het een syntax error geven
+select DEPARTMENT_ID, count(EMPLOYEE_ID)
+from EMPLOYEES
+where DEPARTMENT_ID<>10
+having count(EMPLOYEE_ID)>20
+group by DEPARTMENT_ID;

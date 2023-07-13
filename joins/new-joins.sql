@@ -78,6 +78,24 @@ join DEPARTMENTS DEP using(DEPARTMENT_ID)
 where EMP.EMPLOYEE_ID!=100;
 
 
+--Het is dezelfde value in both tables so its not gonna give an ambiguity error
+select DEPARTMENT_ID
+from EMPLOYEES
+join DEPARTMENTS
+using(DEPARTMENT_ID);
+
+--Al is het gewoon in je selecting columns, je kan toch het toch geen prefix alias thing geven
+select FIRST_NAME, LAST_NAME, dep.DEPARTMENT_ID
+from EMPLOYEES
+join DEPARTMENTS dep
+using(DEPARTMENT_ID);
+
+select FIRST_NAME, LAST_NAME, departments.DEPARTMENT_ID
+from EMPLOYEES
+join DEPARTMENTS 
+using(DEPARTMENT_ID);
+
+
 select *
 from EMPLOYEES
 join JOB_HISTORY using(EMPLOYEE_ID, DEPARTMENT_ID);
@@ -90,6 +108,38 @@ select *
 from EMPLOYEES
 join JOBS using(JOB_ID);
 
+--Trying to get column ambiguously defined error with the using clause
+create table TABLE_A(
+    id number,
+    name varchar2(20),
+    age number
+);
+
+
+create table TABLE_B(
+    age number,
+    id number constraint table_b_table_a_fk references table_a(id)
+);
+
+insert into table_a values(1, 'Sameer', 21);
+insert into table_a values(2, 'Jasmine', 22);
+insert into table_a values(3, 'Gavin', 22);
+
+
+
+insert into table_b values(21, 1);
+insert into table_b values(22, 2);
+insert into table_b values(23,  3);
+
+-- in dit geval is die column wel ambiguously defined
+SELECT
+    ID,
+    NAME,
+    AGE
+FROM
+    TABLE_A
+    JOIN TABLE_B
+    USING(ID);
 
 
 --zo alleen bij job_id mag je geen alias of table name zetten, bij derest van de kolumns is dat wel totally allowed
@@ -102,6 +152,8 @@ select *
 from EMPLOYEES
 join JOB_HISTORY
 using(EMPLOYEE_ID, DEPARTMENT_ID);
+
+
 
 --long join using "using clause"
 select emp.first_name, emp.last_name, dep.DEPARTMENT_NAME, loc.CITY, COUNTRY_ID, CNTR.COUNTRY_NAME, CNTR.REGION_ID
@@ -160,5 +212,8 @@ SELECT emp.EMPLOYEE_ID, emp.FIRST_NAME, emp.DEPARTMENT_ID, dep.DEPARTMENT_NAME
 from EMPLOYEES emp right join DEPARTMENTS dep
 on emp.DEPARTMENT_ID=dep.DEPARTMENT_ID
 order by emp.FIRST_NAME;
+
+
+
 
 
