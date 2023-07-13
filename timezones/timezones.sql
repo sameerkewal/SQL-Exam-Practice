@@ -164,3 +164,35 @@ select extract(second from to_dsinterval('20 23:59:59')) from dual;
 -- TIMESTAMP WITH LOCAL TIME ZONE, or INTERVAL DAY TO SECOND. DATE is not valid here, 
 -- because Oracle Database treats it as ANSI DATE data type, which has no time fields.
 
+
+-----More interval stuff
+--Year
+select numtoyminterval(20, 'year')
+from dual;
+
+--Month
+select numtoyminterval(20, 'Month')
+from dual;
+
+
+select numtodsinterval(10,'day')
+from dual;
+
+select numtodsinterval(10, 'hour')
+from dual;
+
+
+select numtodsinterval(10, 'minute')
+from dual;
+
+select numtodsinterval(10, 'second')
+from dual;
+
+
+--72 hours is 3 days
+select numtodsinterval(72, 'hour')
+from dual;
+
+
+select interval '10-02' year to month from dual;
+

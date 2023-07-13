@@ -55,6 +55,12 @@ accept table prompt 'please enter table!!';
 select * from &table where DEPARTMENT_ID = &dept_id;
 
 
+define dept_id
+prompt "Enter A room number: "
+select DEPARTMENT_ID, DEPARTMENT_NAME
+from DEPARTMENTS
+where DEPARTMENT_ID= &test;
+
 undefine dept_id;
 undefine table;
 

@@ -196,3 +196,36 @@ select instr('Sameer Deepak Kewal',  ' ', 1, 1) from dual;
 
 select instr('Sameer Deepak Kewal', ' ', 1, 2) from dual;
 
+
+
+------------More date functions--------------
+
+--Als je days/hours/minutes etc etc wilt optellen bij je datum kan je shit like this doen
+
+select sysdate, sysdate+1 as plus_one_day
+from dual;
+
+select to_char(SYSDATE, 'dd-mm-yyyy hh24:mi:ss'), 
+       to_char(sysdate+1/24, 'dd-mm-yyyy hh24:mi:ss') as plus_one_hour
+from dual;
+
+
+select to_char(SYSDATE, 'dd-mm-yyyy hh24:mi:ss') as today, 
+       to_char(sysdate+1/1440, 'dd-mm-yyyy hh24:mi:ss') as plus_one_minute
+from dual;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

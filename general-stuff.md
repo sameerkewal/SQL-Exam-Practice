@@ -55,3 +55,9 @@ table
     before 130.
 
 - Between is een replacement voor **and**, niet voor *or*
+- the lack of an ORDER BY
+    renders WITH TIES ineffective, but the syntax is acceptable nonetheless.
+    There is no syntax error.
+- . LEAD returns data from a row following the
+current row, as determined by the offset and sorted by the LEAD function’s
+ORDER BY clause

@@ -89,3 +89,29 @@ select mod(-11, 4) from dual;
 
 --dividend is hier also negatief
 select mod(-11, -4) from dual;
+
+
+
+
+--kinda net als modulus, maar deze zoekt naar de dichtsbijzijnde hele getal dat deelbaar is door die 4
+--like in dit geval is dat 12 dus dan doe je 11-12=-1 
+select remainder(11, 4) from dual;
+
+--hier is dat 20 dus dan je 21-20=1
+select remainder(21, 4) from dual;
+
+--Hier heb je 2 dichtsbijzijnde hele getallen precies deelbaar, 8 en 12.
+--in dit geval neemt het die kleinste which is 8
+-- 10 - 8 = 2
+select remainder(10, 4)from dual;
+
+
+--dichtsbijzijnde is 100 so dan wordt het 101-100 = -
+select remainder(101, 4)from dual;
+
+
+--Altijd dat getal in je function aftrekken met dichtsbijzijnde yk
+select remainder(26, 4)from dual;
+
+
+

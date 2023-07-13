@@ -69,6 +69,10 @@ select * from JOBS;
 --die escape character is voor als je wilt dat je result werkelijk die _ moet containen
 select * from JOBS where JOB_ID like 'SA/_%' ESCAPE '/';
 
+desc jobs;
+
+insert into jobs values('SAP_CON', 'SAP_CON', 3000, 4000);
+
 --good luck deciphering this
 select *
 from jobs where JOB_ID like q'[SA'_%]' escape q'[']';
@@ -274,7 +278,6 @@ fetch first 3 rows with ties;
 
 
 --ook bij offset is row and rows the same thing
---worth mentioning dat offset and fetch alleen werken met order by
 select * from DEPARTMENTS
 order by DEPARTMENT_ID
 offset 4 rows;
@@ -284,6 +287,15 @@ from DEPARTMENTS
 offset 5 rows;
 
 
+--als je een negatieve offset specificied, gaat het behandeld worden alsof het een offset 0 rows is
+select * from EMPLOYEES
+offset -20 rows fetch first 10 row only;
+
+
+--Same result as u can see
+select * from EMPLOYEES
+fetch first 10 row only;
+
 
 
 select * from EMPLOYEES order by salary desc;
@@ -292,3 +304,12 @@ select * from EMPLOYEES order by salary desc;
 
 
 
+select  FIRST_NAME
+,       LAST_NAME
+,       EMPLOYEE_ID
+from EMPLOYEES
+where LAST_NAME in (
+    select LAST_NAME
+    from EMPLOYEES
+    where DEPARTMENT_ID = 90
+);
