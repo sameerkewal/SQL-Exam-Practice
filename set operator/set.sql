@@ -157,3 +157,12 @@ select FIRST_NAME as Voornaam, LAST_NAME as Achternaam from EMPLOYEES
 UNION
 select FIRST_NAME as Voornaam, LAST_NAME as from EMPLOYEES
 order by Voornaam;
+
+
+--Will only work if subquery retrieves one row
+select FIRST_NAME, (select DEPARTMENT_NAME from DEPARTMENTS dept where DEPT.DEPARTMENT_ID=100
+                    UNION
+                    select department_name from departments where department_id=90) 
+from EMPLOYEES e;
+
+

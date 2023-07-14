@@ -140,7 +140,9 @@ and FIRST_NAME<>'John';
 ------------------------Scalar Subquery/Correlated Subquery--------------------------------
 
 --Scalar subquery is a subquery that returns exactly one column value from every row
-select EMP.FIRST_NAME, EMP.LAST_NAME, EMP.SALARY, (select max(salary) from employees) as max_sal
+-- If a single-row subquery consists of only one
+-- column’s worth of output, then it is known as a scalar subquery.
+select EMP.FIRST_NAME, EMP.LAST_NAME, EMP.SALARY, (select max(salary) as maxisal from employees) as max_sal
 from EMPLOYEES emp;
 
 
@@ -404,7 +406,14 @@ test as (
 select * from test; 
 
 
+--Subquery does not need to use a table alias when referencing a colum in the outer query
+--Unless there is a risk of ambiguity
+select E.FIRST_NAME 
+from employees e
+where e.DEPARTMENT_ID=(select b.DEPARTMENT_ID from departments b where EMPLOYEE_ID=e.DEPARTMENT_ID
+                            and b.DEPARTMENT_ID=90);
 
 
-
-
+update emp_copy set salary = salary *1.10
+where not exists (select EMPLOYEE_ID from EMPLOYEES
+where emp_copy.EMPLOYEE_ID=employees.EMPLOYEE_ID);

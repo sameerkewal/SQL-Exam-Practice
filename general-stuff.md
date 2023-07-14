@@ -62,3 +62,11 @@ table
 current row, as determined by the offset and sorted by the LEAD function’s
 ORDER BY clause
 - Having **must** occur after the where clause
+- Don't use any V$ tables in joins. C. The V$ prefix indicates that V$DATAFILE is a public synonym
+for a dynamic performance view, for which Oracle Corporation does not
+guarantee read consistency. Therefore, you are recommended to limit your
+direct access of V$ objects to simple queries
+- create index doesn't exist. Create table is wat je nodig hebt om een index te maken, since
+creating a table with pk or uk automatically makes an index for it
+- als je updateable view hebt you dont need access to the table to update it. Just have privilege to the view and update that. Same with selecting from the view/table
+- You can grant  a role to another role but that user first needs to enable that 2nd role to make it actually work
