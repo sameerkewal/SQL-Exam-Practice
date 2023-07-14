@@ -25,6 +25,14 @@ from EMPLOYEES
 where salary>(select salary from EMPLOYEES where DEPARTMENT_ID=30);
 
 
+--Single row subquery mag 1 of 0 rows returnen
+select *
+from EMPLOYEES
+where salary>(
+    select salary from EMPLOYEES where DEPARTMENT_ID = 999
+);
+
+
 --You can use group functions in your subquery
 select *
 from EMPLOYEES

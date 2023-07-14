@@ -374,8 +374,16 @@ when not matched THEN
     values(5, 'test')
     delete where b.name='test';
 
-
-
 select * from table_a;
 select * from table_b;
 rollback;
+
+--je kan alleen columns in je where clause hebben, die komen uit de using clause(source table)
+--cannot reference the target table in the where clause
+merge into EMP_COPY a
+using(select * from EMPLOYEES) b
+on(a.employee_id = b.employee_id)
+when not matched then
+    insert(a.EMPLOYEE_ID, a.FIRST_NAME, a.LAST_NAME, a.EMAIL, a.PHONE_NUMBER, a.HIRE_DATE, a.JOB_ID, a.salary, a.COMMISSION_PCT, a.MANAGER_ID, a.department_id)
+    values(b.employee_id, b.FIRST_NAME, b.LAST_NAME, b.EMAIL, b.PHONE_NUMBER, b.HIRE_DATE, b.JOB_ID, b.salary, b.COMMISSION_PCT, b.manager_id, b.department_id)
+where a.employee_id>100;

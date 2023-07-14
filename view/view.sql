@@ -197,8 +197,13 @@ create table test(
     constraint test_fk foreign key(test_dept) references departments
 );
 
+drop view v1;
 
-f
+create view v1(
+    v1_id constraint v1_chk check(v1_id>0) disable NOVALIDATE
+)
+as select EMPLOYEE_ID
+from employees;
 
 
 

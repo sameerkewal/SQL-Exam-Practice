@@ -70,3 +70,7 @@ direct access of V$ objects to simple queries
 creating a table with pk or uk automatically makes an index for it
 - als je updateable view hebt you dont need access to the table to update it. Just have privilege to the view and update that. Same with selecting from the view/table
 - You can grant  a role to another role but that user first needs to enable that 2nd role to make it actually work
+
+- Redo log files are generally used for instance recovery and media recovery. The data needed for such operations is automatically recorded in the redo log files. However, a redo-based application may require that additional columns be logged in the redo log files. The process of logging these additional columns is called supplemental logging.
+- distinct doesnt ignore null values, so als je in 1 column multiple nulls hebt gaat het voor die distinct gewoon eentje pakken
+- normal or regular view can be indexed

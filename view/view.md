@@ -35,3 +35,9 @@ over de use ervan. Provides a logical representation of the constraints defined 
 - Pseudocolumn rownum keyword
 - Columns defined by expressions
 - Not null columns without default value in the base tables that are not selected by the view
+
+
+
+## Constraints and stuff:
+- Je kan constraints definen zolang ze disabled zijn
+- Je kan geen check constraint definen I think 
