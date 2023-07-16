@@ -201,5 +201,13 @@ create table emp_sal(
 );
 
 
-
-alter table emp_sal 
+--Dit gaat niet bc as soon as u make a table that means you're doing a commit dus daarom kan dat niet
+create table test(
+    id,
+    lname not null,
+    fname constraint fname_uk unique deferrable initially deferred
+)
+as select  employee_id, 
+           first_name, 
+           last_name as lname 
+from employees;
