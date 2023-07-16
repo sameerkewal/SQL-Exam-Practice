@@ -27,3 +27,19 @@ Als je in die data dictionary view kijkt gaat het je die originele deferrable va
 
 
 ## We cannot alter the constraint **ever**, only thing we can do is drop and recreate it
+
+
+## Global Temporary Tables
+
+- The global temporary tables is only for the current session, other users wont be able to see the data
+- They can see that the table exists but not the data inside the table
+- Meaning they can also see the structure of the table
+- They can also insert into the table but the data they inserted is only visible for them itself
+- Other sessions will not be able to see the data they inserted
+- Export and Import utilities can be used to transfer the table definitions, but no data rows are processed
+- Views can be made on them and combined with normal tables
+- indexes can be made on em
+- Also constraints(work on all other sessions)
+- Triggers can be associated with them
+- You need to commit first before other sessions can do ddl statements on the table
+- You can make them by using a subquery as seen in [global tables.sql](<global tables.sql>)
