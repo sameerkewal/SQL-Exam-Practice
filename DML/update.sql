@@ -84,3 +84,16 @@ where EMPLOYEE_ID=100;
 --Je mag die row waarop je filtered in je where clause ook updaten in je update statement
 update copy_emp set FIRST_NAME='Steve'
 where FIRST_NAME='Steven';
+
+
+
+--Je kan ook functions gebruiken in je update statements. Gaat over die rows
+--which you're updating at that moment. Hier zet het voor die rows, if the commission_pct is null
+--then it sets them to 0. Otherwise it returns then commission_pct
+update EMP_COPY
+set COMMISSION_PCT = nvl(COMMISSION_PCT, 0);
+
+--Zet die salary op die manager_id(is gewoon een test, ignore the logica)
+--If the manager_id is null it returns 1000, otherwise it just returns the manager_id
+update EMP_COPY
+set SALARY = nvl(MANAGER_ID, 1000);

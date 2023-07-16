@@ -4,4 +4,5 @@
   - Flashback tables
   - DBA_TAB_PRIVS onderzoeken
   - ~~Grant role to other role?~~
+  - question 221 uitproberen
   

@@ -68,6 +68,13 @@ select first_name,substr(FIRST_NAME, -2) from EMPLOYEES;
 select FIRST_NAME, substr(FIRST_NAME, -3, 2) from EMPLOYEES;
 
 
+--Als je length negatief is, gaat het null returnen and same with it being null
+select FIRST_NAME, substr(FIRST_NAME, 1, -1) from EMPLOYEES;
+select FIRST_NAME, substr(FIRST_NAME, 1, null) from EMPLOYEES;
+
+
+
+
 --length: self explanatory??? exactly like other programming languages
 
 --gelijk in een where and order by statement geplaatst

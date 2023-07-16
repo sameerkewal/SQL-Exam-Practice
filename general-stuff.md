@@ -74,3 +74,18 @@ creating a table with pk or uk automatically makes an index for it
 - Redo log files are generally used for instance recovery and media recovery. The data needed for such operations is automatically recorded in the redo log files. However, a redo-based application may require that additional columns be logged in the redo log files. The process of logging these additional columns is called supplemental logging.
 - distinct doesnt ignore null values, so als je in 1 column multiple nulls hebt gaat het voor die distinct gewoon eentje pakken
 - normal or regular view can be indexed
+
+
+## Long:
+- Table can only have one long column
+- Long columns cannot appear anywhere in the where clauses or in integrity constraints
+- Long columns cannot be indexed
+- Cannot be specified in regular expressions
+- Cannot be used in group by clauses, order by clauses, connect clauses or with the distinct
+  operator in select statements
+- unique operator of a select statement
+- SQL built in functions, expressions or conditions
+- select list of queries containing group by clauses
+- select list of subqueries or queries combined by the union, intersect, or minus set operator
+- select lists of create table...as select statements
+- alter table...move statements select lists in subqueries in insert statements
