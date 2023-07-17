@@ -17,6 +17,7 @@ The INITIALLY clause establishes the default checking behavior for constraints t
 
 - This clause is not valid if you have declared the constraint to be NOT DEFERRABLE, because a NOT DEFERRABLE constraint is automatically INITIALLY IMMEDIATE and cannot ever be INITIALLY DEFERRED.
 
+- A constraint that's DEFERRABLE though uses a non-unique index instead of a unique index (because it has to record changes that may violate the unique constraint while constraint checking is being deferred).
 
 
 Als je in die data dictionary view kijkt gaat het je die originele deferrable value wijzen
@@ -43,3 +44,15 @@ Als je in die data dictionary view kijkt gaat het je die originele deferrable va
 - Triggers can be associated with them
 - You need to commit first before other sessions can do ddl statements on the table
 - You can make them by using a subquery as seen in [global tables.sql](<global tables.sql>)
+
+
+## External Tables:
+- External data is a read only table whose metadata is stored in the db
+- but whose data is stored outside of the db
+- no dml allowed
+- no indexes can be created on external tables
+- You can access the data with 2 methods(oracle_loader or oracle_datapump)
+- To read external data, first u need to create a directory in the db
+- to create directory you need create any directory privilege
+- The directory owner will always be sys, regardless of who actually created it
+- You can specify only NOT NULL, unique, primary key, and foreign key constraints on external tables. Unique, primary key, and foreign key constraints are supported only in RELY DISABLE mode.

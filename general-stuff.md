@@ -74,7 +74,29 @@ creating a table with pk or uk automatically makes an index for it
 - Redo log files are generally used for instance recovery and media recovery. The data needed for such operations is automatically recorded in the redo log files. However, a redo-based application may require that additional columns be logged in the redo log files. The process of logging these additional columns is called supplemental logging.
 - distinct doesnt ignore null values, so als je in 1 column multiple nulls hebt gaat het voor die distinct gewoon eentje pakken
 - normal or regular view can be indexed
+- In read-only mode, the following operations are permitted on the table:
+  -  Select
+  management indexes, constraints, supplemental log
+Dropping and deallocation of unused columns
+ Renaming and moving of the table
+ Altering the table for physical property changes, row movement, and shrinking the segment
+Drop table
 
+The following operations are disabled on a table in read-only mode:
+
+•  DML on table or any table partitions
+
+•  Truncation of table
+
+•  Select for update
+
+•  Adding, removing, renaming, dropping, or setting a column to unused
+
+•  Dropping a partition or sub partition belonging to the table
+
+•  Online redefinition
+
+•  Flashback on the table
 
 ## Long:
 - Table can only have one long column
