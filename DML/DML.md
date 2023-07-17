@@ -49,6 +49,7 @@ Die from is ook optional btw
   - DDL statement or DCL statement executes
   - User exits SQLDeveloper or SQLPlus
   - The system crashes
+  - The database issues an implicit COMMIT statement before and after every DDL statement.
 
 
 ### Advantages of Commit and Rollback statements:
