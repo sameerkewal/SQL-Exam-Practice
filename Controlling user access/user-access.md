@@ -78,3 +78,8 @@ Worth knowing dat bv het verschil is tussen create table and create any table is
 
 
 The GRANT OPTION is not valid when granting an object privilege to a role. Oracle prevents the propagation of object privileges through roles so that grantees of a role cannot propagate object privileges received by means of roles.
+
+
+
+- You **can** grant role and system privileges in one statement
+- you **cannot** grant system and object privileges in one statement

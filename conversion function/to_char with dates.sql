@@ -118,6 +118,10 @@ select to_char(HIRE_DATE, 'ddSP') from EMPLOYEES;
 select to_char(HIRE_DATE, 'ddTH') from EMPLOYEES;
 
 
+--Die volgorde van th/sp maakt niet uit
+SELECT TO_CHAR(TO_DATE('11-oct-2007'), 'fmDdthsp "of" Month, Year')FROM DUAL;
+SELECT TO_CHAR(TO_DATE('11-oct-2007'), 'fmDdspth "of" Month, Year')FROM DUAL;
+
 
 --als je Abbrevation wilt hebben van day of number kan je gebruik maken van dy/mon zoals volgt:
 --zelfde regels van hoofdletters gelden voor die abbrevation versies

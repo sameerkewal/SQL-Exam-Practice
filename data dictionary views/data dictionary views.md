@@ -26,6 +26,8 @@ functions, packages, triggers, and so on)
 
 
 ## The CAT view:
-For a simpliefied query and output you can query the cat view. This view contains only 2 tables.
+For a simpliefied query and output you can query the cat view. This view contains only 2 columns.
 Table_name and table_type. It provides the names of all your index, table, cluster, view,
 synonum, sequence or undefined objects
+User objects geeft tables, indexes, sequences and views, procedures and triggers
+user catalog geeft tables, sequences, views
