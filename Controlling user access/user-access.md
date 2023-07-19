@@ -83,3 +83,8 @@ The GRANT OPTION is not valid when granting an object privilege to a role. Oracl
 
 - You **can** grant role and system privileges in one statement
 - you **cannot** grant system and object privileges in one statement
+- It is only possible to grant access to one object at a time. Granting access to multiple objects in the same statement is not allowed.
+
+
+
+[Seperate grants are required for the orders and order_items table](<../resources/seperate grants..png>)

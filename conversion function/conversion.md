@@ -69,3 +69,6 @@ Although implicit data type conversion is available, it is recommended that you 
 ### Conditional expressions
 -Providing the use of if-then-else within an sql statement
 ![Alt text](<../resources/conditional expressions.png>)
+
+
+- Bij nvl2 kan je null vergelijken met any other datatype and it will work :)

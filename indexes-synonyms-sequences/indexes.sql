@@ -236,3 +236,10 @@ create table emp_ind(
     email varchar2(100) constraint emp_ind_email_unique unique using index(create unique index emp_ind_unique on emp_ind(email))
 );
 
+
+-- A "descending index" is an index in a database that is created with one or more columns sorted in 
+-- descending order. In most traditional database systems, indexes are created in ascending order by default, but there are scenarios 
+-- where descending indexes can be beneficial for specific query optimizations or use cases.
+create index test_idx on test(datum desc);
+
+

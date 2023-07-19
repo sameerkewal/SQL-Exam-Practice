@@ -48,11 +48,29 @@ from EMPLOYEES;
 select EMPLOYEE_ID, FIRST_NAME, COMMISSION_PCT, nvl2(COMMISSION_PCT, COMMISSION_PCT, 0)
 from EMPLOYEES;
 
+
+
+
 --nvl2 is ook flexible when it comes to datatype, unlike nvl
 --However expression2 and expr3 moeten wel dezelfde datatype zijn.
 select EMPLOYEE_ID, FIRST_NAME, COMMISSION_PCT, nvl2(COMMISSION_PCT, 'sal and comm', 'only salary')
 income from EMPLOYEES;
 
+
+-- Bij nvl2 kan je null vergelijken met any other datatype and it will work :)
+create table test(
+    datum date
+);
+
+insert into test values(sysdate);
+insert into test values(null);
+
+--Dit wordt gezien als null
+select nvl2('test', datum+15,'')
+from test;
+
+select nvl2('dk',2, null)
+from dual;
 
 --nullif
 --nullif neemt 2 parameters. Als expr1=expr2 then it returns null, else it returns expr1
