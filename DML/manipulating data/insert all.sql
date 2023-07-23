@@ -387,3 +387,51 @@ when not matched then
     insert(a.EMPLOYEE_ID, a.FIRST_NAME, a.LAST_NAME, a.EMAIL, a.PHONE_NUMBER, a.HIRE_DATE, a.JOB_ID, a.salary, a.COMMISSION_PCT, a.MANAGER_ID, a.department_id)
     values(b.employee_id, b.FIRST_NAME, b.LAST_NAME, b.EMAIL, b.PHONE_NUMBER, b.HIRE_DATE, b.JOB_ID, b.salary, b.COMMISSION_PCT, b.manager_id, b.department_id)
 where a.employee_id>100;
+
+
+
+--Merge only deletes what it actually updated
+insert into orders_master values(1, 1000);
+insert into orders_master values(2, 2000);
+insert into orders_master values(3, 3000);
+insert into orders_master values(4, null);
+
+insert into monthly_orders values(2, 2500);
+insert into monthly_orders values(3, null);
+insert into monthly_orders values(4, null);
+
+rollback;
+select *
+from orders_master;
+
+select *
+from monthly_orders;
+
+--id 4 never got updated so it never deletes that row
+merge into orders_master o 
+using(select * from monthly_orders)m
+on(o.order_id=m.order_id)
+when matched then
+update set o.order_total = m.order_total where o.order_id<>4
+delete where o.order_total is null;
+
+
+/* Specify the DELETE where_clause to clean up data in a table while populating or updating it. 
+The only rows affected by this clause are those rows in the destination table that are updated 
+by the merge operation. T
+he DELETE WHERE condition evaluates the updated value, not the original value that was evaluated by 
+the UPDATE SET ... WHERE condition. 
+If a row of the destination table meets the DELETE condition but is not included in the join 
+defined by the ON clause, then it is not deleted. Any delete triggers defined on the target table 
+will be activated for each row deletion.
+
+You can specify this clause by itself or with the merge_insert_clause. If you specify both, 
+then they can be in either order.
+
+Restrictions on the merge_update_clause
+
+This clause is subject to the following restrictions:
+
+You cannot update a column that is referenced in the ON condition clause.
+
+You cannot specify DEFAULT when updating a view. */

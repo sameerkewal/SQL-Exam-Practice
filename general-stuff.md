@@ -117,3 +117,5 @@ and then use rownum as a way of displaying
 - Where clause mag niet before join clause!!
 - Oracle Database issues an implicit COMMIT under the following circumstances:
 Before any syntactically valid data definition language (DDL) statement, even if the statement results in an error After any data definition language (DDL) statement that completes without an error
+
+- Yes, there is a difference between adding a WHERE statement after the JOIN condition and adding it to the WHERE clause. The WHERE clause filters the result set after the join is performed. The JOIN condition filters the rows before they are joined. If you add a WHERE statement after the JOIN condition, it will filter the result set further. If you add it to the WHERE clause, it will filter the rows before they are joined. In general, it is better to use the JOIN condition to filter rows because it can improve performance by reducing the number of rows that need to be joined

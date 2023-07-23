@@ -91,6 +91,10 @@ which implicitly creates a unique index.
 - The table is small or most queries are expected to retrieve more than 2% to 4% of rows in the table
 - The table is updated frequently(bc everytime a record is inserted, updated or deleted the index needs to be modified to reflect the changes)
 - The indexed columns are referenced as part of an expression
+- A descending index is a function based index
+- you can create unique and nonunique index on one column
+- B tree index is your standard index type
+- However, a column that is marked as unused is not displayed in queries or data dictionary views, and its name is removed so that a new column can reuse that name. All constraints, indexes, and statistics defined on the column are also removed."
 
 
 Bitmap indexes zijn als je wilt pointen naar distinct values rather than each row seperately. Dus basically a group of values. Stel je

@@ -227,3 +227,122 @@ select department_id, max(distinct salary)
 from employees
 group by department_id
 order by max(all salary);
+
+select *
+from employees emp
+join departments dept
+using(department_id)
+where dept.department_id>0;
+
+
+drop table copy_emp;
+
+create table copy_emp
+as
+select *
+from employees;
+
+
+alter table copy_emp
+modify first_name constraint fn_nn not null;
+
+select *
+from user_constraints
+where table_name='COPY_EMP';
+
+
+drop table test;
+
+create table test(
+    test_id number constraint test_nn not null
+);
+
+select *
+from user_constraints
+where table_name='TEST';
+
+
+select  first_name,
+        last_name
+from copy_emp
+where department_id in(
+    (select department_id
+    from departments
+    where department_id= 40
+    ),
+    (select department_id
+    from departments
+    where department_id = 90)
+);
+
+select  employee_id, 
+        first_name
+from employees
+union
+select  '1000',
+        first_name
+from employees;
+
+
+select *
+from hr.employees e1
+where e1.employee_id =
+(select min(e2.employee_id)
+from hr.employees e2);
+
+select *
+from hr.employees e1
+where
+(select min(e2.employee_id)
+from hr.employees e2) =
+e1.employee_id;
+
+
+-- ORA-01776: cannot modify more than one base table through a join view
+insert into 
+(select department_id, department_name, manager_id, loc.location_id from copy_dept dept
+join
+locations loc on loc.location_id=dept.location_id)
+values(1000, 'Construction2', null, null);
+
+
+insert into(
+select  department_id, 
+        department_name, 
+        manager_id, 
+        location_id 
+from copy_dept 
+where department_id=0
+)
+values(1009, 'Construction99', null, null);
+
+
+
+select *
+from copy_dept;
+
+
+select *
+from employees
+where employee_id not in(
+    select test_s.currval from dual
+);
+
+
+select *
+from employees emp
+join departments dept 
+on emp.department_id=dept.department_id
+and salary>0;
+
+select *
+from employees emp
+join departments dept 
+on emp.department_id=dept.department_id
+where salary>0;
+
+
+
+
+select sysdate-'20-MAY-02'
+from dual;

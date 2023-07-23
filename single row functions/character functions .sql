@@ -208,12 +208,21 @@ select trim(leading 'S' from 'Sameer') from dual;
 select trim(' ' from '  sameer kewal  '), length(trim(' ' from '  sameer kewal  ')) from dual;
 
 
+--je mag maar 1 karakter max zetten in je trim. 
+select trim('son' from 'son goku')
+from dual;
 
 
+select max(salary)max-sal
+from employees
+order by max-sal;
 
 
-
-
+select *
+from employees
+where salary in(
+    select salary from employees where department_id=90
+);
 
 
 

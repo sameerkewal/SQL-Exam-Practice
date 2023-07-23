@@ -86,6 +86,20 @@ from EMPLOYEES
 where (SALARY,DEPARTMENT_ID) in (select SALARY,DEPARTMENT_ID from EMPLOYEES where DEPARTMENT_ID=90);
 --je kan die in statement ook gewoon replacen met in(17000, 24000)
 
+--this ugly shit kan ook 
+select  first_name,
+        last_name
+from copy_emp
+where department_id in(
+    (select department_id
+    from departments
+    where department_id= 40
+    ),
+    (select department_id
+    from departments
+    where department_id = 90)
+);
+
 
 
 --Je kan een subquery gebruiken in een having, maar niet in een group by clause

@@ -52,6 +52,7 @@ Als je in die data dictionary view kijkt gaat het je die originele deferrable va
 - no dml allowed
 - no indexes can be created on external tables
 - You can access the data with 2 methods(oracle_loader or oracle_datapump)
+- default for reject method is 0 
 - To read external data, first u need to create a directory in the db
 - to create directory you need create any directory privilege
 - The directory owner will always be sys, regardless of who actually created it

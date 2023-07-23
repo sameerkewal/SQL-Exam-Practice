@@ -257,6 +257,8 @@ describe test;
 
 
 ------------------Altering Sequences---------------------
+drop sequence test_s;
+create sequence test_s;
 
 select * from user_sequences where sequence_name='TEST_S';
 
@@ -281,6 +283,12 @@ maxvalue 1000
 MINVALUE 10;
 
 
+--Altering the sequence minvalue
+alter sequence test_s
+minvalue -1;
+
+select test_s.nextval from dual;
+select test_s.currval from dual;
 
 
 
@@ -348,4 +356,28 @@ insert into test values(test_s.NEXTVAL, 'Jasmine', null);
 insert into test values(test_s.NEXTVAL, 'Claire', null);
 
 
+--Not allowed
+select *
+from employees
+where employee_id not in(
+    select test_s.currval from dual
+);
 
+--Not allowed
+select test_s.nextval
+from dual
+group by test_s.nextval;
+
+
+--For some reason also not allowed
+select test_s.nextval
+from dual
+order by 1;
+
+
+--So ook niet hier
+select test_s.nextval
+from dual
+union
+select 10
+from dual;

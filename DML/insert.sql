@@ -96,8 +96,27 @@ VALUES                  (5, 'Development 1', 100, 1);
 --Dont even have to show this but mismatching datatype
 --                                value too long
 
+--Dit shit mag omdat het gewoon die tabellen ophaalt I guess
+-- er is ook al een value in dept_id 40
+insert into(
+select  department_id, 
+        department_name, 
+        manager_id, 
+        location_id 
+from copy_dept 
+where department_id=40
+)
+values(1000, 'Construction99', null, null);
+
+select *
+from dept_copy;
 
 
 
-
-
+--cannot modify more than one base table through a join view
+INSERT INTO (SELECT o.order_id, o.order_date, o.order_mode, c.customer_id, 
+o.order_total 
+FROM orders o, customers c WHERE o.customer_id = c.customer_id 
+AND c.cust_last_name='Roberts' AND c.credit_limit=600) 
+VALUES (1,'10-mar-2007', 'direct', (SELECT customer_id FROM customers 
+WHERE cust_last_name='Roberts' AND credit_limit=600), 1000);

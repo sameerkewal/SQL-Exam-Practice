@@ -13,10 +13,11 @@ Queries containing set operators are called compound queries
 
 - Bij union moet je hetzelfde aantal kolumns selecteren
 - The data types of the columns being selected must be the same 
+- No implicit conversions?
 - The names of the columns **dont** need to be identical
 - Union operates over all the columns being selected
 - Null values are not ignored during duplicate checking
-- By default the output is sorted in ascending order of the columns of the select clause
+- By default, the output will generally be sorted in the order the rows were inserted
 
 ## Union all
 The guidelines for them are the same **except for the following two reasons:**

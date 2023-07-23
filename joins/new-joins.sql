@@ -162,6 +162,14 @@ join DEPARTMENTS dep using(DEPARTMENT_ID)
 join LOCATIONS loc using(LOCATION_ID)
 join countries cntr using(COUNTRY_ID);
 
+--ook in je where clause mag je geen prefix hebben voor die column
+--op basis waarvan je joined
+select *
+from employees emp
+join departments dept
+using(department_id)
+where dept.department_id>0;
+
 
 --on clause
 --dit gaat werken want die department_name is maar in 1 kolumn

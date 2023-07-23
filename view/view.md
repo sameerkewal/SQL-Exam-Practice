@@ -44,3 +44,7 @@ over de use ervan. Provides a logical representation of the constraints defined 
 
 
 If the view definition contains any constraints, CREATE VIEW ... FORCE will fail if the base table does not exist or the referenced object type does not exist. CREATE VIEW ... FORCE will also fail if the view definition names a constraint that does not exist.
+
+
+
+- Views and synonyms are objects, so they have an object number, but a view does not consume physical space in the database, so it does not have a segment

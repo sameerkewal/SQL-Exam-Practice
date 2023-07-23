@@ -47,11 +47,11 @@ select SESSIONTIMEZONE from dual;
 select to_char(current_date, 'dd-mm-yyyy hh24:mi:ss') from dual;
 
 
+
 --De reden dat deze 2 hetzelfde zijn is dat die database locally runned op je machine en so 
 --je current session is the same as the database session thing
 select to_char(current_date, 'dd-mm-yyyy hh24:mi:ss'), to_char(sysdate, 'dd-mm-yyyy hh24:mi:ss')
 from dual;
-
 
 --as we already seen this returns the current date timestamp w fractional seconds 
 --and also the current timezone

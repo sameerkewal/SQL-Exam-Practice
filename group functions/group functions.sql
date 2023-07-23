@@ -291,3 +291,14 @@ from EMPLOYEES
 where DEPARTMENT_ID<>10
 having count(EMPLOYEE_ID)>20
 group by DEPARTMENT_ID;
+
+
+--You can nest group functions but need an order by if you're doing it
+--Gaat niet
+select max(count(employee_id))
+from employees;
+
+--Need to do it like this
+select max(count(*))
+from employees
+group by employee_id;

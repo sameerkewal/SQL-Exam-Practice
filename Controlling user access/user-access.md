@@ -85,6 +85,10 @@ The GRANT OPTION is not valid when granting an object privilege to a role. Oracl
 - you **cannot** grant system and object privileges in one statement
 - It is only possible to grant access to one object at a time. Granting access to multiple objects in the same statement is not allowed.
 
+- Je kan ook een role with admin option geven meaning he can grant that role to anyone
+grant newuser to hr with admin option; 
 
+
+If you grant a system privilege or role to a user without specifying WITH ADMIN OPTION, and then subsequently grant the privilege or role to the user WITH ADMIN OPTION, then the user has the ADMIN OPTION on the privilege or role.
 
 [Seperate grants are required for the orders and order_items table](<../resources/seperate grants..png>)

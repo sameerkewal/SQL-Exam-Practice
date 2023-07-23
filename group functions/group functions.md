@@ -7,3 +7,4 @@
 
 - no group functions allowed
 - single row functions allowed
+- als je nested group functions hebt dan moet je een wel een group by hebben

@@ -72,6 +72,11 @@ from test;
 select nvl2('dk',2, null)
 from dual;
 
+
+
+select nvl2('man', null, 'yep')
+from dual;
+
 --nullif
 --nullif neemt 2 parameters. Als expr1=expr2 then it returns null, else it returns expr1
 
@@ -143,3 +148,7 @@ from EMPLOYEES;
 
 --dus belangrijk hier is dat als je null krijgt uit die functions en calculations daarmee doet gaat het resultaat gewoon weer null zijn
 --Maar geen null values kan je disregarden en je hele calculatie is nog steeds helemaal valid
+
+
+
+
