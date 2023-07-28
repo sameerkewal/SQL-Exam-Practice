@@ -346,3 +346,128 @@ where salary>0;
 
 select sysdate-'20-MAY-02'
 from dual;
+
+
+drop table dept;
+
+create table emp(
+    empno number,
+    ename varchar2(20),
+    deptno number
+);
+
+create table dept(
+    deptno number,
+    dname varchar2(20),
+    loc varchar2(20)
+);
+
+
+insert into emp values(7369, 'Smith', 20);
+insert into emp values(7499, 'Allen', 30);
+insert into emp values(7521, 'Ward', 30);
+insert into emp values(7566, 'Jones', 20);
+insert into emp values(7654, 'Martin', 30);
+insert into emp values(7698, 'Blake', 30);
+insert into emp values(7782, 'Clark', 10);
+
+
+insert into dept values(10, 'Accounting', 'New York');
+insert into dept values(20, 'Research', 'Dallas');
+insert into dept values(30, 'Sales', 'Chicago');
+insert into dept values(40, 'Operations', 'Boston');
+
+
+CREATE OR REPLACE VIEW v_emp AS
+SELECT e.empno, e.ename, d.loc FROM emp e, dept d WHERE d.deptno = e.deptno;
+
+delete from v_emp where loc='Dallas';
+
+select *
+from v_emp;
+
+
+
+alter table dept
+add constraint dept_pk2 primary key(deptno);
+
+alter table emp
+add constraint emp_pk3 primary key(empno);
+
+
+alter table emp
+add constraint emp_fk3 foreign key(deptno) references dept(deptno);
+
+
+
+
+
+
+
+
+
+create table a(
+    id char(1),
+    val number
+);
+
+create table b(
+    id char(1),
+    val number
+);
+
+
+
+insert into a values('A', 10);
+insert into a values('B', 20);
+insert into a values('C', 30);
+insert into a values('C', 30);
+
+
+insert into B values('B', 20);
+insert into B values('C', 30);
+insert into B values('D', 50);
+
+select val
+from a
+union all
+select val
+from b;
+
+
+
+
+select employee_id, first_name "name", last_name "lname"
+from employees
+union
+select department_id, 'test' "test", department_name "deptname"
+from departments
+order by 2, last_name;
+
+
+select employee_id, first_name "name", last_name "lname"
+from employees
+order by 2, last_name;
+
+
+
+select 1, 'John' as first_name
+from dual
+union
+select 1 as id, 'John' as name
+from dual;
+
+select 1, 'John' as first_name
+from dual
+union all
+select 1 as id, 'John' as name
+from dual;
+
+
+
+select 1
+from dual;
+
+
+select 1
+from employees;

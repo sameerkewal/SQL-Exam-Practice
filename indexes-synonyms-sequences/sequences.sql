@@ -116,6 +116,26 @@ insert into test values(test_s.NEXTVAL, 'Sameer');
 insert into test values(test_s.NEXTVAL, 'Jasmine');
 
 
+--die start with value maakt niets uit, once je sequence zijn maxvalue heeft gereached. Op dat moment begint ie gewoon weer bij je minvalue
+create sequence test_s
+start with 2
+maxvalue 8
+cycle
+cache 7;
+
+select test_s.nextval
+from dual;
+
+
+
+alter sequence test_s
+minvalue 4
+cache 3;
+
+alter sequence test_s
+maxvalue 10;
+
+
 select * from test;
 
 select * from test
@@ -381,3 +401,29 @@ from dual
 union
 select 10
 from dual;
+
+
+drop sequence seq_test;
+
+--The CACHE value may not exceed the CYCLE value.
+create sequence seq_test increment by 1
+start with 1
+maxvalue 10
+cycle 
+cache 10;
+
+--Dus moet zo gedaan worden
+create sequence seq_test increment by 1
+start with 1
+maxvalue 10
+cycle 
+cache 9;
+
+
+create sequence seq_test
+maxvalue 5;
+
+
+select *
+from user_sequences
+where sequence_name='SEQ_TEST';

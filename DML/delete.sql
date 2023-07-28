@@ -59,3 +59,26 @@ delete from departments where DEPARTMENT_ID=90;
 truncate table dept_copy;
 
 select * from dept_copy;
+
+--You can never TRUNCATE a table if foreign key constraints will be violated.
+--This is false in cases where the fk referes to the same table
+--geldt niet alleen voor truncate maar ook voor delete as seen here
+CREATE TABLE SELF_REFERENCE(
+CUST_ID NUMBER(10) NOT NULL PRIMARY KEY,
+NAME VARCHAR2(30) NOT NULL,
+MANAGER_ID NUMBER(10),
+CONSTRAINT MAN_ID_FK FOREIGN KEY (MANAGER_ID)
+REFERENCES SELF_REFERENCE(CUST_ID)
+);
+
+INSERT INTO SELF_REFERENCE VALUES (1,'John',NULL);
+INSERT INTO SELF_REFERENCE VALUES (2,'Maria',1);
+INSERT INTO SELF_REFERENCE VALUES (3,'Julia',1);
+INSERT INTO SELF_REFERENCE VALUES (4,'Steve',2);
+commit;
+
+rollback;
+select*
+from SELF_REFERENCE;
+delete from SELF_REFERENCE where cust_id=1;
+truncate table self_reference;

@@ -107,6 +107,11 @@ creating a table with pk or uk automatically makes an index for it
 - alter table...move statements select lists in subqueries in insert statements
 
 
+## Datatypes:
+- Long supports characters I think
+- Raw does not
+- Neither does long raw
+
 
 
 
@@ -119,3 +124,5 @@ and then use rownum as a way of displaying
 Before any syntactically valid data definition language (DDL) statement, even if the statement results in an error After any data definition language (DDL) statement that completes without an error
 
 - Yes, there is a difference between adding a WHERE statement after the JOIN condition and adding it to the WHERE clause. The WHERE clause filters the result set after the join is performed. The JOIN condition filters the rows before they are joined. If you add a WHERE statement after the JOIN condition, it will filter the result set further. If you add it to the WHERE clause, it will filter the rows before they are joined. In general, it is better to use the JOIN condition to filter rows because it can improve performance by reducing the number of rows that need to be joined
+
+- Al maak jij die table, als die table in iemand anders zn scheme is heb je geen privileges erop. Not even select. Vraag 384 in pdf

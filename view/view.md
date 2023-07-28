@@ -48,3 +48,6 @@ If the view definition contains any constraints, CREATE VIEW ... FORCE will fail
 
 
 - Views and synonyms are objects, so they have an object number, but a view does not consume physical space in the database, so it does not have a segment
+
+- If another user queries your view they only need select privileges on the view itself and not on
+the underlying tables. Same thing with insert. They just need the insert privileges on the view

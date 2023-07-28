@@ -206,7 +206,111 @@ as select EMPLOYEE_ID
 from employees;
 
 
+-- ORA-01702: a view is not appropriate here
+insert all
+into copy_emp_vw
+select 'Kewal', 'skewal', sysdate, 'IT_PROG'
+from dual;
+
+
+drop table emp;
+drop table dept;
+
+-- If you delete rows from the view v_emp with the WHERE condition loc='Dallas', the rows with department location 'Dallas' 
+-- will be removed from the view. Since the view v_emp is created using data from the dept table, 
+-- the rows with department location 'Dallas' will no longer be shown in the view.
+create table emp(
+    empno number,
+    ename varchar2(20),
+    deptno number
+);
+
+create table dept(
+    deptno number,
+    dname varchar2(20),
+    loc varchar2(20)
+);
+
+insert into emp values(7369, 'Smith', 20);
+insert into emp values(7499, 'Allen', 30);
+insert into emp values(7521, 'Ward', 30);
+insert into emp values(7566, 'Jones', 20);
+insert into emp values(7654, 'Martin', 30);
+insert into emp values(7698, 'Blake', 30);
+insert into emp values(7782, 'Clark', 10);
+
+
+insert into dept values(10, 'Accounting', 'New York');
+insert into dept values(20, 'Research', 'Dallas');
+insert into dept values(30, 'Sales', 'Chicago');
+insert into dept values(40, 'Operations', 'Boston');
+
+alter table dept
+add constraint dept_pk2 primary key(deptno);
+alter table emp
+add constraint emp_pk3 primary key(empno);
+alter table emp
+add constraint emp_fk3 foreign key(deptno) references dept(deptno);
+
+CREATE OR REPLACE VIEW v_emp AS
+SELECT e.empno, e.ename, d.loc FROM emp e, dept d WHERE d.deptno = e.deptno;
+
+CREATE OR REPLACE VIEW v_emp AS
+SELECT e.empno, e.ename, d.deptno, d.loc FROM emp e right join dept d on d.deptno=e.deptno;
+-- If you delete rows from the view v_emp with the WHERE condition loc='Dallas', the rows with department location 'Dallas' 
+-- will be removed from the view. Since the view v_emp is created using data from the dept table, 
+-- the rows with department location 'Dallas' will no longer be shown in the view.
+
+
+CREATE OR REPLACE VIEW v_emp AS
+SELECT e.empno, e.ename, d.deptno, d.loc
+FROM emp e
+JOIN dept d ON d.deptno = e.deptno;
+
+-- How to know a table is key preserved?
+-- If the number of records in view represent 
+-- exactly same numbers of records after applying filter than table is Key Preserved.
+delete from v_emp where loc='Dallas';
 
 
 
+select *
+from v_emp;
 
+
+
+select *
+from copy_emp;
+
+
+desc copy_emp;
+
+
+drop table test;
+
+create or replace view test
+as select employee_id,hire_date, job_id
+from copy_emp;
+
+
+create table copy_emp
+as select *
+from employees;
+drop table copy_emp;
+
+
+select *
+from test;
+
+select *
+from test;
+
+merge into test t
+using(select * from employees) e
+on(e.employee_id=t.employee_id)
+when matched then
+update set t.hire_date = e.hire_date;
+
+
+select *
+from test;

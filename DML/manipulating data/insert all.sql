@@ -415,6 +415,12 @@ when matched then
 update set o.order_total = m.order_total where o.order_id<>4
 delete where o.order_total is null;
 
+merge into orders_master o 
+using(select * from monthly_orders)m
+on(o.order_id=m.order_id)
+when matched then
+delete where o.order_total is null;
+
 
 /* Specify the DELETE where_clause to clean up data in a table while populating or updating it. 
 The only rows affected by this clause are those rows in the destination table that are updated 

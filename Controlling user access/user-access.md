@@ -73,6 +73,8 @@ can be assigned the same role. Roles are typically created for a database applic
 
 ![Alt text](<../resources/revoking object privileges2.png>)
 
+- GRANT ALL has additional privileges apart from SELECT, INSERT, DELETE, UPDATE there are more LIKE DEBUG, QUERY REWRITE, FLASHBACK , INDEX & ALTER
+
 
 Worth knowing dat bv het verschil is tussen create table and create any table is dat het verschil is tussen een create table privilege en een create any table privilege is dat bij een create table privilege die user alleen in zijn schema een tabel kan maken terwijl bij create any table die user een table kan maken in any schema
 
@@ -91,4 +93,18 @@ grant newuser to hr with admin option;
 
 If you grant a system privilege or role to a user without specifying WITH ADMIN OPTION, and then subsequently grant the privilege or role to the user WITH ADMIN OPTION, then the user has the ADMIN OPTION on the privilege or role.
 
+- Data dictionary which provides all roles available in database
+select *
+from dba_roles;
+
+
+- This view describes system privileges granted to roles.
+select *
+from role_sys_privs;
+
+- A system privilege is the right to perform a particular action, or to perform an action on any schema objects of a particular type.
+- A schema object privilege is a privilege or right to perform a particular action on a specific schema object
+
 [Seperate grants are required for the orders and order_items table](<../resources/seperate grants..png>)
+
+

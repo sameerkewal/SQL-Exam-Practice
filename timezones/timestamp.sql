@@ -83,6 +83,9 @@ select localtimestamp from dual;
 alter session set time_zone = 'America/Argentina/Buenos_Aires';
 
 
+-- The TIMESTAMP WITH LOCAL TIME ZONE data type is a variant of TIMESTAMP that includes a time zone offset in its value. 
+-- Data stored in the database is normalized to the database time zone, and time zone displacement is not stored as part of the column data. 
+-- When the data is retrieved, it is returned in the user’s local session time zone
 create table web_order(
   cust_id number,
   name varchar2(100),
@@ -102,3 +105,14 @@ values(2, 'Jasmine', 'Nissan Toyota', 'Suriname', current_timestamp, 3, current_
 
 alter session set time_zone='Asia/Karachi';
  select * from web_order;
+
+
+ 
+-- CURRENT_TIMESTAMP returns the current date and time in the session time zone in a value of data type TIMESTAMP WITH TIME ZONE, 
+-- while CURRENT_DATE returns the current date in the session time zone in a value of data type DATE
+select current_timestamp
+from dual;
+
+
+select current_date
+from dual;

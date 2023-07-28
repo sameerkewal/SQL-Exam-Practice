@@ -99,17 +99,35 @@ VALUES                  (5, 'Development 1', 100, 1);
 --Dit shit mag omdat het gewoon die tabellen ophaalt I guess
 -- er is ook al een value in dept_id 40
 insert into(
-select  department_id, 
-        department_name, 
-        manager_id, 
-        location_id 
-from copy_dept 
+select department_id, department_name, manager_id, location_id
+from dept_copy
 where department_id=40
 )
 values(1000, 'Construction99', null, null);
 
+create table dept_copy as
+select *
+from departments;
+
+select department_id, 
+        department_name, 
+        manager_id, 
+        location_id 
+from copy_dept 
+where department_id=40;
+
+drop table dept_copy;
+
+
 select *
 from dept_copy;
+
+select department_id, department_name, manager_id, location_id
+from dept_copy
+where department_id=40;
+
+drop table emp_copy;
+
 
 
 

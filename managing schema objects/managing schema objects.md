@@ -44,6 +44,7 @@ Als je in die data dictionary view kijkt gaat het je die originele deferrable va
 - Triggers can be associated with them
 - You need to commit first before other sessions can do ddl statements on the table
 - You can make them by using a subquery as seen in [global tables.sql](<global tables.sql>)
+- No redo is generated for gtt, however undo is generated for the gtt and redo for the undo must be generated
 
 
 ## External Tables:
@@ -57,3 +58,14 @@ Als je in die data dictionary view kijkt gaat het je die originele deferrable va
 - to create directory you need create any directory privilege
 - The directory owner will always be sys, regardless of who actually created it
 - You can specify only NOT NULL, unique, primary key, and foreign key constraints on external tables. Unique, primary key, and foreign key constraints are supported only in RELY DISABLE mode.
+- You must create the directory object before you create the external table; otherwise, an error is generated.
+- Data Pump supports character set conversion for both direct path and external tables. Most of the restrictions that exist for character set conversions in the original Import utility do not apply to Data Pump. The one case in which character set conversions are not supported under the Data Pump is when using transportable tablespaces.
+
+
+## Oracle_Loader and Oracle_Datapump
+- The Oracle_Loader access driver is the default. It can perform only data loads, and the data must come from text datafiles. Loads
+from external tables to internal tables are done by reading from the external tables' only datafiles
+- The Oracle_Datapump access driver can perform both loads and unloads. The data must come from binary dump files. Loads to external tables are done by populating the external tables' binary dump files. 
+
+
+- Data Pump supports character set conversion for both direct path and external tables. Most of the restrictions that exist for character set conversions in the original Import utility do not apply to Data Pump. The one case in which character set conversions are not supported under the Data Pump is when using transportable tablespaces.

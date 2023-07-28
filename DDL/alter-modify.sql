@@ -235,6 +235,12 @@ alter table test set unused column test_lname, gender;
 alter table test set unused column (test_lname, gender);
 
 
+--Je kan multiple columns op unused zetten tegelijk
+--En je kan ook multiple columns tegelijk zetten op unused
+Alter table copy_emp drop (employee_id, first_name);
+alter table copy_emp set unused (last_name, email);
+
+
 -
 
 

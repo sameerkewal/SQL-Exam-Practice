@@ -182,3 +182,26 @@ is 'new comment';
 
 --overwrites old comment
 select * from USER_COL_COMMENTS where table_name='EMP_COPY';
+
+
+--je kan ook commenten op views
+create or replace view test2 as
+select * from departments;
+
+
+comment on table test2 is 'view to test comments';
+
+
+select *
+from user_tab_comments
+where table_name='TEST2';
+
+
+
+--Comment on column from a view`
+comment on column test2.department_name
+is 'man';
+
+select *
+from user_col_comments
+where table_name='TEST2';

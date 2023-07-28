@@ -417,3 +417,16 @@ where e.DEPARTMENT_ID=(select b.DEPARTMENT_ID from departments b where EMPLOYEE_
 update emp_copy set salary = salary *1.10
 where not exists (select EMPLOYEE_ID from EMPLOYEES
 where emp_copy.EMPLOYEE_ID=employees.EMPLOYEE_ID);
+
+
+with test
+as (
+    select * from employees
+),
+test2 as (
+    select test.first_name from test
+)
+select * from test2;
+
+
+--If the query block name and table name are the same, then the query block name will take precedence

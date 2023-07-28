@@ -166,3 +166,51 @@ select FIRST_NAME, (select DEPARTMENT_NAME from DEPARTMENTS dept where DEPT.DEPA
 from EMPLOYEES e;
 
 
+--Je kan niet ordenen by die b tenzij je number notation gebruikt
+select department_id "DEPT_ID", department_name, 'b'
+from departments
+where department_id=90
+union
+select department_id, department_name "DEPT_NAME", 'a'
+from departments
+where department_id=10
+order by "b";
+
+select department_id "DEPT_ID", department_name, 'b'
+from departments
+where department_id=90
+union
+select department_id, department_name "DEPT_NAME", 'a'
+from departments
+where department_id=10
+order by dept_id;
+
+--als je dan ordent zonder die double quotes te gebruiken, kan je of helemaal in kleinletter of helemaal in caps
+select department_id "DEPT_ID", department_name, 'b'
+from departments
+where department_id=90
+union
+select department_id, department_name "DEPT_NAME", 'a'
+from departments
+where department_id=10
+order by dept_id;
+
+--dit gaat niet
+select department_id "DEpT_ID", department_name, 'b'
+from departments
+where department_id=90
+union
+select department_id, department_name "DEPT_NAME", 'a'
+from departments
+where department_id=10
+order by DEPT_ID;
+
+--Dus dan zou je speciaal gebruik moeten maken van double quotes 
+select department_id "DEpT_ID", department_name, 'b'
+from departments
+where department_id=90
+union
+select department_id, department_name "DEPT_NAME", 'a'
+from departments
+where department_id=10
+order by "DEpT_ID";

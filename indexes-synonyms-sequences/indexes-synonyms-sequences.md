@@ -58,6 +58,7 @@ But can not have:
 - Can reduce disk input/output(I/O) by using a rapid path access method to locate data quickly
 - Is dependent on the table that it indexes
 - Is used and maintained automatically by the Oracle Server
+- does occupy physical disk space
 
 
 If you do not have an index on the column, a full table scan occurs. An index provides direct and fast access to rows in a table. Its purpose is to reduce the disk I/O by using an indexed path to locate data quickly. An index is used and maintained automatically by the Oracle sevrer. After an index is created no direct activity is required by the user.

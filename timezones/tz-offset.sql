@@ -9,7 +9,8 @@ from dual;
 --conversion of a timestamp to timestamp with timezone for a given time
 --Essentially it combines the timestamp and timezone information into a single operation
 
-select from_tz(timestamp '2000-03-6 08:00:00', 'Asia/Karachi') from dual;
+select from_tz(timestamp '2000-03-6 08:00:00', 'Asia/Karachi')
+from dual;
 
 
 --Converts to a timestamp just like how to_date works basically
@@ -33,12 +34,3 @@ from dual;
 select to_timestamp('20-12-2002', 'dd-mm-yyyy') from dual;
 
 
-select DEPARTMENT_ID, max(SALARY)
-from EMPLOYEES
-group by DEPARTMENT_ID
-having max(SALARY)>(select 7150 from dual);
-
-
-
-select to_char('1889.22', '99,999.00')
-from dual;
