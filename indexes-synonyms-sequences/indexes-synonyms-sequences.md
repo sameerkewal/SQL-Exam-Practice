@@ -38,8 +38,8 @@ You can not use nextval and currval in the following contexts:
 - Can be created to give an alternative name to a table or to another database object
 - Requires no storage other than its definition in the data dictionary
 - Is useful for hiding the identity and location of an underlying schema object
-
-In order to create a public synonym he has to have a privilege called create public synonym
+- Need privileges on the underlying object to be able to actually use the synonym
+- In order to create a public synonym he has to have a privilege called create public synonym
 
 **You can have:**
 - Table and Public Synonym with the same name

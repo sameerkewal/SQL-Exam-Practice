@@ -80,6 +80,15 @@ select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_I
 
 
 
+
+--Je kan dit cool ass shit ook doen
+select avg(
+    case when first_name like 'A%' 
+    then salary 
+    else null 
+    end)"avg of salaries starting with A"
+from employees;
+
 --Decode function
 --Decode simpler and not as powerful as case statement
 --die job_is die column op basis waarvan je je comparison doet

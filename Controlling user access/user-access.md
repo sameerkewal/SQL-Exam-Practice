@@ -108,3 +108,5 @@ from role_sys_privs;
 [Seperate grants are required for the orders and order_items table](<../resources/seperate grants..png>)
 
 
+- Roles and user's dont have owners
+- You cannot revoke the public role from a user

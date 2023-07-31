@@ -9,3 +9,8 @@ from EMPLOYEES
 MINUS
 select DEPARTMENT_ID
 from DEPARTMENTS;
+
+
+select sysdate from dual
+union all
+select localtimestamp from dual;

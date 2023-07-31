@@ -169,3 +169,12 @@ from dual;
 select to_char(sysdate, 'Yyspth')
 from dual;
 
+
+
+--This works perfectly for some reason, its still converting the char to a date which(implicit conversion)
+select *
+from employees
+where hire_date>=to_char(to_date('17-jun-2003'), 'dd-mon-rr')
+order by hire_date;
+
+

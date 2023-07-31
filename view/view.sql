@@ -314,3 +314,34 @@ update set t.hire_date = e.hire_date;
 
 select *
 from test;
+
+
+--Als je een view maakt van een table en dan een column van die table dropped of op unused zet
+--dan gaat je view errors hebben en moet je het opnieuw compilen voordat je die view weer kan queryen
+create or replace view test_vw
+as
+select *
+from copy_dept;
+
+
+select *
+from test_vw;
+
+alter table copy_dept set unused column department_name;
+
+
+
+create or replace view test_vw
+as select first_name
+from employees;
+
+--Not possuble
+create index test_vw_ind on test_vw(first_name);
+
+
+grant select on test_vw to shavien;
+
+
+
+select *
+from hr.test_vw;

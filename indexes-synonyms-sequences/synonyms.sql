@@ -28,3 +28,26 @@ create public synonym deps for DEPARTMENTS;
 --Verder ook nog je hebt ook nog "drop public synonym" privilege nodig hiervoor
 drop public synonym deps;  
 
+
+
+
+
+
+--Need privileges on the underlying object to be able to actually use the synonym
+create table test(
+    id number,
+    name varchar2(20)
+);
+
+insert into test values(1, 'Sameer');
+insert into test values(2, 'Jasmine');
+
+create public synonym anxiety for test;
+grant select on test to test;
+
+
+
+
+-------------Test
+select *
+from anxiety;

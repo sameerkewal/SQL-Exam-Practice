@@ -41,7 +41,9 @@ over de use ervan. Provides a logical representation of the constraints defined 
 ## Constraints and stuff:
 - Je kan constraints definen zolang ze disabled zijn
 - Je kan geen check constraint definen I think 
-
+- You cannot create an index on a view
+- if you give someone privileges on your view and then do a create or replace on the view
+they will keep the privileges they had on it
 
 If the view definition contains any constraints, CREATE VIEW ... FORCE will fail if the base table does not exist or the referenced object type does not exist. CREATE VIEW ... FORCE will also fail if the view definition names a constraint that does not exist.
 
