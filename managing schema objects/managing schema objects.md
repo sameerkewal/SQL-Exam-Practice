@@ -45,6 +45,8 @@ Als je in die data dictionary view kijkt gaat het je die originele deferrable va
 - You need to commit first before other sessions can do ddl statements on the table
 - You can make them by using a subquery as seen in [global tables.sql](<global tables.sql>)
 - No redo is generated for gtt, however undo is generated for the gtt and redo for the undo must be generated
+- you cant reference a gtt as fk
+- You also cant refer to another table in a temporary table
 
 
 ## External Tables:

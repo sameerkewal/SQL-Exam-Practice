@@ -53,3 +53,7 @@ If the view definition contains any constraints, CREATE VIEW ... FORCE will fail
 
 - If another user queries your view they only need select privileges on the view itself and not on
 the underlying tables. Same thing with insert. They just need the insert privileges on the view
+
+
+- Alter cannot be granted on a view
+ORA-02204: ALTER, INDEX and EXECUTE not allowed for views

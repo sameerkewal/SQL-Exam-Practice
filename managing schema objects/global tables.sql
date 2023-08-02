@@ -99,3 +99,17 @@ values(1, 'Sameer', 'kewal', 90);
 commit;
 
 --You need to commit first before other sessions can do ddl statements on the table
+
+
+
+
+                                                         *
+-- ORA-14454: attempt to reference temporary table in a referential integrity constraint
+create table test123(
+    test_fk number,
+     constraint test_fk foreign key(test_fk) references gtt_emp(id)
+);
+
+-- ERROR at line 113:
+-- ORA-14455: attempt to create referential integrity constraint on temporary table
+alter table gtt_emp add emp_fk number constraint emp_fk references employees;
